@@ -12,4 +12,12 @@ public class WebAppHomeController {
     public String webAppHome(){
         return "webAppHome";
     }
+    @RequestMapping("/loginPage")
+    public  String loginPage(){
+        return "loginPage";
+    }
+    @RequestMapping("/signupPage")
+    public String signupPage() {
+        return "signupPage";
+    }
 }
