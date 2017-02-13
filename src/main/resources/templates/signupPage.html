@@ -8,6 +8,7 @@
 	<title>CocoNet - Now :) the taste of Tender coconut at your door step</title>
 
 	<link rel="shortcut icon" href="../static/images/favicon-16x16.png" th:href="@{/images/favicon-16x16.png}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 	<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
 	<link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
@@ -81,7 +82,8 @@
 								</div>
 								<div class="form-group top-margin">
 									<label>Email Address <span class="text-danger">*</span></label>
-									<input required name="email" data-error="Please fill this field" type="email" class="form-control">
+									<input required name="email" id="email" data-error="Please fill this field" type="email" class="form-control"><span id="emailOk" style="display: none" class="glyphicon glyphicon-ok text-success"></span>
+                                    <span id="emailRepeat" class="glyphicon glyphicon-remove text-danger" style="display: none">This email is registered already</span>
                                     <div class="help-block with-errors"></div>
 								</div>
 								<div class="form-group top-margin">
@@ -204,7 +206,25 @@
 			$("#signupForm").submit(function( event ) {
 				$("#signupSubmit").prop("disabled", true).addClass("disabled");
 			});
-		})
+            $("#email").change(function () {
+                var email =$("#email").val();
+                $("#emailOk").hide();
+                $("#emailRepeat").hide();
+                $.ajax({
+                    url: "/rest/subscriberEmailCheck",
+                    type: "get", //send it through get method
+                    data: {
+                        email: email
+                    },
+                    success: function(response) {
+                        $("#emailOk").show();
+                    },
+                    error: function(xhr) {
+                        $("#emailRepeat").show();
+                    }
+                });
+            })
+		});
 	</script>
 </body>
 </html>
