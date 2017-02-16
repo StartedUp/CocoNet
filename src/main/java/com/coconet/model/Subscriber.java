@@ -27,6 +27,9 @@ public class Subscriber {
     @NotEmpty
     @Column(name = "mobile", nullable=false)
     private String mobile;
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="address_id")
+    private Address address;
 
     public int getId() {
         return id;
@@ -77,7 +80,15 @@ public class Subscriber {
         this.email = email;
     }
 
-    @Override
+    public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	@Override
     public String toString() {
         return "Subscriber{" +
                 "id=" + id +
