@@ -19,13 +19,13 @@ public class Address {
 	private String addressLine2;
 	@NotEmpty
 	@Column(name = "city", nullable=false)
-	private String city;
+	private String city="Chennai";
 	@NotEmpty
 	@Column(name = "state", nullable=false)
-	private String state;
+	private String state="TamilNadu";
 	@NotEmpty
 	@Column(name = "country", nullable=false)
-	private String country;
+	private String country="India";
 	@NotEmpty
 	@Column(name = "pincode", nullable=false)
 	private String pincode;
