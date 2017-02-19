@@ -31,14 +31,14 @@
 			<div class="navbar-header">
 				<!-- Button for smallest screens -->
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-				<a class="navbar-brand" href="/"><img src="../static/images/logo.png" alt="Coco water comes Home"></a>
+				<a class="navbar-brand" href="/"><!--<img src="../static/images/logo.png" alt="Coco water comes Home">--></a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li><a href="/">Home</a></li>
-					<li><a href="../static/pages/about.html">About</a></li>
+					<li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
 					<li><a href="#">Contact</a></li>
-					<li class="active"><a class="btn" href="loginPage">SIGN IN / SIGN UP</a></li>
+					<li class="active"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
@@ -51,13 +51,15 @@
 	<div class="container">
 
 		<ol class="breadcrumb">
-			<li><a href="webAppHome.html">Home</a></li>
+			<li><a href="/">Home</a></li>
 			<li class="active">User access</li>
 		</ol>
 
 		<div class="row">
-			
 			<!-- Article main content -->
+			<div class="alert alert-success text-center" th:inline="text" th:if="${subscriberByEmailAndToken!=null and subscriberByEmailAndToken.active}">
+				<strong>Success!</strong>Congratz!! [[${subscriberByEmailAndToken.firstName}]] [[${subscriberByEmailAndToken.lastName}]]. Your account is activated.
+			</div>
 			<article class="col-xs-12 maincontent">
 				<header class="page-header">
 					<h1 class="page-title">Sign in</h1>
@@ -67,7 +69,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<h3 class="thin text-center">Sign in to your account</h3>
-							<p class="text-center text-muted">Lorem ipsum dolor sit amet, <a href="signupPage">Register</a> adipisicing elit. Quo nulla quibusdam cum doloremque incidunt nemo sunt a tenetur omnis odio. </p>
+							<p class="text-center text-muted">Lorem ipsum dolor sit amet, <a href="/signupPage">Register</a> adipisicing elit. Quo nulla quibusdam cum doloremque incidunt nemo sunt a tenetur omnis odio. </p>
 							<hr>
 							
 							<form>

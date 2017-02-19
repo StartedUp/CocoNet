@@ -30,6 +30,11 @@ public class Subscriber {
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="address_id")
     private Address address;
+    @NotEmpty
+    @Column(name = "registration_token", nullable = false)
+    private String registrationToken;
+    @Column(name = "is_active", nullable = false)
+    private boolean active;
 
     public int getId() {
         return id;
@@ -72,7 +77,6 @@ public class Subscriber {
     }
 
     public String getEmail() {
-
         return email;
     }
 
@@ -88,7 +92,23 @@ public class Subscriber {
 		this.address = address;
 	}
 
-	@Override
+    public String getRegistrationToken() {
+        return registrationToken;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setRegistrationToken(String registrationToken) {
+        this.registrationToken = registrationToken;
+    }
+
+    @Override
     public String toString() {
         return "Subscriber{" +
                 "id=" + id +
