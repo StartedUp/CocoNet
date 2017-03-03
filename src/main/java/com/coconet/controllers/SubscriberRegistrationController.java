@@ -48,7 +48,7 @@ public class SubscriberRegistrationController {
                 subscriberManager.saveOrUpdate(subscriber);
                 _log.info("Sending Email confirmation mail to " + subscriber.getEmail());
                 String [] recipients ={subscriber.getEmail()};
-                String confirmEmailUrl="http://ec2-52-34-145-199.us-west-2.compute.amazonaws.com:8080/confirmEmail/"+subscriber.getEmail()+"/"+token;
+                String confirmEmailUrl="/confirmEmail/"+subscriber.getEmail()+"/"+token;
                 Mailer mailer=new Mailer();
                 mailer.setRecipients(recipients);
                 mailer.setSubject("Coconet Email confirmation");
