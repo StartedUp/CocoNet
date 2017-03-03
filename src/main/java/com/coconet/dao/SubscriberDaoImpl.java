@@ -36,8 +36,8 @@ public class SubscriberDaoImpl implements SubscriberDao {
     }
 
     @Override
-    public void delete(int id) {
-
+    public void update(Subscriber subscriber) {
+        this.sessionFactory.getCurrentSession().update(subscriber);
     }
 
     @Override
@@ -45,5 +45,12 @@ public class SubscriberDaoImpl implements SubscriberDao {
         String queryByEmail = "from Subscriber where email=:email";
         return (Subscriber) this.sessionFactory.getCurrentSession().createQuery(queryByEmail)
                 .setParameter("email", email).uniqueResult();
+    }
+
+    @Override
+    public Subscriber findByEmailAndToken(String email, String token) {
+        String queryByEmailAndToken = "from Subscriber where email=:email and registration_token=:token";
+        return (Subscriber) this.sessionFactory.getCurrentSession().createQuery(queryByEmailAndToken)
+                .setParameter("email",email).setParameter("token",token).uniqueResult();
     }
 }
