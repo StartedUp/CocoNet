@@ -1,0 +1,1 @@
+ALTER TABLE `coconet`.`subscriber` ADD COLUMN `registration_token` VARCHAR(255) NOT NULL AFTER `address_id`;

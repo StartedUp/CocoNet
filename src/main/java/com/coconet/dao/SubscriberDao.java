@@ -14,7 +14,9 @@ public interface SubscriberDao {
 
     public void saveOrUpdate(Subscriber user);
 
-    public void delete(int id);
+    public void update(Subscriber subscriber);
 
     public Subscriber findByEmail(String email);
+
+    public Subscriber findByEmailAndToken(String email, String token);
 }
