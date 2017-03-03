@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">>
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport"    content="width=device-width, initial-scale=1.0"/>
@@ -39,16 +39,21 @@
 					<li class="active"><a href="/">Home</a></li>
 					<li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
 					<li><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
-					<li><a class="btn" href="loginPage">SIGN IN / SIGN UP</a></li>
+					<li sec:authorize="isAuthenticated()"><a class="btn" href="/loginPage" sec:authentication="name">user</a></li>
+					<li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
+					<li sec:authorize="isAnonymous()"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
 				</ul>
-			</div><!--/.nav-collapse -->
+                <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                    <input hidden type="submit" value="Sign Out"/>
+                </form>
+            </div><!--/.nav-collapse -->
 		</div>
 	</div> 
 	<!-- /.navbar -->
-
 	<!-- Header -->
 	<header id="head">
 		<div class="container">
+            <div class="alert alert-info text-center" th:if="${param.loggedin}">Already logged in</div>
 			<div class="row">
 				<h1 class="lead">Welcome.!Pure tender coconut is delivered home.</h1>
 				<!--<p class="tagline">PROGRESSUS: free business bootstrap template by <a href="http://www.gettemplate.com/?utm_source=progressus&amp;utm_medium=template&amp;utm_campaign=progressus">GetTemplate</a></p>
@@ -72,10 +77,10 @@
 			<div class="thumbnail">
 				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 50%;" alt="">
 				<div class="caption">
-					<h3>Subscrition 1</h3>
+					<h3>Subscription 1</h3>
 					<p>Get it on weekdays.</p>
 					<p>
-						<a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+						<a th:href="@{/product}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
 					</p>
 				</div>
 			</div>
@@ -85,10 +90,10 @@
 			<div class="thumbnail">
 				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 50%;" alt="">
 				<div class="caption">
-					<h3>Subscrition 2</h3>
+					<h3>Subscription 2</h3>
 					<p>@27 per piece get it delivered at home on alternate days. </p>
 					<p>
-						<a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+						<a th:href="@{/product}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
 					</p>
 				</div>
 			</div>

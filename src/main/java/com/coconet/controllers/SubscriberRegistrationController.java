@@ -7,6 +7,8 @@ import com.coconet.util.Mailer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,8 @@ public class SubscriberRegistrationController {
     private MailService mailService;
     @Autowired
     private SubscriberManager subscriberManager;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private static final Log _log = LogFactory.getLog(SubscriberRegistrationController.class);
 
@@ -40,10 +44,11 @@ public class SubscriberRegistrationController {
             if (checkSubscriber==null) {
                 String token = UUID.randomUUID().toString();
                 subscriber.setRegistrationToken(token);
+                subscriber.setPassword(passwordEncoder.encode(subscriber.getPassword()));
                 subscriberManager.saveOrUpdate(subscriber);
                 _log.info("Sending Email confirmation mail to " + subscriber.getEmail());
                 String [] recipients ={subscriber.getEmail()};
-                String confirmEmailUrl="/confirmEmail/"+subscriber.getEmail()+"/"+token;
+                String confirmEmailUrl="http://ec2-52-34-145-199.us-west-2.compute.amazonaws.com:8080/confirmEmail/"+subscriber.getEmail()+"/"+token;
                 Mailer mailer=new Mailer();
                 mailer.setRecipients(recipients);
                 mailer.setSubject("Coconet Email confirmation");
