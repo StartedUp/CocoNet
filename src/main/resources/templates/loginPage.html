@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport"    content="width=device-width, initial-scale=1.0"/>
@@ -60,7 +60,8 @@
 			<div class="alert alert-success text-center" th:inline="text" th:if="${subscriberByEmailAndToken!=null and subscriberByEmailAndToken.active}">
 				<strong>Success! </strong>Congratz!! [[${subscriberByEmailAndToken.firstName}]] [[${subscriberByEmailAndToken.lastName}]]. Your account is activated.
 			</div>
-			<div class="alert alert-info text-center" th:if="${param.logout}">Logged out succesfully</div>
+			<div class="alert alert-info text-center" sec: th:if="${param.logout}">Logged out succesfully</div>
+            <div class="alert alert-danger text-center" sec: th:if="${param.error}">Verify your email if not verified</div>
 			<article class="col-xs-12 maincontent">
 				<header class="page-header">
 					<h1 class="page-title">Sign in</h1>
