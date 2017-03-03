@@ -32,7 +32,7 @@ public class SubscriberDetailsService implements UserDetailsService {
                 return null;
             }
             UserDetails userDetails =new org.springframework.security.core.userdetails
-                    .User(subscriber.getFirstName(), subscriber.getPassword(),subscriber.isActive(),false,false,false,getAuthorities());
+                    .User(subscriber.getFirstName(), subscriber.getPassword(),subscriber.isActive(),true,true,true,getAuthorities());
             return userDetails;
         }catch (Exception e){
             throw new UsernameNotFoundException("Subcriber Email not found");
