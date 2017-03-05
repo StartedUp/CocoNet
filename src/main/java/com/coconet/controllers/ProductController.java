@@ -26,6 +26,6 @@ public class ProductController{
         subscription=SubscriptionUtil.startAndEndDateSetter(subscription);
         model.addAttribute("subscriptionPlan", subscriptionPlanManager.getSubscriptionPlan(subscriptionPlanId));
         model.addAttribute("subscription",subscription);
-        return "Product-details";
+        return "product-details";
     }
 }
