@@ -40,7 +40,7 @@ public class SubscriptionUtil {
             calendar.add(Calendar.DATE, 2);
             return calendar;
         }
-        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             calendar.add(Calendar.DATE, 1);
             return calendar;
         }
