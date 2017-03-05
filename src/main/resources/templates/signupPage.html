@@ -147,6 +147,7 @@
 										<button id="signupSubmit" class="btn btn-action" type="submit">Signup</button>
 									</div>
 								</div>
+								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 							</form>
 						</div>
 					</div>
