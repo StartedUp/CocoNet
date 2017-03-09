@@ -50,6 +50,99 @@
         </div>
     </div>
     <header id="head" class="secondary"></header>
-    <h1>Subscription details</h1>
+    <!-- container -->
+    <div class="container">
+
+        <h2 class="text-center top-space" th:inline="text">[[${subscriptionPlan.product.productName}]]-[[${subscriptionPlan.planName}]]</h2>
+        <br>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <h3>Subscription Starts on</h3>
+                <p style="color:#009688" th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"></p>
+                <h3>Subscription Ends on</h3>
+                <p style="color:#009688" th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></p>
+                <h3>Price per <span th:text="${subscriptionPlan.product.measurementUnit}" </h3>
+                <p style="color:#009688" th:inline="text">₹ [[${subscriptionPlan.product.pricePerUnit}]]</p>
+            </div>
+            <div class="col-sm-6">
+                <form role="form" data-toggle="validator" id="productSubscribeForm" action="/product/subscribe/" method="post">
+                    <input id="measurementUnit" hidden th:value="${subscriptionPlan.product.measurementUnit}" type="text">
+                    <input id="pricePerUnit" hidden th:value="${subscriptionPlan.product.pricePerUnit}" type="text">
+                    <input hidden id="actualPrice" name="actualPrice" type="text">
+                    <input hidden id="totalPrice" name="totalPrice" type="text">
+                    <input id="totalNumberOfDays" hidden name="totalNumberOfDays" th:value="${subscription.totalNumberOfDays}" type="text">
+                    <div class="form-group top-margin">
+                        <label>Quantity per day<span class="text-danger">*</span></label>
+                        <input id="quantityPerDay" required name="quantityPerDay" data-error="Please fill this field" type="text" class="form-control">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div>
+                        <h4 hidden>Total quantity = <span style="color:#009688" id="displayTotQty"></span></h4>
+                        <h4 hidden>Total price = <span style="color:#009688" id="displayTotPrice"></span></h4>
+                    </div>
+                    <div class="form-group top-margin">
+                        <label>Preferred Delivery time</label>
+                            <select  name="preferredDeliveryTime" data-error="Please choose this field" type="text" class="form-control">
+                                <option value="7">07</option><option value="8">08</option>
+                                <option value="9">09</option><option value="10" selected>10</option>
+                                <option value="11">11</option><option value="12">12</option>
+                                <option value="13">13</option><option value="14">14</option>
+                                <option value="15">15</option><option value="16">16</option>
+                                <option value="17">17</option><option value="18">18</option>
+                            </select>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <option selected disabled hidden style='display: none' value=''></option>
+                </form>
+            </div>
+        </div> <!-- /row -->
+    </div>	<!-- /container -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="../static/js/headroom.min.js" th:src="@{/js/headroom.min.js}"></script>
+    <script src="../static/js/jQuery.headroom.min.js" th:src="@{/js/jQuery.headroom.min.js}"></script>
+    <script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
+    <script type="text/javascript">
+        $('#quantityPerDay').change(function () {
+            var pricePerUnit=$('#pricePerUnit').val();
+            var actualPrice;
+            var totalQuantity;
+            var totalNumberOfDays = $('#totalNumberOfDays').val();
+            var quantityPerDay=$('#quantityPerDay').val();
+            var isQuantityInvalid=false;
+            console.log('quantityPerDay:'+quantityPerDay);
+            var isQuantityInt =($.isNumeric(quantityPerDay) && quantityPerDay % 1 === 0);
+            var isQuantityDouble =($.isNumeric(quantityPerDay) && quantityPerDay % 1 !== 0);
+            var measurementUnit = $('#measurementUnit').val();
+            console.log('measurementUnit:'+measurementUnit+',isQuantityInt:'+isQuantityInt+',isQuantityDouble:'+isQuantityDouble)
+            if(!isQuantityInt && !isQuantityDouble){
+                alert("Invalid quantity value");
+                $('#quantityPerDay').val('');
+                isQuantityInvalid=true;
+            }
+            if(measurementUnit =='piece' && !isQuantityInt){
+                alert("Invalid quantity value for this product")
+                $('#quantityPerDay').val('');
+                isQuantityInvalid=true;
+            }
+            console.log('isQuantityInvalid:'+isQuantityInvalid);
+            if(!isQuantityInvalid) {
+                $('#displayTotPrice').parent().hide();
+                $('#displayTotQty').parent().hide();
+                actualPrice = pricePerUnit * totalNumberOfDays * quantityPerDay;
+                totalQuantity = totalNumberOfDays * quantityPerDay;
+                console.log('actualPrice:'+actualPrice);
+                console.log('totalQuantity:'+totalQuantity);
+                $('#actualPrice').val(actualPrice);
+                $('#totalPrice').val(actualPrice);
+                $('#displayTotPrice').html(actualPrice);
+                $('#displayTotPrice').parent().show();
+                $('#totalQuantity').val(totalQuantity);
+                $('#displayTotQty').html(totalQuantity);
+                $('#displayTotQty').parent().show();
+            }
+        });
+    </script>
 </body>
 </html>
