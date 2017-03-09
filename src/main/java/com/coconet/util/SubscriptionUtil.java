@@ -1,6 +1,7 @@
 package com.coconet.util;
 
 import com.coconet.model.Subscription;
+import com.coconet.model.SubscriptionPlan;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.Date;
  * Created by Prithu on 05-03-2017.
  */
 public class SubscriptionUtil {
-    public static Subscription startAndEndDateSetter(Subscription subscription) {
+    public static Subscription startAndEndDateSetter(Subscription subscription, SubscriptionPlan subscriptionPlan) {
         /*Required Date variable declaration*/
         Calendar startDateCal = Calendar.getInstance();
         Calendar endDateCal = Calendar.getInstance();
@@ -26,10 +27,13 @@ public class SubscriptionUtil {
         subscription.setEndDate(endDateCal.getTime());
         int numberOfDays = 0;
         while (startDateCal.before(endDateCal)) {
-            if ((Calendar.SATURDAY != startDateCal.get(Calendar.DAY_OF_WEEK))
-                    &&(Calendar.SUNDAY != startDateCal.get(Calendar.DAY_OF_WEEK))) {
+            if (subscriptionPlan.getRoutinePattern().equals("weekdays")) {
+                if ((Calendar.SATURDAY != startDateCal.get(Calendar.DAY_OF_WEEK))
+                        && (Calendar.SUNDAY != startDateCal.get(Calendar.DAY_OF_WEEK))) {
+                    numberOfDays++;
+                }
+            }else
                 numberOfDays++;
-            }
             startDateCal.add(Calendar.DATE,1);
         }
         subscription.setTotalNumberOfDays(numberOfDays);

@@ -1,8 +1,10 @@
 package com.coconet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Prithu on 04-03-2017.
@@ -23,12 +25,16 @@ public class SubscriptionPlan {
     @NotEmpty
     @Column(name = "subscription_duration_number")
     private int subscriptionDurationNumber;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
     @NotEmpty
     @Column(name = "routine_pattern")
     private String routinePattern;
+    @NotNull
+    @Column(name = "discount_percentage")
+    private int discountPercentage;
 
     public int getId() {
         return id;
@@ -78,6 +84,14 @@ public class SubscriptionPlan {
         this.routinePattern = routinePattern;
     }
 
+    public int getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(int discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
+
     @Override
     public String toString() {
         return "SubscriptionPlan{" +
@@ -88,5 +102,9 @@ public class SubscriptionPlan {
                 ", product=" + product +
                 ", routinePattern='" + routinePattern + '\'' +
                 '}';
+    }
+    @Override
+    public int hashCode() {
+        return this.id+"".hashCode();
     }
 }
