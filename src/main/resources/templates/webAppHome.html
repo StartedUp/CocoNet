@@ -39,7 +39,7 @@
 					<li class="active"><a href="/">Home</a></li>
 					<li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
 					<li><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
-					<li sec:authorize="isAuthenticated()"><a class="btn" href="/loginPage" sec:authentication="name">user</a></li>
+					<li sec:authorize="isAuthenticated()"><a class="btn" href="#" sec:authentication="name">user</a></li>
 					<li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
 					<li sec:authorize="isAnonymous()"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
 				</ul>
@@ -73,31 +73,31 @@
 	<!-- Page Features -->
 	<div class="row text-center">
 
-		<div class="col-md-6 col-sm-12 hero-feature">
+		<div class="col-md-6 col-sm-12 hero-feature" th:each="subscriptionPlan : ${subscriptionPlans}">
 			<div class="thumbnail">
 				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 50%;" alt="">
 				<div class="caption">
 					<h3>Subscription 1</h3>
-					<p>Get it on weekdays.</p>
+					<p th:text="${subscriptionPlan.planName}">Get it on weekdays.</p>
 					<p>
-						<a th:href="@{/product}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+						<a th:href="@{'/product/'+${subscriptionPlan.product.id}+'/subscriptionPlan/'+${subscriptionPlan.id}}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
 					</p>
 				</div>
 			</div>
 		</div>
 
-		<div class="col-md-6 col-sm-12 hero-feature">
+		<!--<div class="col-md-6 col-sm-12 hero-feature">
 			<div class="thumbnail">
 				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 50%;" alt="">
 				<div class="caption">
 					<h3>Subscription 2</h3>
 					<p>@27 per piece get it delivered at home on alternate days. </p>
 					<p>
-						<a th:href="@{/product}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+						<a th:href="@{'/product/'+${subscriptionPlans[1].product.id}+'/'+${subscriptionPlans[1].id}}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
 					</p>
 				</div>
 			</div>
-		</div>
+		</div>-->
 	</div>
 	<!-- /.row -->
 
