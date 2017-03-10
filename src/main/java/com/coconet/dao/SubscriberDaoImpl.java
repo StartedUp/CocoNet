@@ -47,7 +47,6 @@ public class SubscriberDaoImpl implements SubscriberDao {
         Session session= sessionFactory.openSession();
         Subscriber subscriber= (Subscriber) session.createQuery(queryByEmail)
                 .setParameter("email", email).uniqueResult();
-        subscriber.getAddresses();
         session.close();
         return subscriber;
     }
