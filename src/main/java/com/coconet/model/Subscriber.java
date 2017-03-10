@@ -40,6 +40,7 @@ public class Subscriber {
     private String registrationToken;
     @Column(name = "is_active", nullable = false)
     private boolean active;
+    @NotNull
     @JsonIgnore
     @OneToMany(targetEntity = Subscription.class, mappedBy = "subscriber", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Subscription> subscriptions;

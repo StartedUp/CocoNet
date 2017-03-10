@@ -20,10 +20,9 @@ public class SubscriptionPlan {
     @Column(name="plan_name", nullable=false)
     private String planName;
     @NotEmpty
-    @Column(name = "subscription_duration_type")
+    @Column(name = "subscription_duration_type",nullable = false)
     private String subscriptionDurationType;
-    @NotEmpty
-    @Column(name = "subscription_duration_number")
+    @Column(name = "subscription_duration_number",nullable = false)
     private int subscriptionDurationNumber;
     @JsonIgnore
     @ManyToOne
