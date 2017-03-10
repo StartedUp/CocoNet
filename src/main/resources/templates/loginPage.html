@@ -71,7 +71,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<h3 class="thin text-center">Sign in to your account</h3>
-							<p class="text-center text-muted">Lorem ipsum dolor sit amet, <a href="/signupPage">Register</a> adipisicing elit. Quo nulla quibusdam cum doloremque incidunt nemo sunt a tenetur omnis odio. </p>
+							<p class="text-center text-muted"><a href="/signupPage">Register</a></p>
 							<hr>
 
 							<form role="form" th:action="@{/loginPage}" method="post">
@@ -90,8 +90,11 @@
 								<hr>
 
 								<div class="row">
-									<div class="col-lg-8">
+									<div class="col-lg-4">
 										<b><a href="">Forgot password?</a></b>
+									</div>
+									<div class="col-lg-4">
+										<a href="/signupPage"><button class="btn btn-action">Register</button></a>
 									</div>
 									<div class="col-lg-4 text-right">
 										<button class="btn btn-action" type="submit">Sign in</button>
@@ -179,8 +182,8 @@
 				</div> <!-- /row of widgets -->
 			</div>
 		</div>
-	</footer>	
-		
+	</footer>
+
 
 
 
@@ -188,8 +191,8 @@
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-	<script src="../static/js/headroom.min.js"></script>
-	<script src="../static/js/jQuery.headroom.min.js"></script>
-	<script src="../static/js/template.js"></script>
+	<script src="../static/js/headroom.min.js" th:src="@{/js/headroom.min.js}"></script>
+	<script src="../static/js/jQuery.headroom.min.js" th:src="@{/js/jQuery.headroom.min.js}"></script>
+	<script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.coconet.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -11,6 +12,8 @@ public class Address {
     @GeneratedValue
     @Column(name = "id")
     private int id;
+	@Column(name = "address_holder_name")
+	private String addressHolderName;
 	@NotEmpty
 	@Column(name = "address_line1", nullable=false)
 	private String addressLine1;
@@ -29,11 +32,22 @@ public class Address {
 	@NotEmpty
 	@Column(name = "pincode", nullable=false)
 	private String pincode;
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name ="subscriber_id")
+	private Subscriber subscriber;
+
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getAddressHolderName() {
+		return addressHolderName;
+	}
+	public void setAddressHolderName(String addressHolderName) {
+		this.addressHolderName = addressHolderName;
 	}
 	public String getAddressLine1() {
 		return addressLine1;
@@ -71,9 +85,21 @@ public class Address {
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
 	}
+	public Subscriber getSubscriber() {
+		return subscriber;
+	}
+
+	public void setSubscriber(Subscriber subscriber) {
+		this.subscriber = subscriber;
+	}
+
 	@Override
 	public String toString() {
 		return "Address [addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city
 				+ ", state=" + state + ", country=" + country + ", pincode=" + pincode + "]";
 	}
+	@Override
+	public int hashCode() {
+		return this.id+"".hashCode();
 	}
+}

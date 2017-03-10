@@ -3,6 +3,7 @@ package com.coconet.dao;
 import com.coconet.model.Subscriber;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,7 +33,7 @@ public class SubscriberDaoImpl implements SubscriberDao {
     @Override
     public void saveOrUpdate(Subscriber subscriber) {
         _log.info("subscriber in daoImpl = " + subscriber);
-        this.sessionFactory.getCurrentSession().save(subscriber);
+        this.sessionFactory.getCurrentSession().saveOrUpdate(subscriber);
     }
 
     @Override
@@ -43,8 +44,12 @@ public class SubscriberDaoImpl implements SubscriberDao {
     @Override
     public Subscriber findByEmail(String email) {
         String queryByEmail = "from Subscriber where email=:email";
-        return (Subscriber) this.sessionFactory.getCurrentSession().createQuery(queryByEmail)
+        Session session= sessionFactory.openSession();
+        Subscriber subscriber= (Subscriber) session.createQuery(queryByEmail)
                 .setParameter("email", email).uniqueResult();
+        subscriber.getAddresses();
+        session.close();
+        return subscriber;
     }
 
     @Override
