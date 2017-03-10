@@ -91,42 +91,46 @@
 									<input required name="mobile" type="text" data-error="Please fill this field" class="form-control">
                                     <div class="help-block with-errors"></div>
 								</div>
-								<div class="row">
-									<div class="form-group col-sm-6">
-									<label>AddressLine1<span class="text-danger">*</span></label>
-									<input required name="address.addressLine1" type="text" data-error="Please fill this field" class="form-control">
-                                    <div class="help-block with-errors"></div>
-								</div>
-								<div class="form-group col-sm-6">
-									<label>AddressLine2<span class="text-danger">*</span></label>
-									<input required name="address.addressLine2" type="text" data-error="Please fill this field" class="form-control">
-                                    <div class="help-block with-errors"></div>
-								</div>
-								</div>
-								<div class="row">
-									<div class="form-group col-sm-6">
-									<label>City<span class="text-danger">*</span></label>
-									<input required disabled value="Chennai" name="address.city" type="text" data-error="Please fill this field" class="form-control">
-                                    <div class="help-block with-errors"></div>
-								</div>
-								<div class="form-group col-sm-6">
-									<label>State<span class="text-danger">*</span></label>
-									<input required disabled value="TamilNadu" name="address.state" type="text" data-error="Please fill this field" class="form-control">
-                                    <div class="help-block with-errors"></div>
-								</div>
-								</div>
-								<div class="row">
-									<div class="form-group col-sm-6">
-									<label>Country<span class="text-danger">*</span></label>
-									<input required disabled value="India" name="address.country" type="text" data-error="Please fill this field" class="form-control">
-                                    <div class="help-block with-errors"></div>
-								</div>
-								<div class="form-group col-sm-6">
-									<label>PIN code<span class="text-danger">*</span></label>
-									<input required name="address.pincode" type="text" data-error="Please fill this field" class="form-control">
-                                    <div class="help-block with-errors"></div>
-								</div>
-								</div>
+                              <!--  <table>
+                                    <tr th:each="address, rowStat : *{addresses}">
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                            <label>AddressLine1<span class="text-danger">*</span></label>
+                                            <input required th:value="address.addressLine1" th:field="*{addresses[__${rowStat.index}__].addressLine1}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>AddressLine2<span class="text-danger">*</span></label>
+                                            <input required th:value="address.addressLine2" th:field="*{addresses[__${rowStat.index}__].addressLine2}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                            <label>City<span class="text-danger">*</span></label>
+                                            <input required disabled value="Chennai" th:field="*{addresses[__${rowStat.index}__].city}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>State<span class="text-danger">*</span></label>
+                                            <input required disabled value="TamilNadu" th:field="*{addresses[__${rowStat.index}__].state}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                            <label>Country<span class="text-danger">*</span></label>
+                                            <input required disabled value="India" th:field="*{addresses[__${rowStat.index}__].country}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>PIN code<span class="text-danger">*</span></label>
+                                            <input required th:field="*{addresses[__${rowStat.index}__].pincode}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        </div>
+                                    </tr>
+                                </table>-->
 								<div class="row">
 									<div class="form-group col-sm-6">
 										<label>Password <span class="text-danger">*</span></label>

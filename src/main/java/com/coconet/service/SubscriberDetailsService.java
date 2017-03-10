@@ -1,5 +1,6 @@
 package com.coconet.service;
 
+import com.coconet.model.LoggedInSubscriber;
 import com.coconet.model.Subscriber;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,9 +32,10 @@ public class SubscriberDetailsService implements UserDetailsService {
                 _log.info("Subscriber email not found");
                 return null;
             }
-            UserDetails userDetails =new org.springframework.security.core.userdetails
-                    .User(subscriber.getFirstName(), subscriber.getPassword(),subscriber.isActive(),true,true,true,getAuthorities());
-            return userDetails;
+            LoggedInSubscriber loggedInSubscriber =new LoggedInSubscriber(subscriber.getFirstName(), subscriber.getPassword(),subscriber.isActive(),true,true,true,getAuthorities());
+            loggedInSubscriber.setEmail(subscriber.getEmail()); loggedInSubscriber.setId(subscriber.getId()); loggedInSubscriber.setFirstName(subscriber.getFirstName());
+            loggedInSubscriber.setLastName(subscriber.getLastName());
+            return loggedInSubscriber;
         }catch (Exception e){
             throw new UsernameNotFoundException("Subcriber Email not found");
         }

@@ -1,5 +1,6 @@
 package com.coconet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -32,7 +33,8 @@ public class Product {
     @NotEmpty
     @Column(name = "price_per_unit", nullable = false)
     private double pricePerUnit;
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(targetEntity = SubscriptionPlan.class, mappedBy = "product",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SubscriptionPlan> subscriptionPlan;
 
     public int getId() {
@@ -106,5 +108,10 @@ public class Product {
                 ", productName='" + productName + '\'' +
                 ", pricePerUnit=" + pricePerUnit +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id+"".hashCode();
     }
 }
