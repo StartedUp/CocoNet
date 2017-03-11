@@ -31,7 +31,6 @@ public class Subscriber {
     @NotEmpty
     @Column(name = "mobile", nullable=false)
     private String mobile;
-    @NotEmpty
     @JsonIgnore
     @OneToMany(targetEntity = Address.class,mappedBy = "subscriber",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Address> addresses;
@@ -40,7 +39,6 @@ public class Subscriber {
     private String registrationToken;
     @Column(name = "is_active", nullable = false)
     private boolean active;
-    @NotNull
     @JsonIgnore
     @OneToMany(targetEntity = Subscription.class, mappedBy = "subscriber", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Subscription> subscriptions;

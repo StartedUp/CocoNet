@@ -71,7 +71,11 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<h3 class="thin text-center">Sign in to your account</h3>
-							<p class="text-center text-muted"><a href="/signupPage">Register</a></p>
+							<div class="row">
+								<div class="col-lg-4">
+									<a href="/signupPage"><button class="btn btn-action">Register</button></a>
+								</div>
+							</div>
 							<hr>
 
 							<form role="form" th:action="@{/loginPage}" method="post">
@@ -90,11 +94,8 @@
 								<hr>
 
 								<div class="row">
-									<div class="col-lg-4">
+									<div hidden class="col-lg-4">
 										<b><a href="">Forgot password?</a></b>
-									</div>
-									<div class="col-lg-4">
-										<a href="/signupPage"><button class="btn btn-action">Register</button></a>
 									</div>
 									<div class="col-lg-4 text-right">
 										<button class="btn btn-action" type="submit">Sign in</button>
