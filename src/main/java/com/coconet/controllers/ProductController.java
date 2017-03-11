@@ -102,7 +102,7 @@ public class ProductController{
             mailTemplateData.put("deliveryAddress",subscription.getDeliveryAddress().toString());
             mailTemplateData.put("templateName","mailTemplates/subscriptionDetails");
             mailService.prepareAndSend(mailer,mailTemplateData);
-            return "redirect:/subscriptionSuccess";
+            return "subscriptionSuccess";
         }catch (Exception e){
             e.printStackTrace();
             return "exceptionError";
