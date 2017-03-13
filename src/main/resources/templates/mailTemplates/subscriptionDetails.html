@@ -257,9 +257,10 @@
                                 <tr>
                                     <td>
                                         <p>Hi <span th:text="${userName}"></span>,</p>
-                                        <p>Thank you for Subscribing to <span style="color:#009688" th:text="${productSubscriptionPlanName}"></span>. Service to you starts from <span style="color:#009688" th:text="${startDate}"></span> service ends on <span style="color:#009688" th:text="${endDate}"></span></p>
-                                        <p th:if="${paymentType=='cod'}">Payment option chosen - <span style="color:#009688" th:text="${paymentType}"></span> Please pay the amount ₹. <span style="color:#009688" th:text="${totalPrice}"></span> on <span style="color:#009688" th:text="${startdate}"></span></p>
-                                        <p>Delivery Address- <span style="color:#009688" th:text="${deliveryAddress}"></span></p>
+                                        <p>Thank you for Subscribing <span style="color:#009688" th:text="${productSubscriptionPlanName}"></span>. Service to you starts from <span style="color:#009688" th:text="${startDate}"></span> service ends on <span style="color:#009688" th:text="${endDate}"></span></p>
+                                        <p th:if="${paymentType=='cod'}">Payment option chosen - <span style="color:#009688" th:text="${paymentType}"></span> Please pay the amount ₹. <span style="color:#009688" th:text="${totalPrice}"></span> on <span style="color:#009688" th:text="${startDate}"></span></p>
+                                        <p>Number of coconuts : <span style="color:#009688" th:text="${numberOfCoconuts}"></span></p>
+                                        <p>Delivery Address - <span style="color:#009688" th:text="${deliveryAddress}"></span></p>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>
                                             <tr>
@@ -295,7 +296,7 @@
                         </tr>
                         <tr>
                             <td class="content-block powered-by">
-                                Powered by <a href="#">MyDomain</a>.
+                                Powered by <a href="madeintrees.com">MadeInTrees</a>.
                             </td>
                         </tr>
                     </table>

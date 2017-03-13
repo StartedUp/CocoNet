@@ -46,7 +46,13 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
                     <li><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
-                    <li sec:authorize="isAuthenticated()"><a class="btn" href="/loginPage" sec:authentication="name">user</a></li>
+                    <li class="dropdown" sec:authorize="isAuthenticated()">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="/subscriber/profile">Profile</a></li>
+                            <li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>
+                        </ul>
+                    </li>
                     <li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
                     <li sec:authorize="isAnonymous()"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
                 </ul>
@@ -80,7 +86,7 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Add new delivery address</h4>
                                 </div>
-                                <div class="media-body">
+                                <div class="container-fluid media-body">
                                     <form role="form" data-toggle="validator" id="addAddressForm" action="/rest/subscriberAddAddress" method="post">
                                         <div class="row">
                                             <div class="form-group col-sm-6 col-sm-offset-3">
@@ -323,7 +329,7 @@
                 value: address.id,
                 text: 'Address :'+($('#deliveryAddress option').length+1),
                 name: 'deliveryAddress.id',
-            }).attr('data-show','.'+address.id).attr('selected', 'selected')).change();
+            }).attr('data-show','.'+address.id).attr('selected', 'selected'));
             $('#chosenAddress').append($('<div>', {
                         class: address.id+' col-sm-12 hide',
                         id: 'address-'+address.id,
@@ -340,6 +346,7 @@
                         class: 'data'
             }))
             );
+            $('#deliveryAddress').change();
         }
     </script>
 </body>

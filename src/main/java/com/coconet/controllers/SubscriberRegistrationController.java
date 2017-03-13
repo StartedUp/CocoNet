@@ -48,7 +48,7 @@ public class SubscriberRegistrationController {
                 subscriberManager.saveOrUpdate(subscriber);
                 _log.info("Sending Email confirmation mail to " + subscriber.getEmail());
                 String [] recipients ={subscriber.getEmail()};
-                String [] bccList = {"dydhanraj5@gmail.com","rprithviprakash@gmail.com"};
+                String [] bccList = {"dydhanraj5@gmail.com","rprithviprakash@gmail.com","admin@madeintrees.com"};
                 String confirmEmailUrl="/confirmEmail/"+subscriber.getEmail()+"/"+token;
                 Mailer mailer=new Mailer();
                 mailer.setRecipients(recipients);

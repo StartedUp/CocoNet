@@ -86,7 +86,7 @@ public class ProductController{
             _log.info("Sending Email about subscription to " + subscriber.getEmail());
             _log.info(subscription);
             String [] recipients ={subscriber.getEmail()};
-            String [] bccList = {"dydhanraj5@gmail.com","rprithviprakash@gmail.com"};
+            String [] bccList = {"dydhanraj5@gmail.com","rprithviprakash@gmail.com","admin@madeintrees.com"};
             Mailer mailer=new Mailer();
             mailer.setRecipients(recipients);
             mailer.setBccList(bccList);
@@ -95,11 +95,12 @@ public class ProductController{
             mailTemplateData.put("userName",subscriber.getFirstName()+" "+subscriber.getLastName());
             mailTemplateData.put("productSubscriptionPlanName",subscriptionPlan.getProduct().getProductName()+" "+
                     subscriptionPlan.getPlanName());
-            mailTemplateData.put("startDate",subscription.getStartDate().toString());
-            mailTemplateData.put("endDate", subscription.getEndDate().toString());
+            mailTemplateData.put("startDate",(subscription.getStartDate().toString()).substring(0, 10));
+            mailTemplateData.put("endDate", (subscription.getEndDate().toString()).substring(0, 10));
             mailTemplateData.put("paymentType",subscription.getPaymentType());
-            mailTemplateData.put("totalPrice",subscription.getTotalPrice()+"");
+            mailTemplateData.put("totalPrice",subscription.getTotalPrice()+"0");
             mailTemplateData.put("deliveryAddress",subscription.getDeliveryAddress().toString());
+            mailTemplateData.put("numberOfCoconuts", Integer.parseInt(subscription.getTotalQuantity()+"")+"");
             mailTemplateData.put("templateName","mailTemplates/subscriptionDetails");
             mailService.prepareAndSend(mailer,mailTemplateData);
             return "subscriptionSuccess";
