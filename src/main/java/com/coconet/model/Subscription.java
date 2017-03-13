@@ -52,19 +52,21 @@ public class Subscription {
     @NotEmpty
     @Column(name = "payment_type")
     private String paymentType;
-    @NotEmpty
+    @NotNull
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "subscriber_id")
     private Subscriber subscriber;
-    @NotEmpty
+    @NotNull
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "subscription_plan_id")
+    @JoinColumn(name = "subscription_plan_id",nullable = false)
     private SubscriptionPlan subscriptionPlan;
-    @NotEmpty
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_address")
     private Address deliveryAddress;
+    @Column(name = "subscription_status")
+    private String subscriptionStatus;
 
     public int getId() {
         return id;
@@ -194,6 +196,14 @@ public class Subscription {
         this.deliveryAddress = deliveryAddress;
     }
 
+    public String getSubscriptionStatus() {
+        return subscriptionStatus;
+    }
+
+    public void setSubscriptionStatus(String subscriptionStatus) {
+        this.subscriptionStatus = subscriptionStatus;
+    }
+
     @Override
     public String toString() {
         return "Subscription{" +
@@ -203,6 +213,8 @@ public class Subscription {
                 ", preferredDeliveryTime=" + preferredDeliveryTime +
                 ", quantityPerDay=" + quantityPerDay +
                 ", totalQuantity=" + totalQuantity +
+                ", discountPercentage=" + discountPercentage +
+                ", discount=" + discount +
                 ", totalNumberOfDays=" + totalNumberOfDays +
                 ", actualPrice=" + actualPrice +
                 ", totalPrice=" + totalPrice +
@@ -210,8 +222,11 @@ public class Subscription {
                 ", paymentType='" + paymentType + '\'' +
                 ", subscriber=" + subscriber +
                 ", subscriptionPlan=" + subscriptionPlan +
+                ", deliveryAddress=" + deliveryAddress +
+                ", subscriptionStatus='" + subscriptionStatus + '\'' +
                 '}';
     }
+
     @Override
     public int hashCode() {
         return this.id+"".hashCode();

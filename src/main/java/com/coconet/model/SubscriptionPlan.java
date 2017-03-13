@@ -20,10 +20,9 @@ public class SubscriptionPlan {
     @Column(name="plan_name", nullable=false)
     private String planName;
     @NotEmpty
-    @Column(name = "subscription_duration_type")
+    @Column(name = "subscription_duration_type",nullable = false)
     private String subscriptionDurationType;
-    @NotEmpty
-    @Column(name = "subscription_duration_number")
+    @Column(name = "subscription_duration_number",nullable = false)
     private int subscriptionDurationNumber;
     @JsonIgnore
     @ManyToOne
@@ -35,6 +34,9 @@ public class SubscriptionPlan {
     @NotNull
     @Column(name = "discount_percentage")
     private int discountPercentage;
+    @NotNull
+    @Column(name = "description")
+    private String description="";
 
     public int getId() {
         return id;
@@ -92,6 +94,14 @@ public class SubscriptionPlan {
         this.discountPercentage = discountPercentage;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "SubscriptionPlan{" +
@@ -101,8 +111,11 @@ public class SubscriptionPlan {
                 ", subscriptionDurationNumber=" + subscriptionDurationNumber +
                 ", product=" + product +
                 ", routinePattern='" + routinePattern + '\'' +
+                ", discountPercentage=" + discountPercentage +
+                ", description='" + description + '\'' +
                 '}';
     }
+
     @Override
     public int hashCode() {
         return this.id+"".hashCode();

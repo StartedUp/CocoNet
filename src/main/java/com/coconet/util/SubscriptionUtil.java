@@ -17,13 +17,16 @@ public class SubscriptionUtil {
 
         /*StartDate Calculation*/
         startDateCal.setTime(new Date());
-        startDateCal = getNextWeekdayIfWeekend(startDateCal);
+        startDateCal.add(Calendar.DATE,1);
+        if (subscriptionPlan.getRoutinePattern().equals("weekdays"))
+            startDateCal = getNextWeekdayIfWeekend(startDateCal);
         subscription.setStartDate(startDateCal.getTime());
 
         /*EndDate Calculation*/
         endDateCal.setTime(startDateCal.getTime());
         endDateCal.add(Calendar.MONTH,1);
-        endDateCal = getNextWeekdayIfWeekend(endDateCal);
+        if (subscriptionPlan.getRoutinePattern().equals("weekdays"))
+            endDateCal = getNextWeekdayIfWeekend(endDateCal);
         subscription.setEndDate(endDateCal.getTime());
         int numberOfDays = 0;
         while (startDateCal.before(endDateCal)) {
