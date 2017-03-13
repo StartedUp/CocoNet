@@ -46,7 +46,13 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
                     <li><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
-                    <li sec:authorize="isAuthenticated()"><a class="btn" href="/loginPage" sec:authentication="name">user</a></li>
+                    <li class="dropdown" sec:authorize="isAuthenticated()">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="/subscriber/profile">Profile</a></li>
+                            <li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>
+                        </ul>
+                    </li>
                     <li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
                     <li sec:authorize="isAnonymous()"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
                 </ul>
@@ -80,7 +86,7 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Add new delivery address</h4>
                                 </div>
-                                <div class="media-body">
+                                <div class="container-fluid media-body">
                                     <form role="form" data-toggle="validator" id="addAddressForm" action="/rest/subscriberAddAddress" method="post">
                                         <div class="row">
                                             <div class="form-group col-sm-6 col-sm-offset-3">
@@ -147,7 +153,7 @@
                     <input id="totalNumberOfDays" hidden name="totalNumberOfDays" th:value="${subscription.totalNumberOfDays}" type="text">
                     <input hidden id="totalQuantity" name="totalQuantity" type="text">
                     <input hidden id="discountPercentage" name="discountPercentage" th:value="${subscriptionPlan.discountPercentage}" type="text">
-                    <input hidden id="discount" name="discount" type="text">
+                    <input hidden id="discount" name="discount" value="0.0" type="text">
                     <input hidden id="paymentStatus" name="paymentStatus" value="pending" type="text">
 
                     <input hidden id="actualPrice" name="actualPrice" type="text">
@@ -165,19 +171,19 @@
                     <div class="form-group top-margin">
                         <label>Preferred Delivery time</label>
                             <select  name="preferredDeliveryTime" data-error="Please choose this field" type="text" class="form-control">
-                                <option value="7">07:00</option><option value="8">08:00</option>
-                                <option value="9">09:00</option><option value="10" selected>10:00</option>
-                                <option value="11">11:00</option><option value="12">12:00</option>
-                                <option value="13">13:00</option><option value="14">14:00</option>
-                                <option value="15">15:00</option><option value="16">16:00</option>
-                                <option value="17">17:00</option><option value="18">18:00</option>
+                                <option value="7:00:00">07:00</option><option value="8:00:00">08:00</option>
+                                <option value="9:00:00">09:00</option><option value="10:00:00" selected>10:00</option>
+                                <option value="11:00:00">11:00</option><option value="12:00:00">12:00</option>
+                                <option value="13:00:00">13:00</option><option value="14:00:00">14:00</option>
+                                <option value="15:00:00">15:00</option><option value="16:00:00">16:00</option>
+                                <option value="17:00:00">17:00</option><option value="18:00:00">18:00</option>
                             </select>
                     </div>
                     <div th:if="${subscriber.addresses != null}" class="form-group top-margin">
                         <div class="form-inline">
                             <div class="form-group">
                                 <label>Choose Delivery address</label>
-                                <select data-error="Please choose/add an address" required id="deliveryAddress" data-target=".address" name="deliveryAddress" type="text" class="form-control div-toggle">
+                                <select data-error="Please choose/add an address" required id="deliveryAddress" data-target=".address" name="deliveryAddress.id" type="text" class="form-control div-toggle">
                                     <option th:attr="data-show=${'.'+address.id}" th:text="${'Address :'+index.count}" th:each="address,index :${subscriber.addresses}" th:value="${address.id}" name="deliveryAddress.id" ></option>
                                 </select>
                                 <div class="help-block with-errors"></div>
@@ -196,14 +202,27 @@
                     </div>
                     <div class="form-group top-margin">
                         <label class="radio-inline">
-                            <input name="paymentType" disabled value="online" type="radio">Online<span class="text-danger">*</span>
+                            <input disabled name="paymentType" value="online" type="radio">Online<span class="text-danger">*</span>
                         </label>
                         <label class="radio-inline">
-                            <input name="paymentType" checked type="radio" value="cod">Cash On Delivery<span class="text-danger">*</span>
+                            <input name="paymentType" type="radio" value="cod">Cash On Delivery<span class="text-danger">*</span>
                         </label>
                     </div>
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <div class="form-group"><button id="subscribeSubmit" class="btn btn-action" type="submit">Subscribe</button></div>
+                    <!--<script
+                            src="https://checkout.razorpay.com/v1/checkout.js"
+                            data-key="rzp_test_qXHnTAbgbYC4zR"
+                            data-amount="50000"
+                            data-buttontext="Pay online"
+                            data-name="Merchant Name"
+                            data-description="Purchase Description"
+                            data-image=""
+                            data-prefill.name=""
+                            data-prefill.email=""
+                            data-theme.color="#F37254"
+                    ></script>
+                    <input type="hidden" value="Hidden Element" name="hidden">-->
                 </form>
             </div>
         </div> <!-- /row -->
@@ -216,6 +235,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            /*razorpay button*/
+            $(".razorpay-payment-button:first").addClass('btn btn-action hide');
+
             $('#quantityPerDay').change(function () {
                 $('#displayTotPrice').parent().hide();
                 $('#displayTotQty').parent().hide();
@@ -307,7 +329,7 @@
                 value: address.id,
                 text: 'Address :'+($('#deliveryAddress option').length+1),
                 name: 'deliveryAddress.id',
-            }).attr('data-show','.'+address.id).attr('selected', 'selected')).change();
+            }).attr('data-show','.'+address.id).attr('selected', 'selected'));
             $('#chosenAddress').append($('<div>', {
                         class: address.id+' col-sm-12 hide',
                         id: 'address-'+address.id,
@@ -324,6 +346,7 @@
                         class: 'data'
             }))
             );
+            $('#deliveryAddress').change();
         }
     </script>
 </body>

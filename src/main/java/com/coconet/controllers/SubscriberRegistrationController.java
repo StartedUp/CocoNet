@@ -48,14 +48,16 @@ public class SubscriberRegistrationController {
                 subscriberManager.saveOrUpdate(subscriber);
                 _log.info("Sending Email confirmation mail to " + subscriber.getEmail());
                 String [] recipients ={subscriber.getEmail()};
+                String [] bccList = {"dydhanraj5@gmail.com","rprithviprakash@gmail.com","admin@madeintrees.com"};
                 String confirmEmailUrl="/confirmEmail/"+subscriber.getEmail()+"/"+token;
                 Mailer mailer=new Mailer();
                 mailer.setRecipients(recipients);
+                mailer.setBccList(bccList);
                 mailer.setSubject("Coconet Email confirmation");
                 HashMap<String, String> mailTemplateData = new HashMap<String, String>();
                 mailTemplateData.put("userName",subscriber.getFirstName()+" "+subscriber.getLastName());
                 mailTemplateData.put("confirmEmailUrl",confirmEmailUrl);
-                mailTemplateData.put("templateName","mailTemplateConfirmEmail");
+                mailTemplateData.put("templateName","mailTemplates/mailTemplateConfirmEmail");
                 mailService.prepareAndSend(mailer, mailTemplateData);
             }
             else

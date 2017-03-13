@@ -95,8 +95,8 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city
-				+ ", state=" + state + ", country=" + country + ", pincode=" + pincode + "]";
+		return  "Reciever - "+addressHolderName+"\n"+addressLine1 + ", " + addressLine2 + ", " + city
+				+ ", " + state + ", " + country + ", " + pincode;
 	}
 	@Override
 	public int hashCode() {
