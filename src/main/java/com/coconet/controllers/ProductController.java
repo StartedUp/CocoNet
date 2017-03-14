@@ -77,6 +77,7 @@ public class ProductController{
             }
             if (subscription.getPaymentType().equals("cod")) {
                 subscription.setPaymentStatus("pending");
+                subscription.setSubscriptionStatus("initialized");
             }
             subscription.setSubscriber(subscriber);
             subscription.setSubscriptionPlan(subscriptionPlan);
@@ -103,7 +104,7 @@ public class ProductController{
             mailTemplateData.put("numberOfCoconuts", Integer.parseInt(subscription.getTotalQuantity()+"")+"");
             mailTemplateData.put("templateName","mailTemplates/subscriptionDetails");
             mailService.prepareAndSend(mailer,mailTemplateData);
-            return "subscriptionSuccess";
+            return "redirect:/subscriber/subscriptions";
         }catch (Exception e){
             e.printStackTrace();
             return "exceptionError";
