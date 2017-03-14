@@ -65,6 +65,28 @@
 
 			<h3 class="text-center thin">Subscription Details</h3>
 			<p class="text-center">Thank you for subscribing, Subscription details have been sent to your mail</p>
+            <p class="text-center">Your suscriptions</p>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Susbcription Plan</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Total Quantity</th>
+                    <th>Total Price</th>
+                    <th>Payment Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="subscription,stat : ${subscriptions}">
+                        <td th:text="${subscription.subscriptionPlan.planName}">John</td>
+                        <td th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"></td>
+                        <td th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></td>
+                        <td th:text="${subscription.totalQuantity}"></td><td th:text="${subscription.totalPrice}"></td>
+                        <td th:text="${subscription.paymentStatus}"></td>
+                    </tr>
+                </tbody>
+            </table>
 			<!--<div class="row">
 				<div class="col-md-3 col-sm-6 highlight">
 					<div class="h-caption"><h4><i class="fa fa-cogs fa-5"></i>Bootstrap-powered</h4></div>
