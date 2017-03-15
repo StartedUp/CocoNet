@@ -57,4 +57,10 @@ public class SubscriberDaoImpl implements SubscriberDao {
         return (Subscriber) this.sessionFactory.getCurrentSession().createQuery(queryByEmailAndToken)
                 .setParameter("email",email).setParameter("token",token).uniqueResult();
     }
+
+    @Override
+    public Subscriber findByToken(String token) {
+        String queryByToken = "from Subscriber where registration_token=:token";
+        return (Subscriber) this.sessionFactory.getCurrentSession().createQuery(queryByToken).setParameter("token",token).uniqueResult();
+    }
 }

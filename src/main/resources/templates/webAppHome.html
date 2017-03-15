@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport"    content="width=device-width, initial-scale=1.0"/>
 	<meta name="description" content=""/>
 	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)"/>
 	
-	<title>Coconut drink</title>
+	<title>CocoNut - Now :) the taste of Tender coconut at your door step</title>
 
 	<link rel="shortcut icon" href="../static/images/favicon-16x16.png" th:href="@{/images/favicon-16x16.png}"/>
 	
@@ -37,8 +37,8 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li class="active"><a href="/">Home</a></li>
-					<li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
-					<li><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
+					<li class="hidden"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+					<li class="hidden"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
 					<li class="dropdown" sec:authorize="isAuthenticated()">
 						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -251,8 +251,8 @@
 					</div>
 
 					<div class="col-md-3 widget">
-						<h3 class="widget-title">Follow us</h3>
-						<div class="widget-body">
+						<h3 th:hidden="true" class="widget-title">Follow us</h3>
+						<div th:hidden="true" class="widget-body">
 							<p class="follow-me-icons">
 								<a href="www.facebook.com"><i class="fa fa-twitter fa-2"></i></a>
 								<a href="www.twitter.com"><i class="fa fa-facebook fa-2"></i></a>
@@ -279,9 +279,9 @@
 					<div class="col-md-6 widget">
 						<div class="widget-body">
 							<p class="simplenav">
-								<a href="#">Home</a> | 
-								<a href="../static/pages/about.html">About</a> |
-								<a href="../static/pages/contact.html">Contact</a> |
+								<a href="/">Home</a> |
+								<a class="hidden" href="../static/pages/about.html">About</a> |
+								<a class="hidden" href="../static/pages/contact.html">Contact</a> |
 								<b><a href="/signupPage">Sign up</a></b>
 							</p>
 						</div>

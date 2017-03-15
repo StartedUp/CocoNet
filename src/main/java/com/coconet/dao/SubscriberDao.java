@@ -19,4 +19,6 @@ public interface SubscriberDao {
     public Subscriber findByEmail(String email);
 
     public Subscriber findByEmailAndToken(String email, String token);
+
+    public Subscriber findByToken(String token);
 }
