@@ -32,7 +32,7 @@ public class SubscriptionController {
                 _log.info(subscriber.getSubscriptions());
                 return "subscriptions";
             }else
-                return "/";
+                return "loginPage";
         }catch (Exception e){
             e.printStackTrace();
             return "exceptionError";

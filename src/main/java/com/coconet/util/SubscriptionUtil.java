@@ -16,7 +16,7 @@ public class SubscriptionUtil {
         Calendar endDateCal = Calendar.getInstance();
 
         /*StartDate Calculation*/
-        startDateCal.setTime(new Date());
+        startDateCal.set(2017,2,26);
         startDateCal.add(Calendar.DATE,1);
         if (subscriptionPlan.getRoutinePattern().equals("weekdays"))
             startDateCal = getNextWeekdayIfWeekend(startDateCal);

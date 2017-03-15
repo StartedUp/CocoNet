@@ -36,8 +36,8 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li><a href="/">Home</a></li>
-					<li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
-					<li><a href="#">Contact</a></li>
+					<li th:hidden="true"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+					<li th:hidden="true"><a href="#">Contact</a></li>
 					<li class="active"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
@@ -62,6 +62,8 @@
 			</div>
 			<div class="alert alert-info text-center" sec: th:if="${param.logout}">Logged out succesfully</div>
             <div class="alert alert-danger text-center" sec: th:if="${param.error}">Verify your email if not verified</div>
+			<div class="alert alert-info text-center" sec: th:if="${param.emailUpdate}">Your email has been updated</div>
+			<div class="alert alert-info text-center" sec: th:if="${param.passwordUpdate}">Your password has been updated</div>
 			<article class="col-xs-12 maincontent">
 				<header class="page-header">
 					<h1 class="page-title">Sign in</h1>
@@ -94,7 +96,7 @@
 								<hr>
 
 								<div class="row">
-									<div hidden class="col-lg-4">
+									<div th:hidden="true" class="col-lg-4">
 										<b><a href="">Forgot password?</a></b>
 									</div>
 									<div class="col-lg-4 text-right">
@@ -148,8 +150,8 @@
 					</div>
 
 					<div class="col-md-3 widget">
-						<h3 class="widget-title">Follow us</h3>
-						<div class="widget-body">
+						<h3 th:hidden="true" class="widget-title">Follow us</h3>
+						<div th:hidden="true" class="widget-body">
 							<p class="follow-me-icons">
 								<a href="www.facebook.com"><i class="fa fa-twitter fa-2"></i></a>
 								<a href="www.twitter.com"><i class="fa fa-facebook fa-2"></i></a>
@@ -176,9 +178,9 @@
 					<div class="col-md-6 widget">
 						<div class="widget-body">
 							<p class="simplenav">
-								<a href="#">Home</a> |
-								<a href="../static/pages/about.html">About</a> |
-								<a href="../static/pages/contact.html">Contact</a> |
+								<a href="/">Home</a> |
+								<a th:hidden="true" href="../static/pages/about.html">About</a> |
+								<a th:hidden="true" href="../static/pages/contact.html">Contact</a> |
 								<b><a href="/signupPage">Sign up</a></b>
 							</p>
 						</div>

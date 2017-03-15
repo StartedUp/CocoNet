@@ -45,4 +45,9 @@ public class SubscriberManagerImpl implements SubscriberManager {
     public Subscriber findByEmailAndToken(String email, String token) {
         return subscriberDao.findByEmailAndToken(email, token);
     }
+
+    @Override
+    public Subscriber findByToken(String token) {
+        return subscriberDao.findByToken(token);
+    }
 }
