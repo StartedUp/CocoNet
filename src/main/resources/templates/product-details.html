@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport"    content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content=""/>
-    <meta name="author"      content="Sergey Pozhilov (GetTemplate.com)"/>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
@@ -44,8 +43,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right">
                     <li><a href="/">Home</a></li>
-                    <li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
-                    <li><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
+                    <li th:hidden="true"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+                    <li th:hidden="true"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
                     <li class="dropdown" sec:authorize="isAuthenticated()">
                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -139,7 +138,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div><!--container-fluid-->
             </div>
             <div class="col-sm-6">
                 <form role="form" data-toggle="validator" id="productSubscribeForm" action="/product/subscribe/" method="post">
@@ -171,16 +170,16 @@
                     <div class="form-group top-margin">
                         <label>Preferred Delivery time</label>
                             <select  name="preferredDeliveryTime" data-error="Please choose this field" type="text" class="form-control">
-                                <option value="7:00:00">07:00</option><option value="8:00:00">08:00</option>
-                                <option value="9:00:00">09:00</option><option value="10:00:00" selected>10:00</option>
-                                <option value="11:00:00">11:00</option><option value="12:00:00">12:00</option>
+                                <option value=6:00:00">6:00</option><!--<option value="7:00:00">07:00</option><option value="8:00:00">08:00</option>
+                                <option value="9:00:00">09:00</option>--><option value="10:00:00" selected>10:00</option>
+                                <!--<option value="11:00:00">11:00</option><option value="12:00:00">12:00</option>
                                 <option value="13:00:00">13:00</option><option value="14:00:00">14:00</option>
-                                <option value="15:00:00">15:00</option><option value="16:00:00">16:00</option>
+                                <option value="15:00:00">15:00</option><option value="16:00:00">16:00</option>-->
                                 <option value="17:00:00">17:00</option><option value="18:00:00">18:00</option>
                             </select>
                     </div>
-                    <div th:if="${subscriber.addresses != null}" class="form-group top-margin">
-                        <div class="form-inline">
+                    <div th:if="${subscriber.addresses != null}" class="row">
+                        <div class="col-sm-5">
                             <div class="form-group">
                                 <label>Choose Delivery address</label>
                                 <select data-error="Please choose/add an address" required id="deliveryAddress" data-target=".address" name="deliveryAddress.id" type="text" class="form-control div-toggle">
@@ -191,11 +190,11 @@
                                 <!-- Trigger the modal with a button -->
                                 <button type="button" class="btn btn-action" data-toggle="modal" data-target="#myModal">Add new address</button>
                         </div>
-                        <div id="chosenAddress" class="row address">
+                        <div id="chosenAddress" class="col-sm-7 address">
                             <div th:each="address,index :${subscriber.addresses}" th:id="${'address-'+address.id}" th:class="${address.id+' hide col-sm-12'}">
-                                <h3 th:text="${address.addressHolderName}"></h3>
-                                <p class="data" th:text="${address.addressLine1+', '+address.addressLine2}"></p>
-                                <p class="data" th:text="${address.city+', '+address.state}"></p>
+                                <h3 th:text="${address.addressHolderName}" style="margin-top: 0px"></h3>
+                                <p class="data" th:text="${address.addressLine1+', '+address.addressLine2+','}"></p>
+                                <p class="data" th:text="${address.city+', '+address.state+','}"></p>
                                 <p class="data" th:text="${address.country+', '+address.pincode+'.'}"></p>
                             </div>
                         </div>
