@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport"    content="width=device-width, initial-scale=1.0"/>
 	<meta name="description" content=""/>
 	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)"/>
 	
-	<title>Coconut drink</title>
+	<title>CocoNut - Now :) the taste of Tender coconut at your door step</title>
 
 	<link rel="shortcut icon" href="../static/images/favicon-16x16.png" th:href="@{/images/favicon-16x16.png}"/>
 	
@@ -32,45 +32,114 @@
 			<div class="navbar-header">
 				<!-- Button for smallest screens -->
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-				<a class="navbar-brand" href="/"><img src="../static/images/coconut-water.jpg" th:src="@{/images/coconut-water.jpg}" width="50px" alt="Drink the Purest"/></a>
+				<a class="navbar-brand" href="/"><!--<img src="../static/images/coconut-water.jpg" th:src="@{/images/coconut-water.jpg}" width="50px" alt="Drink the Purest"/>--></a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li class="active"><a href="/">Home</a></li>
-					<li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
-					<li><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
-					<li><a class="btn" href="loginPage">SIGN IN / SIGN UP</a></li>
+					<li class="hidden"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+					<li class="hidden"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
+					<li class="dropdown" sec:authorize="isAuthenticated()">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li class=""><a href="/subscriber/profile">Profile</a></li>
+							<li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>
+						</ul>
+					</li>
+					<li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
+					<li sec:authorize="isAnonymous()"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
 				</ul>
-			</div><!--/.nav-collapse -->
+                <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                    <input hidden type="submit" value="Sign Out"/>
+                </form>
+            </div><!--/.nav-collapse -->
 		</div>
 	</div> 
 	<!-- /.navbar -->
-
 	<!-- Header -->
 	<header id="head">
 		<div class="container">
+            <div class="alert alert-info text-center" th:if="${param.loggedin}">Already logged in</div>
 			<div class="row">
-				<h1 class="lead">AWESOME, CUSTOMIZABLE, FREE</h1>
-				<p class="tagline">PROGRESSUS: free business bootstrap template by <a href="http://www.gettemplate.com/?utm_source=progressus&amp;utm_medium=template&amp;utm_campaign=progressus">GetTemplate</a></p>
-				<p><a class="btn btn-default btn-lg" role="button">MORE INFO</a> <a class="btn btn-action btn-lg" role="button">SUBSCRIBE NOW</a></p>
+				<h1 class="lead">Welcome! Pure tender coconut is delivered home.</h1>
+				<!--<p class="tagline">PROGRESSUS: free business bootstrap template by <a href="http://www.gettemplate.com/?utm_source=progressus&amp;utm_medium=template&amp;utm_campaign=progressus">GetTemplate</a></p>
+				<p><a class="btn btn-default btn-lg" role="button">MORE INFO</a> <a class="btn btn-action btn-lg" role="button">SUBSCRIBE NOW</a></p>-->
 			</div>
 		</div>
 	</header>
 	<!-- /Header -->
 
+	<div class="row">
+		<div class="col-lg-12">
+			<h3 class="text-center">Schemes</h3>
+		</div>
+	</div>
+	<!-- /.row -->
+
+	<!-- Page Features -->
+	<div class="row text-center">
+
+		<div class="col-md-6 col-sm-12 hero-feature" th:each="subscriptionPlan,stat : ${subscriptionPlans}">
+			<div class="thumbnail">
+				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 50%;" alt="">
+				<div class="caption">
+					<h3 th:text="${'Subscription-'+stat.count}">Subscription 1</h3>
+					<p th:text="${subscriptionPlan.planName}">Get it on weekdays.</p>
+					<p>
+						<a th:href="@{'/product/'+${subscriptionPlan.product.id}+'/subscriptionPlan/'+${subscriptionPlan.id}}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default" data-toggle="modal" th:attr="data-target=${'#planId-'+subscriptionPlan.id}">More Info</a>
+					</p>
+				</div>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" th:id="${'planId-'+subscriptionPlan.id}" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Scheme details</h4>
+						</div>
+						<div class="modal-body">
+							<p th:text="${subscriptionPlan.description}"></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!--<div class="col-md-6 col-sm-12 hero-feature">
+			<div class="thumbnail">
+				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 50%;" alt="">
+				<div class="caption">
+					<h3>Subscription 2</h3>
+					<p>@27 per piece get it delivered at home on alternate days. </p>
+					<p>
+						<a th:href="@{'/product/'+${subscriptionPlans[1].product.id}+'/'+${subscriptionPlans[1].id}}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+					</p>
+				</div>
+			</div>
+		</div>-->
+	</div>
+	<!-- /.row -->
+
 	<!-- Intro -->
 	<div class="container text-center">
 		<br> <br>
-		<h2 class="thin">The best place to tell people why they are here</h2>
-		<p class="text-muted">
+		<h2 class="thin">The best place to get the world's healthiest natural drink at your door step</h2>
+		<!--<p class="text-muted">
 			The difference between involvement and commitment is like an eggs-and-ham breakfast:<br> 
 			the chicken was involved; the pig was committed.
-		</p>
+		</p>-->
 	</div>
 	<!-- /Intro-->
 		
 	<!-- Highlights - jumbotron -->
-	<div class="jumbotron top-space">
+<!--	<div class="jumbotron top-space">
 		<div class="container">
 			
 			<h3 class="text-center thin">Reasons to use this template</h3>
@@ -100,14 +169,14 @@
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, excepturi, maiores, dolorem quasi reprehenderit illo accusamus nulla minima repudiandae quas ducimus reiciendis odio sequi atque temporibus facere corporis eos expedita? </p>
 					</div>
 				</div>
-			</div> <!-- /row  -->
+			</div> &lt;!&ndash; /row  &ndash;&gt;
 		
 		</div>
-	</div>
+	</div>-->
 	<!-- /Highlights -->
 
 	<!-- container -->
-	<div class="container">
+	<!--<div class="container">
 
 		<h2 class="text-center top-space">Frequently Asked Questions</h2>
 		<br>
@@ -124,7 +193,7 @@
 					I prefer to use photos from these sites: <a href="http://unsplash.com">Unsplash.com</a> 
 					and <a href="http://www.flickr.com/creativecommons/by-2.0/tags/">Flickr - Creative Commons</a></p>
 			</div>
-		</div> <!-- /row -->
+		</div> &lt;!&ndash; /row &ndash;&gt;
 
 		<div class="row">
 			<div class="col-sm-6">
@@ -138,14 +207,14 @@
 				<h3>Can you customize this template for me?</h3>
 				<p>Yes, I can. Please drop me a line to sergey-at-pozhilov.com and describe your needs in details. Please note, my services are not cheap.</p>
 			</div>
-		</div> <!-- /row -->
+		</div> &lt;!&ndash; /row &ndash;&gt;
 
 		<div class="jumbotron top-space">
 			<h4>Dicta, nostrum nemo soluta sapiente sit dolor quae voluptas quidem doloribus recusandae facere magni ullam suscipit sunt atque rerum eaque iusto facilis esse nam veniam incidunt officia perspiciatis at voluptatibus. Libero, aliquid illum possimus numquam fuga.</h4>
      		<p class="text-right"><a class="btn btn-primary btn-large">Learn more »</a></p>
   		</div>
 
-</div>	<!-- /container -->
+</div>-->	<!-- /container -->
 	
 	<!-- Social links. @TODO: replace by link/instructions in template -->
 	<section id="social">
@@ -155,7 +224,6 @@
 				<div class="addthis_toolbox addthis_default_style">
 				<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
 				<a class="addthis_button_tweet"></a>
-				<a class="addthis_button_linkedin_counter"></a>
 				<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
 				</div>
 				<!-- AddThis Button END -->
@@ -174,31 +242,29 @@
 					<div class="col-md-3 widget">
 						<h3 class="widget-title">Contact</h3>
 						<div class="widget-body">
-							<p>+234 23 9873237<br>
-								<a href="mailto:#">some.email@somewhere.com</a><br>
+							<p>+91 8438258092<br>
+								<a href="mailto:#">admin@madeintrees.com</a><br>
 								<br>
-								234 Hidden Pond Road, Ashland City, TN 37015
+								144 Sornambal Nagar, Ammachatiram, Tirubuvanam 612103
 							</p>	
 						</div>
 					</div>
 
 					<div class="col-md-3 widget">
-						<h3 class="widget-title">Follow me</h3>
-						<div class="widget-body">
+						<h3 th:hidden="true" class="widget-title">Follow us</h3>
+						<div th:hidden="true" class="widget-body">
 							<p class="follow-me-icons">
-								<a href=""><i class="fa fa-twitter fa-2"></i></a>
-								<a href=""><i class="fa fa-dribbble fa-2"></i></a>
-								<a href=""><i class="fa fa-github fa-2"></i></a>
-								<a href=""><i class="fa fa-facebook fa-2"></i></a>
+								<a href="www.facebook.com"><i class="fa fa-twitter fa-2"></i></a>
+								<a href="www.twitter.com"><i class="fa fa-facebook fa-2"></i></a>
 							</p>	
 						</div>
 					</div>
 
 					<div class="col-md-6 widget">
-						<h3 class="widget-title">Text widget</h3>
+						<h3 class="widget-title">Coconut Water Is A Clean Natural Drink</h3>
 						<div class="widget-body">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, dolores, quibusdam architecto voluptatem amet fugiat nesciunt placeat provident cumque accusamus itaque voluptate modi quidem dolore optio velit hic iusto vero praesentium repellat commodi ad id expedita cupiditate repellendus possimus unde?</p>
-							<p>Eius consequatur nihil quibusdam! Laborum, rerum, quis, inventore ipsa autem repellat provident assumenda labore soluta minima alias temporibus facere distinctio quas adipisci nam sunt explicabo officia tenetur at ea quos doloribus dolorum voluptate reprehenderit architecto sint libero illo et hic.</p>
+							<p>Tender coconut water is a natural source of electrolytes, minerals, vitamins, complex carbohydrates, Amino acids and other nutrients. The natural carbohydrate content is between 4-5% of the liquid solution. This make coconut water particularly suitable for the burgeoning sports drink market. According to Sports Science Institute (USA), sports drinks containing under 5% carbohydrates are likely to provide benefits, while those exceeding 10% carbohydrate content, like most soft drinks are associated with abdominal cramps, nausea and diarrhea. </p>
+							<p><a href="https://www.davidwolfe.com/how-coconut-water-can-help-your-body/">Do You Know What Can Happen if You Drink Coconut Water for 14 Days?</a> </p>
 						</div>
 					</div>
 
@@ -213,11 +279,10 @@
 					<div class="col-md-6 widget">
 						<div class="widget-body">
 							<p class="simplenav">
-								<a href="#">Home</a> | 
-								<a href="../static/pages/about.html">About</a> |
-								<a href="sidebar-right.html">Sidebar</a> |
-								<a href="contact.html">Contact</a> |
-								<b><a href="signup.html">Sign up</a></b>
+								<a href="/">Home</a> |
+								<a class="hidden" href="../static/pages/about.html">About</a> |
+								<a class="hidden" href="../static/pages/contact.html">Contact</a> |
+								<b><a href="/signupPage">Sign up</a></b>
 							</p>
 						</div>
 					</div>
@@ -225,7 +290,7 @@
 					<div class="col-md-6 widget">
 						<div class="widget-body">
 							<p class="text-right">
-								Copyright &copy; 2014, Your name. Designed by <a href="http://gettemplate.com/" rel="designer">gettemplate</a> 
+								Copyright &copy; 2014. Designed by Dhanraj and Prithvi</a>
 							</p>
 						</div>
 					</div>

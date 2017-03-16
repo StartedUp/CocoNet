@@ -1,8 +1,13 @@
 package com.coconet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by ${Prithu} on 04-02-2017.
@@ -27,9 +32,19 @@ public class Subscriber {
     @NotEmpty
     @Column(name = "mobile", nullable=false)
     private String mobile;
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="address_id")
-    private Address address;
+    @JsonIgnore
+    @OneToMany(targetEntity = Address.class,mappedBy = "subscriber",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Address> addresses;
+    @NotEmpty
+    @Column(name = "registration_token", nullable = false)
+    private String registrationToken;
+    @Column(name = "is_active", nullable = false)
+    private boolean active;
+    @JsonIgnore
+    @OneToMany(targetEntity = Subscription.class, mappedBy = "subscriber", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Subscription> subscriptions;
+    @Column(name = "create_date")
+    private Date createDate;
 
     public int getId() {
         return id;
@@ -72,7 +87,6 @@ public class Subscriber {
     }
 
     public String getEmail() {
-
         return email;
     }
 
@@ -80,19 +94,65 @@ public class Subscriber {
         this.email = email;
     }
 
-    public Address getAddress() {
-		return address;
+    public Set<Address> getAddresses() {
+		return addresses;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
 	}
 
-	@Override
+    public String getRegistrationToken() {
+        return registrationToken;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setRegistrationToken(String registrationToken) {
+        this.registrationToken = registrationToken;
+    }
+
+    public Set<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(Set<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    @Override
     public String toString() {
         return "Subscriber{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 '}';
+    }
+    @Override
+    public int hashCode() {
+        return this.id+"".hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+       if (obj!=null && obj instanceof Subscriber){
+           Subscriber subscriber = (Subscriber)obj;
+           return (this.email).equals(subscriber.getEmail());
+       }
+       else
+           return false;
     }
 }
