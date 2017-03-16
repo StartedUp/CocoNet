@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -82,6 +83,7 @@ public class ProductController{
             subscription.setSubscriber(subscriber);
             subscription.setSubscriptionPlan(subscriptionPlan);
             subscription.setDeliveryAddress(addressManager.getAddress(subscription.getDeliveryAddress().getId()));
+            subscription.setCreateDate(new Date());
             subscriptionManager.saveOrUpdate(subscription); /*Saving subscription*/
             subscription=subscriptionManager.getSubscription(subscription);
             _log.info("Sending Email about subscription to " + subscriber.getEmail());
@@ -101,10 +103,10 @@ public class ProductController{
             mailTemplateData.put("paymentType",subscription.getPaymentType());
             mailTemplateData.put("totalPrice",subscription.getTotalPrice()+"0");
             mailTemplateData.put("deliveryAddress",subscription.getDeliveryAddress().toString());
-            mailTemplateData.put("numberOfCoconuts", Integer.parseInt(subscription.getTotalQuantity()+"")+"");
+            mailTemplateData.put("numberOfCoconuts", ((int)subscription.getTotalQuantity())+"");
             mailTemplateData.put("templateName","mailTemplates/subscriptionDetails");
             mailService.prepareAndSend(mailer,mailTemplateData);
-            return "redirect:/subscriber/subscriptions";
+            return "redirect:/subscriber/subscriptions?subscribed=true";
         }catch (Exception e){
             e.printStackTrace();
             return "exceptionError";
