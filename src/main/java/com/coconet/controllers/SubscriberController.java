@@ -88,14 +88,15 @@ public class SubscriberController {
                     Mailer mailer = new Mailer();
                     mailer.setRecipients(recipients);
                     mailer.setBccList(bccList);
-                    mailer.setSubject("Coconet Email confirmation");
+                    mailer.setSubject("MadeInTrees Email update");
                     HashMap<String, String> mailTemplateData = new HashMap<String, String>();
                     mailTemplateData.put("userName", subscriber.getFirstName() + " " + subscriber.getLastName());
                     mailTemplateData.put("confirmEmailUrl", confirmEmailUrl);
                     mailTemplateData.put("templateName", "mailTemplates/updateEmail");
                     mailService.prepareAndSend(mailer, mailTemplateData);
+                    return "redirect:/subscriber/profile?emailUpdate=true";
                 }
-                return SecurityContextHolder.getContext().getAuthentication()!=null?"redirect:/subscriber/profile":"redirect:/loginPage?passwordUpdate=true";
+                return SecurityContextHolder.getContext().getAuthentication()!=null?"redirect:/subscriber/profile?profileUpdate=true":"redirect:/loginPage?passwordUpdate=true";
             }else
                 return "/loginPage";
         }catch (Exception e) {

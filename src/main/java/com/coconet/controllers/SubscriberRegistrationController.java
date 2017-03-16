@@ -53,7 +53,7 @@ public class SubscriberRegistrationController {
                 Mailer mailer=new Mailer();
                 mailer.setRecipients(recipients);
                 mailer.setBccList(bccList);
-                mailer.setSubject("Coconet Email confirmation");
+                mailer.setSubject("MadeInTrees Email confirmation");
                 HashMap<String, String> mailTemplateData = new HashMap<String, String>();
                 mailTemplateData.put("userName",subscriber.getFirstName()+" "+subscriber.getLastName());
                 mailTemplateData.put("confirmEmailUrl",confirmEmailUrl);

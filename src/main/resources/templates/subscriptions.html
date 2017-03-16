@@ -37,8 +37,8 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
                 <li class="active"><a href="/">Home</a></li>
-                <li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
-                <li><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
+                <li th:hidden="true"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+                <li th:hidden="true"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
                 <li class="dropdown" sec:authorize="isAuthenticated()">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
                     <ul class="dropdown-menu">
