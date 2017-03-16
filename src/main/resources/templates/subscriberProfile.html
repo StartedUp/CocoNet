@@ -63,6 +63,8 @@
         <div class="row">
             <!-- Article main content -->
             <article class="col-xs-12 maincontent">
+                <div class="alert alert-info text-center" sec: th:if="${param.profileUpdate}">Your profile has been updated</div>
+                <div class="alert alert-info text-center" sec: th:if="${param.emailUpdate}">Request sent to update email.</div>
                 <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -81,6 +83,7 @@
                                 </div>
                                 <div class="form-group top-margin">
                                     <label>Email Address<span class="text-danger">*</span></label>
+                                    <div class="alert alert-info text-center" sec: th:if="${param.emailUpdate}">Request sent to update email, confirm new email</div>
                                     <input required th:value="${subscriber.email}" name="email" id="email" data-error="Please fill this field" type="email" class="form-control"><span id="emailOk" style="display: none" class="glyphicon glyphicon-ok text-success"></span>
                                     <span id="emailRepeat" class="glyphicon glyphicon-remove text-danger" style="display: none">This email is registered already</span>
                                     <div class="help-block with-errors"></div>

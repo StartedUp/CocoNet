@@ -37,8 +37,8 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
                 <li class="active"><a href="/">Home</a></li>
-                <li><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
-                <li><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
+                <li class="hidden"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+                <li class="hidden"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
                 <li class="dropdown" sec:authorize="isAuthenticated()">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -64,9 +64,10 @@
 		<div class="container">
 
 			<h3 class="text-center thin">Subscription Details</h3>
-			<p class="text-center">Thank you for subscribing, Subscription details have been sent to your mail</p>
-            <p class="text-center">Your suscriptions</p>
-            <table class="table table-bordered">
+			<p th:if="${param.subscribed}" class="text-center">Thank you for subscribing, Subscription details have been sent to your mail</p>
+            <p th:if="${!subscriptions.isEmpty()}" class="text-center">Your suscriptions</p>
+            <p th:if="${subscriptions.isEmpty()}" class="text-center">You have not subscribed to our products</p>
+            <table th:if="${!subscriptions.isEmpty()}" class="table table-bordered">
                 <thead>
                 <tr>
                     <th>Susbcription Plan</th>
@@ -75,6 +76,7 @@
                     <th>Total Quantity</th>
                     <th>Total Price</th>
                     <th>Payment Status</th>
+                    <th>Subscribed on</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -84,6 +86,7 @@
                         <td th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></td>
                         <td th:text="${subscription.totalQuantity}"></td><td th:text="${subscription.totalPrice}"></td>
                         <td th:text="${subscription.paymentStatus}"></td>
+                        <td th:text="${subscription.createDate}"></td>
                     </tr>
                 </tbody>
             </table>
