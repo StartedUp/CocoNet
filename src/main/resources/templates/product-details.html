@@ -204,7 +204,7 @@
                             <input hidden disabled name="paymentType" value="online" type="radio">Online<span class="text-danger">*</span>
                         </label>-->
                         <label class="radio-inline">
-                            <input selected name="paymentType" type="radio" value="cod">Cash On Delivery<span class="text-danger">*</span>
+                            <input required selected name="paymentType" type="radio" value="cod">Cash On Delivery<span class="text-danger">*</span>
                         </label>
                     </div>
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
