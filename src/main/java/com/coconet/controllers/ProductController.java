@@ -101,10 +101,10 @@ public class ProductController{
             mailTemplateData.put("paymentType",subscription.getPaymentType());
             mailTemplateData.put("totalPrice",subscription.getTotalPrice()+"0");
             mailTemplateData.put("deliveryAddress",subscription.getDeliveryAddress().toString());
-            mailTemplateData.put("numberOfCoconuts", Integer.parseInt(subscription.getTotalQuantity()+"")+"");
+            mailTemplateData.put("numberOfCoconuts", ((int)subscription.getTotalQuantity())+"");
             mailTemplateData.put("templateName","mailTemplates/subscriptionDetails");
             mailService.prepareAndSend(mailer,mailTemplateData);
-            return "redirect:/subscriber/subscriptions";
+            return "redirect:/subscriber/subscriptions?subscribed=true";
         }catch (Exception e){
             e.printStackTrace();
             return "exceptionError";
