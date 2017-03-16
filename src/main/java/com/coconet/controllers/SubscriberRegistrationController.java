@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -45,6 +46,7 @@ public class SubscriberRegistrationController {
                 String token = UUID.randomUUID().toString();
                 subscriber.setRegistrationToken(token);
                 subscriber.setPassword(passwordEncoder.encode(subscriber.getPassword()));
+                subscriber.setCreateDate(new Date());
                 subscriberManager.saveOrUpdate(subscriber);
                 _log.info("Sending Email confirmation mail to " + subscriber.getEmail());
                 String [] recipients ={subscriber.getEmail()};

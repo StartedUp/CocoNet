@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,6 +43,8 @@ public class Subscriber {
     @JsonIgnore
     @OneToMany(targetEntity = Subscription.class, mappedBy = "subscriber", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Subscription> subscriptions;
+    @Column(name = "create_date")
+    private Date createDate;
 
     public int getId() {
         return id;
@@ -121,6 +124,14 @@ public class Subscriber {
 
     public void setSubscriptions(Set<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     @Override

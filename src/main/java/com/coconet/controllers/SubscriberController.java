@@ -79,6 +79,7 @@ public class SubscriberController {
                     subscriber.setActive(currentSubscriber.isActive());
                 }
                 subscriber.setId(currentSubscriber.getId());
+                subscriber.setCreateDate(currentSubscriber.getCreateDate());
                 subscriberManager.saveOrUpdate(subscriber);
                 if (!newEmail.equals(loggedInSubscriber.getEmail())) {
                     _log.info("Sending Email to request email update to " + newEmail);

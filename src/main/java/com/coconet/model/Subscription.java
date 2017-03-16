@@ -67,6 +67,8 @@ public class Subscription {
     private Address deliveryAddress;
     @Column(name = "subscription_status")
     private String subscriptionStatus;
+    @Column(name = "create_date")
+    private Date createDate;
 
     public int getId() {
         return id;
@@ -202,6 +204,14 @@ public class Subscription {
 
     public void setSubscriptionStatus(String subscriptionStatus) {
         this.subscriptionStatus = subscriptionStatus;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     @Override
