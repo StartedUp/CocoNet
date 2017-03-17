@@ -7,7 +7,7 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
-    <title>Coconut drink</title>
+    <title>Made in Trees</title>
     <style>
         .data{
             color:#009688;
@@ -74,7 +74,7 @@
                 <p class="data" th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"></p>
                 <h3>Subscription Ends on</h3>
                 <p class="data" th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></p>
-                <h3>Price per <span th:text="${subscriptionPlan.product.measurementUnit}" </h3>
+                <h3>Price per <span th:text="${subscriptionPlan.product.measurementUnit}"></span></h3>
                 <p class="data" th:inline="text">₹ [[${subscriptionPlan.product.pricePerUnit}]]</p>
                 <div class="container-fluid">
                     <!-- Modal -->
