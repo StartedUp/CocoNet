@@ -36,8 +36,8 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li><a href="/">Home</a></li>
-					<li th:hidden="true"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
-					<li th:hidden="true"><a href="#">Contact</a></li>
+					<li class="hidden"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+					<li class="hidden"><a href="#">Contact</a></li>
 					<li class="active"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
@@ -179,8 +179,8 @@
 						<div class="widget-body">
 							<p class="simplenav">
 								<a href="/">Home</a> |
-								<a th:hidden="true" href="../static/pages/about.html">About</a> |
-								<a th:hidden="true" href="../static/pages/contact.html">Contact</a> |
+								<a class="hidden" href="../static/pages/about.html">About</a> |
+								<a class="hidden" href="../static/pages/contact.html">Contact</a> |
 								<b><a href="/signupPage">Sign up</a></b>
 							</p>
 						</div>
