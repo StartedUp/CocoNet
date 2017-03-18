@@ -100,7 +100,7 @@ public class SubscriptionController {
         Mailer mailer = new Mailer();
         mailer.setRecipients(recipients);
         mailer.setBccList(bccList);
-        mailer.setSubject(subscriptionPlan.getProduct().getProductName() + " Subscription Initialized and Active");
+        mailer.setSubject(subscriptionPlan.getProduct().getProductName() + " Subscription Initialized and Activated");
         HashMap<String, String> mailTemplateData = new HashMap<String, String>();
         mailTemplateData.put("userName", subscriber.getFirstName() + " " + subscriber.getLastName());
         mailTemplateData.put("productSubscriptionPlanName", subscriptionPlan.getProduct().getProductName() + " " +
@@ -113,6 +113,6 @@ public class SubscriptionController {
         mailTemplateData.put("numberOfCoconuts", (subscription.getTotalQuantity()) + "");
         mailTemplateData.put("templateName", "mailTemplates/subscriptionDetails");
         mailService.prepareAndSend(mailer, mailTemplateData);
-        return "redirect:/subscriber/subscriptions?subscribed=true";
+        return "redirect:/subscriber/subscriptions?subscribed=true&payment=true";
     }
 }

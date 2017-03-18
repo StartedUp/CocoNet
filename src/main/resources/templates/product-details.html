@@ -43,8 +43,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right">
                     <li><a href="/">Home</a></li>
-                    <li th:hidden="true"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
-                    <li th:hidden="true"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
+                    <li class="hidden"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+                    <li class="hidden"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
                     <li class="dropdown" sec:authorize="isAuthenticated()">
                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -166,7 +166,7 @@
                     </div>
                     <div>
                         <h4 hidden>Total quantity = <span class="data" id="displayTotQty"></span></h4>
-                        <h4 hidden>Total price = <span class="data" id="displayTotPrice"></span><span>(Inclusive of all taxes)</span></h4>
+                        <h4 hidden>Total price = ₹ <span class="data" id="displayTotPrice"></span><span> (Inclusive of all taxes-2% +₹3 +15% CESS)</span></h4>
                     </div>
                     <div class="form-group top-margin">
                         <label>Preferred Delivery time</label>
@@ -253,19 +253,45 @@
                 var isQuantityDouble =($.isNumeric(quantityPerDay) && quantityPerDay % 1 !== 0);
                 var measurementUnit = $('#measurementUnit').val();
                 console.log('measurementUnit:'+measurementUnit+',isQuantityInt:'+isQuantityInt+',isQuantityDouble:'+isQuantityDouble)
-                if(quantityPerDay!=""&&!isQuantityInt && !isQuantityDouble){
+                if(quantityPerDay!=""&&(!isQuantityInt || !isQuantityDouble) &&!(quantityPerDay>=0)){
                     alert("Invalid quantity value");
                     $('#quantityPerDay').val('');
                     isQuantityInvalid=true;
                 }
-                if(quantityPerDay!=""&&measurementUnit =='piece' && !isQuantityInt){
+                if(quantityPerDay!=""&&measurementUnit =='piece' && !isQuantityInt && !quantityPerDay<=0){
                     alert("Invalid quantity value for this product")
                     $('#quantityPerDay').val('');
                     isQuantityInvalid=true;
                 }
                 console.log('isQuantityInvalid:'+isQuantityInvalid);
                 if(!isQuantityInvalid && quantityPerDay!="") {
-                    actualPrice = pricePerUnit * totalNumberOfDays * quantityPerDay;
+                    totalQuantity = totalNumberOfDays * quantityPerDay;
+                    $.ajax({
+                        type: "GET",
+                        url: "/subscription/getTotalPrice",
+                        data: {
+                            pricePerUnit: pricePerUnit,
+                            totalQuantity: totalQuantity
+                        },
+                        success: function (data) {
+                            console.log("ajax resp: "+data);
+                            actualPrice = data;
+                            console.log('actualPrice:'+actualPrice);
+                            console.log('totalQuantity:'+totalQuantity);
+                            $('#actualPrice').val(actualPrice);
+                            $('#totalPrice').val(actualPrice);
+                            $('#displayTotPrice').html(actualPrice);
+                            $('#displayTotPrice').parent().show();
+                            $('#totalQuantity').val(totalQuantity);
+                            $('#displayTotQty').html(totalQuantity);
+                            $('#displayTotQty').parent().show();
+                        },
+                        error: function () {
+                            alert("Invalid quantity value");
+                        },
+                        dataType: "json"
+                    });
+                    /*actualPrice = pricePerUnit * totalNumberOfDays * quantityPerDay;
                     VAT = ((actualPrice*0.02)+3)*0.15+((actualPrice*0.02)+3);
                     actualPrice = actualPrice+VAT;
                     totalQuantity = totalNumberOfDays * quantityPerDay;
@@ -277,7 +303,7 @@
                     $('#displayTotPrice').parent().show();
                     $('#totalQuantity').val(totalQuantity);
                     $('#displayTotQty').html(totalQuantity);
-                    $('#displayTotQty').parent().show();
+                    $('#displayTotQty').parent().show();*/
                 }
             });
             /*add address form*/

@@ -67,6 +67,7 @@
 			<p th:if="${param.subscribed}" class="text-center">Thank you for subscribing, Subscription details have been sent to your mail</p>
             <p th:if="${!subscriptions.isEmpty()}" class="text-center">Your suscriptions</p>
             <p th:if="${subscriptions.isEmpty()}" class="text-center">You have not subscribed to our products</p>
+            <div class="alert alert-success text-center" sec: th:if="${param.payment}">Online Payment successful, subscription activated</div>
             <table th:if="${!subscriptions.isEmpty()}" class="table table-bordered">
                 <thead>
                 <tr>

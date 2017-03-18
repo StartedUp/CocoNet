@@ -73,7 +73,7 @@ public class OnlinePaymentProcessor {
             } catch (ConnectionException e) {
                 //LOGGER.log(Level.SEVERE, e.toString(), e);
             }
-            return longUrl;
+            return longUrl!=null?longUrl.replace("?embed=form",""):null;
         } else {
             // inform validation errors to the user.
             if (order.isTransactionIdInvalid()) {
