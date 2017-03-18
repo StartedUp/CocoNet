@@ -6,9 +6,7 @@ import com.coconet.util.Mailer;
 import com.coconet.util.SubscriptionUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -38,6 +37,8 @@ public class ProductController{
     private SubscriptionManager subscriptionManager;
     @Autowired
     private AddressManager addressManager;
+    @Autowired
+    OnlinePaymentProcessor onlinePaymentProcessor;
     private static final Log _log = LogFactory.getLog(ProductController.class);
 
     @RequestMapping(value = "/product/{productId}/subscriptionPlan/{subscriptionPlanId}")
@@ -63,6 +64,7 @@ public class ProductController{
     }
     @RequestMapping(value = "/product/subscribe", method = RequestMethod.POST)
     public String subscribeProduct(@ModelAttribute("subscription")Subscription subscription, BindingResult bindingResult,Model model){
+        String paymentUrl=null;
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             LoggedInSubscriber loggedInSubscriber = (LoggedInSubscriber)auth.getPrincipal();
@@ -76,37 +78,45 @@ public class ProductController{
                 _log.info("hasErrors :" + bindingResult.hasErrors() + bindingResult.toString());
                 return "product-details";
             }
-            if (subscription.getPaymentType().equals("cod")) {
-                subscription.setPaymentStatus("pending");
-                subscription.setSubscriptionStatus("initialized");
-            }
+            BigDecimal pricePerUnit=subscriptionPlan.getProduct().getPricePerUnit();
+            BigDecimal totalQuantity = subscription.getTotalQuantity();
+            BigDecimal price = SubscriptionUtil.priceCalculator(totalQuantity, pricePerUnit);
+            subscription.setActualPrice(price);
+            subscription.setTotalPrice(price);
+            subscription.setPaymentStatus("pending");
+            subscription.setSubscriptionStatus("initialized");
             subscription.setSubscriber(subscriber);
             subscription.setSubscriptionPlan(subscriptionPlan);
             subscription.setDeliveryAddress(addressManager.getAddress(subscription.getDeliveryAddress().getId()));
             subscription.setCreateDate(new Date());
             subscriptionManager.saveOrUpdate(subscription); /*Saving subscription*/
             subscription=subscriptionManager.getSubscription(subscription);
-            _log.info("Sending Email about subscription to " + subscriber.getEmail());
-            _log.info(subscription);
-            String [] recipients ={subscriber.getEmail()};
-            String [] bccList = {"dydhanraj5@gmail.com","rprithviprakash@gmail.com","admin@madeintrees.com"};
-            Mailer mailer=new Mailer();
-            mailer.setRecipients(recipients);
-            mailer.setBccList(bccList);
-            mailer.setSubject(subscriptionPlan.getProduct().getProductName()+" Subscription Initialized");
-            HashMap<String, String> mailTemplateData = new HashMap<String, String>();
-            mailTemplateData.put("userName",subscriber.getFirstName()+" "+subscriber.getLastName());
-            mailTemplateData.put("productSubscriptionPlanName",subscriptionPlan.getProduct().getProductName()+" "+
-                    subscriptionPlan.getPlanName());
-            mailTemplateData.put("startDate",(subscription.getStartDate().toString()).substring(0, 10));
-            mailTemplateData.put("endDate", (subscription.getEndDate().toString()).substring(0, 10));
-            mailTemplateData.put("paymentType",subscription.getPaymentType());
-            mailTemplateData.put("totalPrice",subscription.getTotalPrice()+"0");
-            mailTemplateData.put("deliveryAddress",subscription.getDeliveryAddress().toString());
-            mailTemplateData.put("numberOfCoconuts", ((int)subscription.getTotalQuantity())+"");
-            mailTemplateData.put("templateName","mailTemplates/subscriptionDetails");
-            mailService.prepareAndSend(mailer,mailTemplateData);
-            return "redirect:/subscriber/subscriptions?subscribed=true";
+            if (subscription.getPaymentType().equals("cod")) {
+                _log.info("Sending Email about subscription to " + subscriber.getEmail());
+                _log.info(subscription);
+                String[] recipients = {subscriber.getEmail()};
+                String[] bccList = {"admin@madeintrees.com"};
+                Mailer mailer = new Mailer();
+                mailer.setRecipients(recipients);
+                mailer.setBccList(bccList);
+                mailer.setSubject(subscriptionPlan.getProduct().getProductName() + " Subscription Initialized");
+                HashMap<String, String> mailTemplateData = new HashMap<String, String>();
+                mailTemplateData.put("userName", subscriber.getFirstName() + " " + subscriber.getLastName());
+                mailTemplateData.put("productSubscriptionPlanName", subscriptionPlan.getProduct().getProductName() + " " +
+                        subscriptionPlan.getPlanName());
+                mailTemplateData.put("startDate", (subscription.getStartDate().toString()).substring(0, 10));
+                mailTemplateData.put("endDate", (subscription.getEndDate().toString()).substring(0, 10));
+                mailTemplateData.put("paymentType", subscription.getPaymentType());
+                mailTemplateData.put("totalPrice", subscription.getTotalPrice() + "");
+                mailTemplateData.put("deliveryAddress", subscription.getDeliveryAddress().toString());
+                mailTemplateData.put("numberOfCoconuts", (subscription.getTotalQuantity()) + "");
+                mailTemplateData.put("templateName", "mailTemplates/subscriptionDetails");
+                mailService.prepareAndSend(mailer, mailTemplateData);
+                return "redirect:/subscriber/subscriptions?subscribed=true";
+            }else {
+                paymentUrl = onlinePaymentProcessor.placeOrder(subscription);
+                return paymentUrl!=null?"redirect:"+paymentUrl:"exceptionError";
+            }
         }catch (Exception e){
             e.printStackTrace();
             return "exceptionError";

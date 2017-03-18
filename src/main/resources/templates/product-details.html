@@ -145,6 +145,7 @@
                     <input id="measurementUnit" hidden th:value="${subscriptionPlan.product.measurementUnit}" type="text">
                     <input id="pricePerUnit" hidden th:value="${subscriptionPlan.product.pricePerUnit}" type="text">
 
+                    <input  th:if="${param.subscriptionId}" hidden id="subscription" name="id" th:value="${param.subscriptionId}" type="text">
                     <input hidden id="subscriber" name="subscriber.id" th:value="${subscriber.id}" type="text">
                     <input hidden id="subscriptionPlan" name="subscriptionPlan.id" th:value="${subscriptionPlan.id}" type="text">
                     <input hidden id="startDate" name="startDate" th:value="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}" type="text">
@@ -165,7 +166,7 @@
                     </div>
                     <div>
                         <h4 hidden>Total quantity = <span class="data" id="displayTotQty"></span></h4>
-                        <h4 hidden>Total price = <span class="data" id="displayTotPrice"></span></h4>
+                        <h4 hidden>Total price = <span class="data" id="displayTotPrice"></span><span>(Inclusive of all taxes)</span></h4>
                     </div>
                     <div class="form-group top-margin">
                         <label>Preferred Delivery time</label>
@@ -200,9 +201,9 @@
                         </div>
                     </div>
                     <div class="form-group top-margin">
-                        <!--<label class="radio-inline">
-                            <input hidden disabled name="paymentType" value="online" type="radio">Online<span class="text-danger">*</span>
-                        </label>-->
+                        <label class="radio-inline">
+                            <input required name="paymentType" value="online" type="radio">Online<span class="text-danger">*</span>
+                        </label>
                         <label class="radio-inline">
                             <input required selected name="paymentType" type="radio" value="cod">Cash On Delivery<span class="text-danger">*</span>
                         </label>
@@ -243,6 +244,7 @@
                 var pricePerUnit=$('#pricePerUnit').val();
                 var actualPrice;
                 var totalQuantity;
+                var VAT;
                 var totalNumberOfDays = $('#totalNumberOfDays').val();
                 var quantityPerDay=$('#quantityPerDay').val();
                 var isQuantityInvalid=false;
@@ -264,6 +266,8 @@
                 console.log('isQuantityInvalid:'+isQuantityInvalid);
                 if(!isQuantityInvalid && quantityPerDay!="") {
                     actualPrice = pricePerUnit * totalNumberOfDays * quantityPerDay;
+                    VAT = ((actualPrice*0.02)+3)*0.15+((actualPrice*0.02)+3);
+                    actualPrice = actualPrice+VAT;
                     totalQuantity = totalNumberOfDays * quantityPerDay;
                     console.log('actualPrice:'+actualPrice);
                     console.log('totalQuantity:'+totalQuantity);
@@ -333,8 +337,8 @@
                         class: address.id+' col-sm-12 hide',
                         id: 'address-'+address.id,
             }).append($('<h3>',{
-                        text: address.addressHolderName
-            })).append($('<p>',{
+                        text: address.addressHolderName,
+            }).css("margin-top","0px")).append($('<p>',{
                         text: address.addressLine1+', '+address.addressLine2,
                         class: 'data'
             })).append($('<p>',{

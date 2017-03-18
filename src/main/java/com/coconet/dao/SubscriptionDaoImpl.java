@@ -22,4 +22,10 @@ public class SubscriptionDaoImpl implements  SubscriptionDao{
         return (Subscription)this.sessionFactory.getCurrentSession().createQuery("from Subscription where id=:id").setParameter("id",subscription.getId()
         ).uniqueResult();
     }
+
+    @Override
+    public Subscription getSubscriptionById(int id) {
+        return (Subscription)this.sessionFactory.getCurrentSession().createQuery("from Subscription where id=:id").setParameter("id",id
+        ).uniqueResult();
+    }
 }

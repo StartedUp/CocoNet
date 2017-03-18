@@ -21,7 +21,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"com.coconet.config"})
-@PropertySource(value = { "classpath:application.properties" })
+@PropertySource(value = {"classpath:application-local.properties"})
 public class HibernateConfiguration {
 
     @Autowired

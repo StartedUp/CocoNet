@@ -3,6 +3,7 @@ package com.coconet.util;
 import com.coconet.model.Subscription;
 import com.coconet.model.SubscriptionPlan;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,6 +11,9 @@ import java.util.Date;
  * Created by Prithu on 05-03-2017.
  */
 public class SubscriptionUtil {
+    private static BigDecimal instamojoCommissionPercentage=new BigDecimal(0.02);
+    private static BigDecimal instamojoCommissionValue=new BigDecimal(3);
+    private static BigDecimal taxPercentage=new BigDecimal(0.15);
     public static Subscription startAndEndDateSetter(Subscription subscription, SubscriptionPlan subscriptionPlan) {
         /*Required Date variable declaration*/
         Calendar startDateCal = Calendar.getInstance();
@@ -52,5 +56,13 @@ public class SubscriptionUtil {
             return calendar;
         }
         return calendar;
+    }
+
+    public static BigDecimal priceCalculator(BigDecimal totalQuantity, BigDecimal pricePerUnit){
+        BigDecimal price=pricePerUnit.multiply(totalQuantity).setScale(2,BigDecimal.ROUND_HALF_EVEN);
+        BigDecimal instamojoCommission = price.multiply(instamojoCommissionPercentage).add(instamojoCommissionValue).setScale(2,BigDecimal.ROUND_HALF_EVEN);
+        BigDecimal VAT=instamojoCommission.multiply(taxPercentage).setScale(2,BigDecimal.ROUND_HALF_EVEN);
+        BigDecimal totalPrice=price.add(instamojoCommission).add(VAT);
+        return totalPrice;
     }
 }
