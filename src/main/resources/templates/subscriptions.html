@@ -40,9 +40,9 @@
                 <li class="hidden"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
                 <li class="hidden"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
                 <li class="dropdown" sec:authorize="isAuthenticated()">
-                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span sec:authentication="name"></span><b style="margin-left: 10px;" class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li class=""><a href="/subscriber/profile">Profile</a></li>
+                        <li><a href="/subscriber/profile">Profile</a></li>
                         <li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>
                     </ul>
                 </li>
@@ -68,33 +68,37 @@
             <p th:if="${!subscriptions.isEmpty()}" class="text-center">Your suscriptions</p>
             <p th:if="${subscriptions.isEmpty()}" class="text-center">You have not subscribed to our products</p>
             <div class="alert alert-success text-center" sec: th:if="${param.payment}">Online Payment successful, subscription activated</div>
-            <table th:if="${!subscriptions.isEmpty()}" class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Susbcription Plan</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Total Quantity</th>
-                    <th>Total Price</th>
-                    <th>Payment Status</th>
-                    <th>Delivery Address</th>
-                    <th>Subscribed on</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="subscription,stat : ${subscriptions}">
-                        <td th:text="${subscription.subscriptionPlan.product.productName}"></td>
-                        <td th:text="${subscription.subscriptionPlan.planName}"></td>
-                        <td th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"></td>
-                        <td th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></td>
-                        <td th:text="${subscription.totalQuantity}"></td><td th:text="${subscription.totalPrice}"></td>
-                        <td th:text="${subscription.paymentStatus}"></td>
-                        <td th:text="${subscription.deliveryAddress}"></td>
-                        <td th:text="${subscription.createDate}"></td>
+            <div class="table-responsive">
+                <table th:if="${!subscriptions.isEmpty()}" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Subscribed to</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Total Quantity</th>
+                        <th>Total Price</th>
+                        <th>Payment Status</th>
+                        <th>Subscribtion Status</th>
+                        <th>Delivery Address</th>
+                        <th>Subscribed on</th>
+                        <th></th>
                     </tr>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <tr th:each="subscription,stat : ${subscriptions}">
+                            <td th:text="${subscription.subscriptionPlan.product.productName+' '+subscription.subscriptionPlan.planName}"></td>
+                            <td th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"></td>
+                            <td th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></td>
+                            <td th:text="${subscription.totalQuantity}"></td><td th:text="${subscription.totalPrice}"></td>
+                            <td th:text="${subscription.paymentStatus}"></td>
+                            <td th:text="${subscription.subscriptionStatus}"></td>
+                            <td th:text="${subscription.deliveryAddress}"></td>
+                            <td th:text="${subscription.createDate}"></td>
+                            <td><a th:href="@{'/subscriber/subscription/'+${subscription.id}}">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 			<!--<div class="row">
 				<div class="col-md-3 col-sm-6 highlight">
 					<div class="h-caption"><h4><i class="fa fa-cogs fa-5"></i>Bootstrap-powered</h4></div>

@@ -5,6 +5,7 @@ import com.coconet.service.MailService;
 import com.coconet.service.SubscriberManager;
 import com.coconet.service.SubscriptionManager;
 import com.coconet.util.Mailer;
+import com.coconet.util.SubscriptionUtil;
 import com.instamojo.wrapper.api.Instamojo;
 import com.instamojo.wrapper.api.InstamojoImpl;
 import com.instamojo.wrapper.exception.ConnectionException;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -72,9 +74,11 @@ public class SubscriptionController {
             String status =paymentOrderDetailsResponse.getStatus();
             if (status.equals("completed")){
                 Subscription subscription=subscriptionManager.getSubscriptionById(transactionId);
-                if (!subscription.getSubscriptionStatus().equals("expired")) {
+                if (subscription.getSubscriptionStatus()!=null &&!subscription.getSubscriptionStatus().equals("expired")) {
                     subscription.setPaymentStatus(status);
                     subscription.setSubscriptionStatus("active");
+                    subscription=SubscriptionUtil.setSubscriptionDeliveryRecords(subscription);
+                    subscription=SubscriptionUtil.setPaymentDetails(subscription, paymentOrderDetailsResponse, paymentId);
                     subscriptionManager.saveOrUpdate(subscription);
                 }
                 return sendSuccessMail(subscription);
@@ -84,8 +88,9 @@ public class SubscriptionController {
                 Product product=subscriptionPlan.getProduct();
                 return "/subscriber/" +product.getId()+"/"+subscriptionPlan.getId()+"?onlinePaymentFailed=true&subscriptionId=" + transactionId;
             }
-        } catch (ConnectionException e) {
+        } catch (Exception e) {
             //LOGGER.log(Level.SEVERE, e.toString(), e);
+            e.printStackTrace();
             return "/subscriber/subscribe?onlinePaymentFailed=true&subscriptionId="+transactionId;
         }
     }
@@ -114,5 +119,21 @@ public class SubscriptionController {
         mailTemplateData.put("templateName", "mailTemplates/subscriptionDetails");
         mailService.prepareAndSend(mailer, mailTemplateData);
         return "redirect:/subscriber/subscriptions?subscribed=true&payment=true";
+    }
+
+    @RequestMapping(value = "/subscriber/subscription/{id}")
+    public String showSubscription(@PathVariable("id") int id, Model model){
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth.isAuthenticated()) {
+               Subscription subscription= subscriptionManager.getSubscriptionByIdEager(id);
+                model.addAttribute("subscription",subscription);
+                return "showSubscription";
+            }else
+                return "redirect:/loginPage";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "exceptionError";
+        }
     }
 }

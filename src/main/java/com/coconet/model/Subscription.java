@@ -1,6 +1,7 @@
 package com.coconet.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Prithu on 04-03-2017.
@@ -70,6 +72,13 @@ public class Subscription {
     private String subscriptionStatus;
     @Column(name = "create_date")
     private Date createDate;
+    @JsonIgnore
+    @OneToMany(targetEntity =SubscriptionDeliveryRecord.class,  mappedBy = "subscription", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy("date")
+    private Set<SubscriptionDeliveryRecord> subscriptionDeliveryRecords;
+    @JsonIgnore
+    @OneToMany(targetEntity =PaymentDetails.class, mappedBy = "subscription", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<PaymentDetails> paymentDetailsSet;
 
     public int getId() {
         return id;
@@ -213,6 +222,22 @@ public class Subscription {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Set<SubscriptionDeliveryRecord> getSubscriptionDeliveryRecords() {
+        return subscriptionDeliveryRecords;
+    }
+
+    public void setSubscriptionDeliveryRecords(Set<SubscriptionDeliveryRecord> subscriptionDeliveryRecords) {
+        this.subscriptionDeliveryRecords = subscriptionDeliveryRecords;
+    }
+
+    public Set<PaymentDetails> getPaymentDetailsSet() {
+        return paymentDetailsSet;
+    }
+
+    public void setPaymentDetailsSet(Set<PaymentDetails> paymentDetailsSet) {
+        this.paymentDetailsSet = paymentDetailsSet;
     }
 
     @Override

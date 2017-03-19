@@ -42,7 +42,7 @@
                     <li class="hidden"><a href="../static/pages/about.html">About</a></li>
                     <li class="hidden"><a href="#">Contact</a></li>
                     <li class="dropdown" sec:authorize="isAuthenticated()">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span sec:authentication="name"></span><b style="margin-left: 10px;" class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class=""><a href="/subscriber/profile">Profile</a></li>
                             <li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>

@@ -9,4 +9,5 @@ public interface SubscriptionManager {
     public void saveOrUpdate(Subscription subscription);
     public Subscription getSubscription(Subscription subscription);
     public Subscription getSubscriptionById(int id);
+    public Subscription getSubscriptionByIdEager(int id);
 }

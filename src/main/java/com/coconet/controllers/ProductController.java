@@ -90,8 +90,10 @@ public class ProductController{
             subscription.setDeliveryAddress(addressManager.getAddress(subscription.getDeliveryAddress().getId()));
             subscription.setCreateDate(new Date());
             subscriptionManager.saveOrUpdate(subscription); /*Saving subscription*/
-            subscription=subscriptionManager.getSubscription(subscription);
             if (subscription.getPaymentType().equals("cod")) {
+                subscription=SubscriptionUtil.setSubscriptionDeliveryRecords(subscription);
+                subscription=SubscriptionUtil.setPaymentDetails(subscription,null,null);
+                subscriptionManager.saveOrUpdate(subscription); /*Saving subscription*/
                 _log.info("Sending Email about subscription to " + subscriber.getEmail());
                 _log.info(subscription);
                 String[] recipients = {subscriber.getEmail()};

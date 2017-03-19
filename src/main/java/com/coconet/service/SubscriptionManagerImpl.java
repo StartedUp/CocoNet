@@ -28,4 +28,9 @@ public class SubscriptionManagerImpl implements SubscriptionManager{
     public Subscription getSubscriptionById(int id) {
         return subscriptionDao.getSubscriptionById(id);
     }
+
+    @Override
+    public Subscription getSubscriptionByIdEager(int id) {
+        return subscriptionDao.getSubscriptionByIdEager(id);
+    }
 }
