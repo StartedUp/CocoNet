@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 /**
@@ -29,10 +30,10 @@ public class Product {
     @Column(name="size_in_word")
     private String sizeInWord;
     @Column(name = "size_in_number", nullable = false)
-    private double sizeInNumber;
+    private BigDecimal sizeInNumber;
     @NotEmpty
     @Column(name = "price_per_unit", nullable = false)
-    private double pricePerUnit;
+    private BigDecimal pricePerUnit;
     @JsonIgnore
     @OneToMany(targetEntity = SubscriptionPlan.class, mappedBy = "product",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SubscriptionPlan> subscriptionPlan;
@@ -85,19 +86,19 @@ public class Product {
         this.sizeInWord = sizeInWord;
     }
 
-    public double getSizeInNumber() {
+    public BigDecimal getSizeInNumber() {
         return sizeInNumber;
     }
 
-    public void setSizeInNumber(double sizeInNumber) {
+    public void setSizeInNumber(BigDecimal sizeInNumber) {
         this.sizeInNumber = sizeInNumber;
     }
 
-    public double getPricePerUnit() {
+    public BigDecimal getPricePerUnit() {
         return pricePerUnit;
     }
 
-    public void setPricePerUnit(double pricePerUnit) {
+    public void setPricePerUnit(BigDecimal pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
     }
 

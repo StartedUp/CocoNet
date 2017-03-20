@@ -4,8 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport"    content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content=""/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <title>Made in Trees</title>
+    <style>
+        .data{
+            color:#009688;
+        }
+    </style>
 
     <link rel="shortcut icon" href="../static/images/favicon-16x16.png" th:href="@{/images/favicon-16x16.png}"/>
 
@@ -24,36 +31,66 @@
     <![endif]-->
 </head>
 
-<body>
+<body class="home">
 <!-- Fixed navbar -->
 <div class="navbar navbar-inverse navbar-fixed-top headroom" >
     <div class="container">
         <div class="navbar-header">
             <!-- Button for smallest screens -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-            <a class="navbar-brand" href="/"><!--<img src="../static/images/logo.png" alt="Coco water comes Home">--></a>
+            <a class="navbar-brand" href="/"><!--<img src="../static/images/coconut-water.jpg" th:src="@{/images/coconut-water.jpg}" width="50px" alt="Drink the Purest"/>--></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
-                <li><a href="/">Home</a></li>
-                <li class="hidden"><a href="../static/pages/about.html">About</a></li>
-                <li class="hidden"><a href="#">Contact</a></li>
+                <li class="active"><a href="/">Home</a></li>
+                <li class="hidden"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+                <li class="hidden"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
                 <li class="dropdown" sec:authorize="isAuthenticated()">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span sec:authentication="name"></span><b style="margin-left: 10px;" class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li class=""><a href="/subscriber/profile">Profile</a></li>
+                        <li><a href="/subscriber/profile">Profile</a></li>
                         <li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
                 <li sec:authorize="isAnonymous()"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
             </ul>
+            <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                <input hidden type="submit" value="Sign Out"/>
+            </form>
         </div><!--/.nav-collapse -->
     </div>
 </div>
-<!-- /.navbar -->
 <header id="head" class="secondary"></header>
-<h1>Internal error. Please try after 60 minutes</h1>
-
+<h3 class="text-center" th:text="${subscription.subscriptionPlan.product.productName+' '+subscription.subscriptionPlan.planName}"></h3>
+    <div class="container-fluid">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Is Delivered?</th>
+                    <th>Delivered quantity</th>
+                    <th>Delivered by</th>
+                    <th>User Acknowledgement</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="subscriptionDeliveryRecord,stat : ${subscription.subscriptionDeliveryRecords}">
+                    <td th:text="${#dates.format(subscriptionDeliveryRecord.date, 'dd-MMM-yyyy')}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.delivered}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.quantityDelivered}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.deliveredBy}"></td>
+                    <td><a class="btn btn-primary" href="#">Not Received</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="../static/js/headroom.min.js" th:src="@{/js/headroom.min.js}"></script>
+    <script src="../static/js/jQuery.headroom.min.js" th:src="@{/js/jQuery.headroom.min.js}"></script>
+    <script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
 </body>
 </html>

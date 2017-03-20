@@ -1,12 +1,15 @@
 package com.coconet.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Prithu on 04-03-2017.
@@ -29,23 +32,23 @@ public class Subscription {
     private Time preferredDeliveryTime;
     @NotNull
     @Column(name = "quantity_per_day")
-    private double quantityPerDay;
+    private BigDecimal quantityPerDay;
     @NotNull
     @Column(name = "total_quantity")
-    private double totalQuantity;
+    private BigDecimal totalQuantity;
     @Column(name = "discount_percentage")
     private int discountPercentage;
     @Column(name = "discount")
-    private double discount;
+    private BigDecimal discount;
     @NotNull
     @Column(name = "total_number_of_days")
     private int totalNumberOfDays;
     @NotNull
     @Column(name = "actual_price")
-    private double actualPrice;
+    private BigDecimal actualPrice;
     @NotNull
     @Column(name = "total_price")
-    private double totalPrice;
+    private BigDecimal totalPrice;
     @NotNull
     @Column(name = "payment_status")
     private String paymentStatus;
@@ -69,6 +72,13 @@ public class Subscription {
     private String subscriptionStatus;
     @Column(name = "create_date")
     private Date createDate;
+    @JsonIgnore
+    @OneToMany(targetEntity =SubscriptionDeliveryRecord.class,  mappedBy = "subscription", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy("date")
+    private Set<SubscriptionDeliveryRecord> subscriptionDeliveryRecords;
+    @JsonIgnore
+    @OneToMany(targetEntity =PaymentDetails.class, mappedBy = "subscription", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<PaymentDetails> paymentDetailsSet;
 
     public int getId() {
         return id;
@@ -102,11 +112,11 @@ public class Subscription {
         this.preferredDeliveryTime = preferredDeliveryTime;
     }
 
-    public double getQuantityPerDay() {
+    public BigDecimal getQuantityPerDay() {
         return quantityPerDay;
     }
 
-    public void setQuantityPerDay(double quantityPerDay) {
+    public void setQuantityPerDay(BigDecimal quantityPerDay) {
         this.quantityPerDay = quantityPerDay;
     }
 
@@ -118,19 +128,19 @@ public class Subscription {
         this.totalNumberOfDays = totalNumberOfDays;
     }
 
-    public double getActualPrice() {
+    public BigDecimal getActualPrice() {
         return actualPrice;
     }
 
-    public void setActualPrice(double actualPrice) {
+    public void setActualPrice(BigDecimal actualPrice) {
         this.actualPrice = actualPrice;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -150,11 +160,11 @@ public class Subscription {
         this.subscriptionPlan = subscriptionPlan;
     }
 
-    public double getTotalQuantity() {
+    public BigDecimal getTotalQuantity() {
         return totalQuantity;
     }
 
-    public void setTotalQuantity(double totalQuantity) {
+    public void setTotalQuantity(BigDecimal totalQuantity) {
         this.totalQuantity = totalQuantity;
     }
 
@@ -166,11 +176,11 @@ public class Subscription {
         this.discountPercentage = discountPercentage;
     }
 
-    public double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 
@@ -212,6 +222,22 @@ public class Subscription {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Set<SubscriptionDeliveryRecord> getSubscriptionDeliveryRecords() {
+        return subscriptionDeliveryRecords;
+    }
+
+    public void setSubscriptionDeliveryRecords(Set<SubscriptionDeliveryRecord> subscriptionDeliveryRecords) {
+        this.subscriptionDeliveryRecords = subscriptionDeliveryRecords;
+    }
+
+    public Set<PaymentDetails> getPaymentDetailsSet() {
+        return paymentDetailsSet;
+    }
+
+    public void setPaymentDetailsSet(Set<PaymentDetails> paymentDetailsSet) {
+        this.paymentDetailsSet = paymentDetailsSet;
     }
 
     @Override
