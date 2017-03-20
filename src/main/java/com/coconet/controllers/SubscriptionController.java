@@ -65,6 +65,9 @@ public class SubscriptionController {
     }
     @RequestMapping(value = "/subscriber/subscription/paymentStatus")
     public String onlinePaymentStatus(@RequestParam("id") String paymentRequestId, @RequestParam("transaction_id") int transactionId, @RequestParam("payment_id") String paymentId){
+        Subscription subscription=subscriptionManager.getSubscriptionById(transactionId);
+        SubscriptionPlan subscriptionPlan=subscription.getSubscriptionPlan();
+        Product product=subscriptionPlan.getProduct();
         try {
             Instamojo api = InstamojoImpl.getApi(instamojoClientId, instamojoClientSecret, instamojoApiEndpoint, instamojoAuthEndpoint);
 
@@ -73,7 +76,7 @@ public class SubscriptionController {
             _log.info("paymentOrderDetailsResponse.getStatus() "+paymentOrderDetailsResponse.getStatus());
             String status =paymentOrderDetailsResponse.getStatus();
             if (status.equals("completed")){
-                Subscription subscription=subscriptionManager.getSubscriptionById(transactionId);
+                subscription=subscriptionManager.getSubscriptionById(transactionId);
                 if (subscription.getSubscriptionStatus()!=null &&!subscription.getSubscriptionStatus().equals("expired")) {
                     subscription.setPaymentStatus(status);
                     subscription.setSubscriptionStatus("active");
@@ -83,15 +86,12 @@ public class SubscriptionController {
                 }
                 return sendSuccessMail(subscription);
             }else {
-                Subscription subscription=subscriptionManager.getSubscriptionById(transactionId);
-                SubscriptionPlan subscriptionPlan=subscription.getSubscriptionPlan();
-                Product product=subscriptionPlan.getProduct();
                 return "/subscriber/" +product.getId()+"/"+subscriptionPlan.getId()+"?onlinePaymentFailed=true&subscriptionId=" + transactionId;
             }
         } catch (Exception e) {
             //LOGGER.log(Level.SEVERE, e.toString(), e);
             e.printStackTrace();
-            return "/subscriber/subscribe?onlinePaymentFailed=true&subscriptionId="+transactionId;
+            return "/subscriber/" +product.getId()+"/"+subscriptionPlan.getId()+"?onlinePaymentFailed=true&subscriptionId=" + transactionId;
         }
     }
 

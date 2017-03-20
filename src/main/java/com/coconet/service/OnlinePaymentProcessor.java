@@ -28,6 +28,8 @@ public class OnlinePaymentProcessor {
     private String instamojoClientId;
     @Value("${payment.online.instamojo.client.secret}")
     private String instamojoClientSecret;
+    @Value("${domain.name}")
+    private String domainName;
     public String placeOrder(Subscription subscription){
         PaymentOrder order = new PaymentOrder();
         Subscriber subscriber = subscription.getSubscriber();
@@ -39,7 +41,7 @@ public class OnlinePaymentProcessor {
         order.setCurrency("INR");
         order.setAmount(subscription.getTotalPrice().doubleValue());
         order.setDescription(product.getProductName()+" "+subscriptionPlan.getPlanName());
-        order.setRedirectUrl("http://localhost:8080/subscriber/subscription/paymentStatus");
+        order.setRedirectUrl(domainName+"/subscriber/subscription/paymentStatus");
         //order.setWebhookUrl("http://www.google.com/");
         order.setTransactionId(subscription.getId()+"");
 
