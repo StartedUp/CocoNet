@@ -78,6 +78,7 @@
                         <th>Total Quantity</th>
                         <th>Total Price</th>
                         <th>Payment Status</th>
+                        <th>Payment Mode</th>
                         <th>Subscribtion Status</th>
                         <th>Delivery Address</th>
                         <th>Subscribed on</th>
@@ -85,12 +86,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="subscription,stat : ${subscriptions}">
+                        <tr th:each="subscription,stat : ${subscriptions}" th:if="${subscription.paymentType=='cod' or subscription.subscriptionStatus=='active'}">
                             <td th:text="${subscription.subscriptionPlan.product.productName+' '+subscription.subscriptionPlan.planName}"></td>
                             <td th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"></td>
                             <td th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></td>
                             <td th:text="${subscription.totalQuantity}"></td><td th:text="${subscription.totalPrice}"></td>
                             <td th:text="${subscription.paymentStatus}"></td>
+                            <td th:text="${subscription.paymentType}"></td>
                             <td th:text="${subscription.subscriptionStatus}"></td>
                             <td th:text="${subscription.deliveryAddress}"></td>
                             <td th:text="${subscription.createDate}"></td>
