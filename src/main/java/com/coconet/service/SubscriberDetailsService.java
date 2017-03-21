@@ -29,7 +29,7 @@ public class SubscriberDetailsService implements UserDetailsService {
         try {
             Subscriber subscriber=subscriberManager.findByEmail(email);
             if (subscriber == null) {
-                _log.info("Subscriber email not found");
+                _log.info("Subscriber "+email+" not found");
                 return null;
             }
             LoggedInSubscriber loggedInSubscriber =new LoggedInSubscriber(subscriber.getFirstName(), subscriber.getPassword(),subscriber.isActive(),true,true,true,getAuthorities());

@@ -25,6 +25,8 @@ public class SubscriptionDeliveryRecord {
     @NotNull
     @Column(name = "date")
     private Date date;
+    @Column(name = "updated_at")
+    private Date updatedAt;
     @NotNull
     @Column(name = "is_delivered")
     private boolean delivered;
@@ -80,5 +82,26 @@ public class SubscriptionDeliveryRecord {
 
     public void setDeliveredBy(String deliveredBy) {
         this.deliveredBy = deliveredBy;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "SubscriptionDeliveryRecord{" +
+                "id=" + id +
+                ", subscriptionId=" + subscription.getId() +
+                ", date=" + date +
+                ", updatedAt=" + updatedAt +
+                ", delivered=" + delivered +
+                ", quantityDelivered=" + quantityDelivered +
+                ", deliveredBy='" + deliveredBy + '\'' +
+                '}';
     }
 }
