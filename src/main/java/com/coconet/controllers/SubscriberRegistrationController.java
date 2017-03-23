@@ -7,6 +7,7 @@ import com.coconet.util.Mailer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,8 @@ public class SubscriberRegistrationController {
     private SubscriberManager subscriberManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Value("${domain.name}")
+    private String domainName;
 
     private static final Log _log = LogFactory.getLog(SubscriberRegistrationController.class);
 
@@ -50,8 +53,8 @@ public class SubscriberRegistrationController {
                 subscriberManager.saveOrUpdate(subscriber);
                 _log.info("Sending Email confirmation mail to " + subscriber.getEmail());
                 String [] recipients ={subscriber.getEmail()};
-                String [] bccList = {"dydhanraj5@gmail.com","rprithviprakash@gmail.com","admin@madeintrees.com"};
-                String confirmEmailUrl="/confirmEmail/"+subscriber.getEmail()+"/"+token;
+                String [] bccList = {"admin@madeintrees.com"};
+                String confirmEmailUrl=domainName+"/confirmEmail/"+subscriber.getEmail()+"/"+token;
                 Mailer mailer=new Mailer();
                 mailer.setRecipients(recipients);
                 mailer.setBccList(bccList);

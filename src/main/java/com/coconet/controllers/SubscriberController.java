@@ -8,6 +8,7 @@ import com.coconet.util.Mailer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,6 +34,8 @@ public class SubscriberController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private MailService mailService;
+    @Value("${domain.name}")
+    private String domainName;
     private static final Log _log = LogFactory.getLog(SubscriberController.class);
 
     @RequestMapping(value = "/subscriber/profile")
@@ -84,8 +87,8 @@ public class SubscriberController {
                 if (!newEmail.equals(loggedInSubscriber.getEmail())) {
                     _log.info("Sending Email to request email update to " + newEmail);
                     String[] recipients = {newEmail};
-                    String[] bccList = {"dydhanraj5@gmail.com", "rprithviprakash@gmail.com", "admin@madeintrees.com"};
-                    String confirmEmailUrl = "/updateEmail/" + newEmail + "/" + token;
+                    String[] bccList = {"admin@madeintrees.com"};
+                    String confirmEmailUrl = domainName+"/updateEmail/" + newEmail + "/" + token;
                     Mailer mailer = new Mailer();
                     mailer.setRecipients(recipients);
                     mailer.setBccList(bccList);

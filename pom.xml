@@ -109,6 +109,13 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.instamojo/instamojo-java -->
+		<dependency>
+			<groupId>com.instamojo</groupId>
+			<artifactId>instamojo-java</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

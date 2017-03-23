@@ -1,6 +1,7 @@
 package com.coconet.dao;
 
 import com.coconet.model.Subscription;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,5 +22,18 @@ public class SubscriptionDaoImpl implements  SubscriptionDao{
     public Subscription getSubscription(Subscription subscription) {
         return (Subscription)this.sessionFactory.getCurrentSession().createQuery("from Subscription where id=:id").setParameter("id",subscription.getId()
         ).uniqueResult();
+    }
+
+    @Override
+    public Subscription getSubscriptionById(int id) {
+        return (Subscription)this.sessionFactory.getCurrentSession().createQuery("from Subscription where id=:id").setParameter("id",id
+        ).uniqueResult();
+    }
+
+    @Override
+    public Subscription getSubscriptionByIdEager(int id){
+       Subscription subscription= (Subscription)this.sessionFactory.getCurrentSession().get(Subscription.class,id);
+        Hibernate.initialize(subscription.getSubscriptionDeliveryRecords());
+        return subscription;
     }
 }

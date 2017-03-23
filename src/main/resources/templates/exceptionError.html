@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport"    content="width=device-width, initial-scale=1.0"/>
@@ -36,9 +36,17 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
                 <li><a href="/">Home</a></li>
-                <li><a href="../static/pages/about.html">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li class="active"><a class="btn" href="loginPage">SIGN IN / SIGN UP</a></li>
+                <li class="hidden"><a href="../static/pages/about.html">About</a></li>
+                <li class="hidden"><a href="#">Contact</a></li>
+                <li class="dropdown" sec:authorize="isAuthenticated()">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span sec:authentication="name"></span><b style="margin-left: 10px;" class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class=""><a href="/subscriber/profile">Profile</a></li>
+                        <li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>
+                    </ul>
+                </li>
+                <li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
+                <li sec:authorize="isAnonymous()"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

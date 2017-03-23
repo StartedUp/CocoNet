@@ -40,9 +40,9 @@
 					<li class="hidden"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
 					<li class="hidden"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
 					<li class="dropdown" sec:authorize="isAuthenticated()">
-						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span sec:authentication="name"></span><b style="margin-left: 10px;" class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li class=""><a href="/subscriber/profile">Profile</a></li>
+							<li><a href="/subscriber/profile">Profile</a></li>
 							<li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>
 						</ul>
 					</li>
@@ -62,6 +62,7 @@
             <div class="alert alert-info text-center" th:if="${param.loggedin}">Already logged in</div>
 			<div class="row">
 				<h1 class="lead">Welcome! Pure tender coconut is delivered home.</h1>
+				<h2 class="lead">Launching on March 27.</h2>
 				<!--<p class="tagline">PROGRESSUS: free business bootstrap template by <a href="http://www.gettemplate.com/?utm_source=progressus&amp;utm_medium=template&amp;utm_campaign=progressus">GetTemplate</a></p>
 				<p><a class="btn btn-default btn-lg" role="button">MORE INFO</a> <a class="btn btn-action btn-lg" role="button">SUBSCRIBE NOW</a></p>-->
 			</div>
@@ -85,6 +86,7 @@
 				<div class="caption">
 					<h3 th:text="${'Subscription-'+stat.count}">Subscription 1</h3>
 					<p th:text="${subscriptionPlan.planName}">Get it on weekdays.</p>
+					<p th:text="${'₹'+subscriptionPlan.product.pricePerUnit +' per '+subscriptionPlan.product.measurementUnit}"
 					<p>
 						<a th:href="@{'/product/'+${subscriptionPlan.product.id}+'/subscriptionPlan/'+${subscriptionPlan.id}}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default" data-toggle="modal" th:attr="data-target=${'#planId-'+subscriptionPlan.id}">More Info</a>
 					</p>
@@ -93,7 +95,6 @@
 			<!-- Modal -->
 			<div class="modal fade" th:id="${'planId-'+subscriptionPlan.id}" role="dialog">
 				<div class="modal-dialog">
-
 					<!-- Modal content-->
 					<div class="modal-content">
 						<div class="modal-header">
@@ -109,7 +110,7 @@
 					</div>
 
 				</div>
-			</div>
+			</div> <!-- Modal -->
 		</div>
 
 		<!--<div class="col-md-6 col-sm-12 hero-feature">
@@ -264,7 +265,7 @@
 						<h3 class="widget-title">Coconut Water Is A Clean Natural Drink</h3>
 						<div class="widget-body">
 							<p>Tender coconut water is a natural source of electrolytes, minerals, vitamins, complex carbohydrates, Amino acids and other nutrients. The natural carbohydrate content is between 4-5% of the liquid solution. This make coconut water particularly suitable for the burgeoning sports drink market. According to Sports Science Institute (USA), sports drinks containing under 5% carbohydrates are likely to provide benefits, while those exceeding 10% carbohydrate content, like most soft drinks are associated with abdominal cramps, nausea and diarrhea. </p>
-							<p><a href="https://www.davidwolfe.com/how-coconut-water-can-help-your-body/">Do You Know What Can Happen if You Drink Coconut Water for 14 Days?</a> </p>
+							<!--<p><a href="https://www.davidwolfe.com/how-coconut-water-can-help-your-body/">Do You Know What Can Happen if You Drink Coconut Water for 14 Days?</a> </p>-->
 						</div>
 					</div>
 

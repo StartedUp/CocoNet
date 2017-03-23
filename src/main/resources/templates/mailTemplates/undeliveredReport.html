@@ -247,7 +247,7 @@
             <div class="content">
 
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader"><a href="http://madeintrees.com">MadeInTrees</a> </span>
+                <span class="preheader"><a href="http://madeintrees.com">MadeInTrees</a></span>
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->
@@ -256,8 +256,12 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hi <span style="color:#009688" th:text="${userName}"></span>,</p>
-                                        <p>Thank you for registering with us. Please click the link to confirm your Email</p>
+                                        <p>Hi <span th:text="${userName}"></span>,</p>
+                                        <p>You have reported that
+                                            <span style="color:#009688" th:text="${productName}"></span> was not delivered on
+                                            <span style="color:#009688" th:text="${date}"></span>
+                                        </p>
+                                        <p>You will be contacted soon by our team to resolve the issue.</p>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>
                                             <tr>
@@ -265,7 +269,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td> <a th:href="@{${confirmEmailUrl}}" target="_blank">Confirm Email</a> </td>
+                                                            <td></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -293,7 +297,7 @@
                         </tr>
                         <tr>
                             <td class="content-block powered-by">
-                                Powered by <a href="http://localhost">MadeInTrees</a>.
+                                Powered by <a href="madeintrees.com">MadeInTrees</a>.
                             </td>
                         </tr>
                     </table>

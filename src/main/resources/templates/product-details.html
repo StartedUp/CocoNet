@@ -43,10 +43,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right">
                     <li><a href="/">Home</a></li>
-                    <li th:hidden="true"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
-                    <li th:hidden="true"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
+                    <li class="hidden"><a href="../static/pages/about.html" th:href="@{/pages/about.html}">About</a></li>
+                    <li class="hidden"><a href="../static/pages/contact.html" th:href="@{/pages/Contact.html}">Contact</a></li>
                     <li class="dropdown" sec:authorize="isAuthenticated()">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" sec:authentication="name">user<b class="caret"></b></a>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span sec:authentication="name"></span><b style="margin-left: 10px;" class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class=""><a href="/subscriber/profile">Profile</a></li>
                             <li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>
@@ -145,6 +145,7 @@
                     <input id="measurementUnit" hidden th:value="${subscriptionPlan.product.measurementUnit}" type="text">
                     <input id="pricePerUnit" hidden th:value="${subscriptionPlan.product.pricePerUnit}" type="text">
 
+                    <input  th:if="${param.subscriptionId}" hidden id="subscription" name="id" th:value="${param.subscriptionId}" type="text">
                     <input hidden id="subscriber" name="subscriber.id" th:value="${subscriber.id}" type="text">
                     <input hidden id="subscriptionPlan" name="subscriptionPlan.id" th:value="${subscriptionPlan.id}" type="text">
                     <input hidden id="startDate" name="startDate" th:value="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}" type="text">
@@ -165,7 +166,7 @@
                     </div>
                     <div>
                         <h4 hidden>Total quantity = <span class="data" id="displayTotQty"></span></h4>
-                        <h4 hidden>Total price = <span class="data" id="displayTotPrice"></span></h4>
+                        <h4 hidden>Total price = ₹ <span class="data" id="displayTotPrice"></span><span> (Inclusive of all taxes)</span></h4>
                     </div>
                     <div class="form-group top-margin">
                         <label>Preferred Delivery time</label>
@@ -200,9 +201,9 @@
                         </div>
                     </div>
                     <div class="form-group top-margin">
-                        <!--<label class="radio-inline">
-                            <input hidden disabled name="paymentType" value="online" type="radio">Online<span class="text-danger">*</span>
-                        </label>-->
+                        <label class="radio-inline">
+                            <input required name="paymentType" value="online" type="radio">Online<span class="text-danger">*</span>
+                        </label>
                         <label class="radio-inline">
                             <input required selected name="paymentType" type="radio" value="cod">Cash On Delivery<span class="text-danger">*</span>
                         </label>
@@ -235,7 +236,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             /*razorpay button*/
-            $(".razorpay-payment-button:first").addClass('btn btn-action hide');
+            /*$(".razorpay-payment-button:first").addClass('btn btn-action hide');*/
 
             $('#quantityPerDay').change(function () {
                 $('#displayTotPrice').parent().hide();
@@ -243,6 +244,7 @@
                 var pricePerUnit=$('#pricePerUnit').val();
                 var actualPrice;
                 var totalQuantity;
+                var VAT;
                 var totalNumberOfDays = $('#totalNumberOfDays').val();
                 var quantityPerDay=$('#quantityPerDay').val();
                 var isQuantityInvalid=false;
@@ -251,19 +253,47 @@
                 var isQuantityDouble =($.isNumeric(quantityPerDay) && quantityPerDay % 1 !== 0);
                 var measurementUnit = $('#measurementUnit').val();
                 console.log('measurementUnit:'+measurementUnit+',isQuantityInt:'+isQuantityInt+',isQuantityDouble:'+isQuantityDouble)
-                if(quantityPerDay!=""&&!isQuantityInt && !isQuantityDouble){
+                if(quantityPerDay!=""&&(!isQuantityInt || !isQuantityDouble) &&!(quantityPerDay>=0)){
                     alert("Invalid quantity value");
                     $('#quantityPerDay').val('');
                     isQuantityInvalid=true;
                 }
-                if(quantityPerDay!=""&&measurementUnit =='piece' && !isQuantityInt){
+                if(quantityPerDay!=""&&measurementUnit =='piece' && !isQuantityInt && !quantityPerDay<=0){
                     alert("Invalid quantity value for this product")
                     $('#quantityPerDay').val('');
                     isQuantityInvalid=true;
                 }
                 console.log('isQuantityInvalid:'+isQuantityInvalid);
                 if(!isQuantityInvalid && quantityPerDay!="") {
-                    actualPrice = pricePerUnit * totalNumberOfDays * quantityPerDay;
+                    totalQuantity = totalNumberOfDays * quantityPerDay;
+                    $.ajax({
+                        type: "GET",
+                        url: "/subscription/getTotalPrice",
+                        data: {
+                            pricePerUnit: pricePerUnit,
+                            totalQuantity: totalQuantity
+                        },
+                        success: function (data) {
+                            console.log("ajax resp: "+data);
+                            actualPrice = data;
+                            console.log('actualPrice:'+actualPrice);
+                            console.log('totalQuantity:'+totalQuantity);
+                            $('#actualPrice').val(actualPrice);
+                            $('#totalPrice').val(actualPrice);
+                            $('#displayTotPrice').html(actualPrice);
+                            $('#displayTotPrice').parent().show();
+                            $('#totalQuantity').val(totalQuantity);
+                            $('#displayTotQty').html(totalQuantity);
+                            $('#displayTotQty').parent().show();
+                        },
+                        error: function () {
+                            alert("Invalid quantity value");
+                        },
+                        dataType: "json"
+                    });
+                    /*actualPrice = pricePerUnit * totalNumberOfDays * quantityPerDay;
+                    VAT = ((actualPrice*0.02)+3)*0.15+((actualPrice*0.02)+3);
+                    actualPrice = actualPrice+VAT;
                     totalQuantity = totalNumberOfDays * quantityPerDay;
                     console.log('actualPrice:'+actualPrice);
                     console.log('totalQuantity:'+totalQuantity);
@@ -273,7 +303,7 @@
                     $('#displayTotPrice').parent().show();
                     $('#totalQuantity').val(totalQuantity);
                     $('#displayTotQty').html(totalQuantity);
-                    $('#displayTotQty').parent().show();
+                    $('#displayTotQty').parent().show();*/
                 }
             });
             /*add address form*/
@@ -333,8 +363,8 @@
                         class: address.id+' col-sm-12 hide',
                         id: 'address-'+address.id,
             }).append($('<h3>',{
-                        text: address.addressHolderName
-            })).append($('<p>',{
+                        text: address.addressHolderName,
+            }).css("margin-top","0px")).append($('<p>',{
                         text: address.addressLine1+', '+address.addressLine2,
                         class: 'data'
             })).append($('<p>',{
