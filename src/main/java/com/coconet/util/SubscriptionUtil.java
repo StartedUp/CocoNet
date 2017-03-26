@@ -16,24 +16,26 @@ public class SubscriptionUtil {
     private static BigDecimal instamojoCommissionPercentage=new BigDecimal(0.02);
     private static BigDecimal instamojoCommissionValue=new BigDecimal(3);
     private static BigDecimal taxPercentage=new BigDecimal(0.15);
-    public static Subscription startAndEndDateSetter(Subscription subscription, SubscriptionPlan subscriptionPlan) {
+    public static Subscription startAndEndDateSetter(Subscription subscription, SubscriptionPlan subscriptionPlan, Date customStartDate) {
         /*Required Date variable declaration*/
         Calendar startDateCal = Calendar.getInstance();
         Calendar endDateCal = Calendar.getInstance();
 
         /*StartDate Calculation*/
-        startDateCal.set(2017,2,26);
+        startDateCal.setTime(customStartDate);
         startDateCal.set(Calendar.HOUR, 0);
         startDateCal.set(Calendar.MINUTE, 0);
         startDateCal.set(Calendar.SECOND, 0);
-        startDateCal.add(Calendar.DATE,1);
         if (subscriptionPlan.getRoutinePattern().equals("weekdays"))
             startDateCal = getNextWeekdayIfWeekend(startDateCal);
         subscription.setStartDate(startDateCal.getTime());
 
         /*EndDate Calculation*/
         endDateCal.setTime(startDateCal.getTime());
-        endDateCal.add(Calendar.MONTH,1);
+        if (subscriptionPlan.getSubscriptionDurationType().equals("month"))
+            endDateCal.add(Calendar.MONTH,1);
+        if (subscriptionPlan.getSubscriptionDurationType().equals("week"))
+            endDateCal.add(Calendar.DATE,7);;
         if (subscriptionPlan.getRoutinePattern().equals("weekdays"))
             endDateCal = getNextWeekdayIfWeekend(endDateCal);
         subscription.setEndDate(endDateCal.getTime());

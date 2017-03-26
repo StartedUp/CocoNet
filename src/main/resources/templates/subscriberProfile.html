@@ -51,6 +51,9 @@
                     <li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
                     <li sec:authorize="isAnonymous()"><a class="btn" href="/loginPage">SIGN IN / SIGN UP</a></li>
                 </ul>
+                <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                    <input hidden type="submit" value="Sign Out"/>
+                </form>
             </div><!--/.nav-collapse -->
         </div>
     </div>

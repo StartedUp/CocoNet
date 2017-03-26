@@ -30,6 +30,8 @@ public class SubscriberRegistrationController {
     private SubscriberManager subscriberManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Value("${mail.standard.bcc.list}")
+    private String[] bccList;
     @Value("${domain.name}")
     private String domainName;
 
@@ -53,7 +55,6 @@ public class SubscriberRegistrationController {
                 subscriberManager.saveOrUpdate(subscriber);
                 _log.info("Sending Email confirmation mail to " + subscriber.getEmail());
                 String [] recipients ={subscriber.getEmail()};
-                String [] bccList = {"admin@madeintrees.com"};
                 String confirmEmailUrl=domainName+"/confirmEmail/"+subscriber.getEmail()+"/"+token;
                 Mailer mailer=new Mailer();
                 mailer.setRecipients(recipients);
