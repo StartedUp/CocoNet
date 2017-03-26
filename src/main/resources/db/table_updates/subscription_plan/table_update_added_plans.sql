@@ -2,7 +2,8 @@
 SQLyog Community v12.14 (64 bit)
 MySQL - 5.7.9-log : Database - coconet
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -36,11 +37,15 @@ CREATE TABLE `subscription_plan` (
 
 /*Data for the table `subscription_plan` */
 
-insert  into `subscription_plan`(`id`,`plan_name`,`Description`,`subscription_duration_type`,`subscription_duration_number`,`product_id`,`routine_pattern`,`discount_percentage`) values 
-(1,'Employee-monthly','The product is delivered on weekdays for a month-Validity 1 month','month',1,1,'weekdays',0),
-(2,'Family-monthly','The product is delivered daily for a month-Validity 1 month','month',1,1,'daily',0),
-(3,'Employee-weekly','The product is delivered on weekdays for one week-Validity 1 week','week',1,1,'weekdays',0),
-(4,'Family-weekly','The product is delivered daily for one week-Validity 1 week','week',1,1,'weekdays',0);
+insert  into `subscription_plan`(`id`,`plan_name`,`Description`,`subscription_duration_type`,`subscription_duration_number`,`product_id`,`routine_pattern`,`discount_percentage`) values 
+
+(1,'Employee-monthly','The product is delivered on weekdays for a month-Validity 1 month','month',1,1,'weekdays',0),
+
+(2,'Family-monthly','The product is delivered daily for a month-Validity 1 month','month',1,1,'daily',0),
+
+(3,'Employee-weekly','The product is delivered on weekdays for one week-Validity 1 week','week',1,1,'weekdays',0),
+
+(4,'Family-weekly','The product is delivered daily for one week-Validity 1 week','week',1,1,'daily',0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
