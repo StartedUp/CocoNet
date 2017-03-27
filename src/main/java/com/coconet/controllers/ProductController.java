@@ -56,7 +56,7 @@ public class ProductController{
             SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(subscriptionPlanId);
             Subscription subscription =new Subscription();
             Calendar startDateCal = Calendar.getInstance();
-            startDateCal.set(2017,2,26,0,0,0);
+            startDateCal.setTime(new Date());
             startDateCal.add(Calendar.DATE,1);
             subscription=SubscriptionUtil.startAndEndDateSetter(subscription, subscriptionPlan, startDateCal.getTime());
             model.addAttribute("subscriptionPlan", subscriptionPlan);
