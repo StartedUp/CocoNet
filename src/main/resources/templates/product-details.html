@@ -70,10 +70,12 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <h3>Subscription Starts on</h3>
-                <p class="data" th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"></p>
+                <h3>Subscription Start date</h3>
+                <p id="displayStartDate" class="data" th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"></p>
+                <label>Choose alternate start Date</label>
+                <input type="text" id="datepicker">
                 <h3>Subscription Ends on</h3>
-                <p class="data" th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></p>
+                <p id="displayEndDate" class="data" th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></p>
                 <h3>Price per <span th:text="${subscriptionPlan.product.measurementUnit}"></span></h3>
                 <p class="data" th:inline="text">₹ [[${subscriptionPlan.product.pricePerUnit}]]</p>
                 <div class="container-fluid">
@@ -233,78 +235,56 @@
     <script src="../static/js/jQuery.headroom.min.js" th:src="@{/js/jQuery.headroom.min.js}"></script>
     <script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" />
+"
     <script type="text/javascript">
         $(document).ready(function () {
             /*razorpay button*/
             /*$(".razorpay-payment-button:first").addClass('btn btn-action hide');*/
 
+            /*datepicker*/
+            $('#datepicker').datepicker({
+                format: 'yyyy/mm/dd',
+                startDate: '+1d'
+            });
+
+            /*datepicker*/
+            $('#datepicker').change(function () {
+                var startDate =$('#datepicker').val();
+                var subscriptionPlanId=$('#subscriptionPlan').val();
+                $.ajax({
+                    type: "GET",
+                    url: "/subscription/getEndDate",
+                    data: {
+                        startDate:startDate,
+                        subscriptionPlanId:subscriptionPlanId
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        startDate=data.startDate;
+                        var endDate = new Date(data.endDate);
+                        var totalNumberOfDays = data.totalNumberOfDays;
+                        $('#totalNumberOfDays').val(totalNumberOfDays);
+                        console.log('endDate:'+endDate);
+                        console.log('totalQuantity:'+totalQuantity);
+                        startDate = new Date(startDate);
+                        console.log("DateStart  "+startDate);
+                        $('#startDate').val(startDate);
+                        $('#displayStartDate').html(startDate.toDateString());
+                        $('#endDate').val(endDate);
+                        $('#displayEndDate').html(endDate.toDateString());
+                        priceCalculateAndUpdate();
+                    },
+                    error: function () {
+                        alert("Invalid date value");
+                    },
+                    dataType: "json"
+                });
+            });
+
             $('#quantityPerDay').change(function () {
-                $('#displayTotPrice').parent().hide();
-                $('#displayTotQty').parent().hide();
-                var pricePerUnit=$('#pricePerUnit').val();
-                var actualPrice;
-                var totalQuantity;
-                var VAT;
-                var totalNumberOfDays = $('#totalNumberOfDays').val();
-                var quantityPerDay=$('#quantityPerDay').val();
-                var isQuantityInvalid=false;
-                console.log('quantityPerDay:'+quantityPerDay);
-                var isQuantityInt =($.isNumeric(quantityPerDay) && quantityPerDay % 1 === 0);
-                var isQuantityDouble =($.isNumeric(quantityPerDay) && quantityPerDay % 1 !== 0);
-                var measurementUnit = $('#measurementUnit').val();
-                console.log('measurementUnit:'+measurementUnit+',isQuantityInt:'+isQuantityInt+',isQuantityDouble:'+isQuantityDouble)
-                if(quantityPerDay!=""&&(!isQuantityInt || !isQuantityDouble) &&!(quantityPerDay>=0)){
-                    alert("Invalid quantity value");
-                    $('#quantityPerDay').val('');
-                    isQuantityInvalid=true;
-                }
-                if(quantityPerDay!=""&&measurementUnit =='piece' && !isQuantityInt && !quantityPerDay<=0){
-                    alert("Invalid quantity value for this product")
-                    $('#quantityPerDay').val('');
-                    isQuantityInvalid=true;
-                }
-                console.log('isQuantityInvalid:'+isQuantityInvalid);
-                if(!isQuantityInvalid && quantityPerDay!="") {
-                    totalQuantity = totalNumberOfDays * quantityPerDay;
-                    $.ajax({
-                        type: "GET",
-                        url: "/subscription/getTotalPrice",
-                        data: {
-                            pricePerUnit: pricePerUnit,
-                            totalQuantity: totalQuantity
-                        },
-                        success: function (data) {
-                            console.log("ajax resp: "+data);
-                            actualPrice = data;
-                            console.log('actualPrice:'+actualPrice);
-                            console.log('totalQuantity:'+totalQuantity);
-                            $('#actualPrice').val(actualPrice);
-                            $('#totalPrice').val(actualPrice);
-                            $('#displayTotPrice').html(actualPrice);
-                            $('#displayTotPrice').parent().show();
-                            $('#totalQuantity').val(totalQuantity);
-                            $('#displayTotQty').html(totalQuantity);
-                            $('#displayTotQty').parent().show();
-                        },
-                        error: function () {
-                            alert("Invalid quantity value");
-                        },
-                        dataType: "json"
-                    });
-                    /*actualPrice = pricePerUnit * totalNumberOfDays * quantityPerDay;
-                    VAT = ((actualPrice*0.02)+3)*0.15+((actualPrice*0.02)+3);
-                    actualPrice = actualPrice+VAT;
-                    totalQuantity = totalNumberOfDays * quantityPerDay;
-                    console.log('actualPrice:'+actualPrice);
-                    console.log('totalQuantity:'+totalQuantity);
-                    $('#actualPrice').val(actualPrice);
-                    $('#totalPrice').val(actualPrice);
-                    $('#displayTotPrice').html(actualPrice);
-                    $('#displayTotPrice').parent().show();
-                    $('#totalQuantity').val(totalQuantity);
-                    $('#displayTotQty').html(totalQuantity);
-                    $('#displayTotQty').parent().show();*/
-                }
+                priceCalculateAndUpdate();
             });
             /*add address form*/
             $('#addAddressForm').submit(function(e) {
@@ -376,6 +356,74 @@
             }))
             );
             $('#deliveryAddress').change();
+        }
+        function priceCalculateAndUpdate() {
+            $('#displayTotPrice').parent().hide();
+            $('#displayTotQty').parent().hide();
+            var pricePerUnit=$('#pricePerUnit').val();
+            var actualPrice;
+            var totalQuantity;
+            var VAT;
+            var totalNumberOfDays = $('#totalNumberOfDays').val();
+            var quantityPerDay=$('#quantityPerDay').val();
+            var isQuantityInvalid=false;
+            console.log('quantityPerDay:'+quantityPerDay);
+            var isQuantityInt =($.isNumeric(quantityPerDay) && quantityPerDay % 1 === 0);
+            var isQuantityDouble =($.isNumeric(quantityPerDay) && quantityPerDay % 1 !== 0);
+            var measurementUnit = $('#measurementUnit').val();
+            console.log('measurementUnit:'+measurementUnit+',isQuantityInt:'+isQuantityInt+',isQuantityDouble:'+isQuantityDouble)
+            if(quantityPerDay!=""&&(!isQuantityInt || !isQuantityDouble) &&!(quantityPerDay>0)){
+                alert("Invalid quantity value");
+                $('#quantityPerDay').val('');
+                isQuantityInvalid=true;
+            }
+            if(quantityPerDay!=""&&measurementUnit =='piece' && !isQuantityInt && !quantityPerDay>0){
+                alert("Invalid quantity value for this product")
+                $('#quantityPerDay').val('');
+                isQuantityInvalid=true;
+            }
+            console.log('isQuantityInvalid:'+isQuantityInvalid);
+            if(!isQuantityInvalid && quantityPerDay!="") {
+                totalQuantity = totalNumberOfDays * quantityPerDay;
+                $.ajax({
+                    type: "GET",
+                    url: "/subscription/getTotalPrice",
+                    data: {
+                        pricePerUnit: pricePerUnit,
+                        totalQuantity: totalQuantity
+                    },
+                    success: function (data) {
+                        console.log("ajax resp: "+data);
+                        actualPrice = data;
+                        console.log('actualPrice:'+actualPrice);
+                        console.log('totalQuantity:'+totalQuantity);
+                        $('#actualPrice').val(actualPrice);
+                        $('#totalPrice').val(actualPrice);
+                        $('#displayTotPrice').html(actualPrice);
+                        $('#displayTotPrice').parent().show();
+                        $('#totalQuantity').val(totalQuantity);
+                        $('#displayTotQty').html(totalQuantity);
+                        $('#displayTotQty').parent().show();
+                    },
+                    error: function () {
+                        alert("Invalid quantity value");
+                    },
+                    dataType: "json"
+                });
+                /*actualPrice = pricePerUnit * totalNumberOfDays * quantityPerDay;
+                 VAT = ((actualPrice*0.02)+3)*0.15+((actualPrice*0.02)+3);
+                 actualPrice = actualPrice+VAT;
+                 totalQuantity = totalNumberOfDays * quantityPerDay;
+                 console.log('actualPrice:'+actualPrice);
+                 console.log('totalQuantity:'+totalQuantity);
+                 $('#actualPrice').val(actualPrice);
+                 $('#totalPrice').val(actualPrice);
+                 $('#displayTotPrice').html(actualPrice);
+                 $('#displayTotPrice').parent().show();
+                 $('#totalQuantity').val(totalQuantity);
+                 $('#displayTotQty').html(totalQuantity);
+                 $('#displayTotQty').parent().show();*/
+            }
         }
     </script>
 </body>

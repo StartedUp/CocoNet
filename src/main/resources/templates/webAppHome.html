@@ -62,7 +62,6 @@
             <div class="alert alert-info text-center" th:if="${param.loggedin}">Already logged in</div>
 			<div class="row">
 				<h1 class="lead">Welcome! Pure tender coconut is delivered home.</h1>
-				<h2 class="lead">Launching on March 27.</h2>
 				<!--<p class="tagline">PROGRESSUS: free business bootstrap template by <a href="http://www.gettemplate.com/?utm_source=progressus&amp;utm_medium=template&amp;utm_campaign=progressus">GetTemplate</a></p>
 				<p><a class="btn btn-default btn-lg" role="button">MORE INFO</a> <a class="btn btn-action btn-lg" role="button">SUBSCRIBE NOW</a></p>-->
 			</div>
@@ -82,9 +81,9 @@
 
 		<div class="col-md-6 col-sm-12 hero-feature" th:each="subscriptionPlan,stat : ${subscriptionPlans}">
 			<div class="thumbnail">
-				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 50%;" alt="">
+				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 25%;" alt="">
 				<div class="caption">
-					<h3 th:text="${'Subscription-'+stat.count}">Subscription 1</h3>
+					<h3 th:text="${'Plan-'+stat.count}">Subscription 1</h3>
 					<p th:text="${subscriptionPlan.planName}">Get it on weekdays.</p>
 					<p th:text="${'₹'+subscriptionPlan.product.pricePerUnit +' per '+subscriptionPlan.product.measurementUnit}"
 					<p>

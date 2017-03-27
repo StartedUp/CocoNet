@@ -7,6 +7,7 @@ import com.coconet.util.SubscriptionUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -39,6 +41,8 @@ public class ProductController{
     private AddressManager addressManager;
     @Autowired
     OnlinePaymentProcessor onlinePaymentProcessor;
+    @Value("${mail.standard.bcc.list}")
+    private String[] bccList;
     private static final Log _log = LogFactory.getLog(ProductController.class);
 
     @RequestMapping(value = "/product/{productId}/subscriptionPlan/{subscriptionPlanId}")
@@ -51,7 +55,10 @@ public class ProductController{
             Subscriber subscriber = subscriberManager.findByEmail(loggedInSubscriber.getEmail());
             SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(subscriptionPlanId);
             Subscription subscription =new Subscription();
-            subscription=SubscriptionUtil.startAndEndDateSetter(subscription, subscriptionPlan);
+            Calendar startDateCal = Calendar.getInstance();
+            startDateCal.setTime(new Date());
+            startDateCal.add(Calendar.DATE,1);
+            subscription=SubscriptionUtil.startAndEndDateSetter(subscription, subscriptionPlan, startDateCal.getTime());
             model.addAttribute("subscriptionPlan", subscriptionPlan);
             model.addAttribute("subscription",subscription);
             model.addAttribute("subscriber",subscriber);
@@ -70,7 +77,6 @@ public class ProductController{
             LoggedInSubscriber loggedInSubscriber = (LoggedInSubscriber)auth.getPrincipal();
             Subscriber subscriber = subscriberManager.findByEmail(loggedInSubscriber.getEmail());
             SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(subscription.getSubscriptionPlan().getId());
-            subscription=SubscriptionUtil.startAndEndDateSetter(subscription, subscriptionPlan);
             model.addAttribute("subscriptionPlan", subscriptionPlan);
             model.addAttribute("subscription",subscription);
             model.addAttribute("subscriber",subscriber);
@@ -97,7 +103,6 @@ public class ProductController{
                 _log.info("Sending Email about subscription to " + subscriber.getEmail());
                 _log.info(subscription);
                 String[] recipients = {subscriber.getEmail()};
-                String[] bccList = {"admin@madeintrees.com"};
                 Mailer mailer = new Mailer();
                 mailer.setRecipients(recipients);
                 mailer.setBccList(bccList);

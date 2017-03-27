@@ -4,11 +4,13 @@ import com.coconet.model.*;
 import com.coconet.service.MailService;
 import com.coconet.service.SubscriptionDeliveryRecordManager;
 import com.coconet.service.SubscriptionManager;
+import com.coconet.service.SubscriptionPlanManager;
 import com.coconet.util.Mailer;
 import com.coconet.util.SubscriptionUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.FormParam;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -27,6 +31,8 @@ public class SubscriptionRestServices {
     @Autowired
     private SubscriptionManager subscriptionManager;
     @Autowired
+    private SubscriptionPlanManager subscriptionPlanManager;
+    @Autowired
     private SubscriptionDeliveryRecordManager subscriptionDeliveryRecordManager;
     @Autowired
     private MailService mailService;
@@ -35,6 +41,16 @@ public class SubscriptionRestServices {
     public ResponseEntity<String> calculateTotalPrice(@RequestParam("pricePerUnit") BigDecimal pricePerUnit, @RequestParam("totalQuantity") BigDecimal totalQuantity) {
         BigDecimal totalPrice = SubscriptionUtil.priceCalculator(totalQuantity, pricePerUnit);
         return ResponseEntity.ok(totalPrice + "");
+    }
+
+    @RequestMapping(value = "/subscription/getEndDate", method = RequestMethod.GET)
+    public ResponseEntity<Subscription> getEndDate(@RequestParam("startDate") Date startDate, @RequestParam("subscriptionPlanId") int subscriptionPlanId) {
+        SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(subscriptionPlanId);
+        _log.info("startDate "+startDate+" subscriptionPlanId "+subscriptionPlan);
+        Subscription subscription = SubscriptionUtil.startAndEndDateSetter(new Subscription(), subscriptionPlan, startDate);
+        DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String endDate = df.format(subscription.getEndDate());
+        return new ResponseEntity<Subscription>(subscription, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subscription/undelivered", method = RequestMethod.GET)

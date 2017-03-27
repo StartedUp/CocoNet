@@ -35,6 +35,8 @@ public class SubscriptionController {
     private SubscriptionManager subscriptionManager;
     @Autowired
     private MailService mailService;
+    @Value("${mail.standard.bcc.list}")
+    private String[] bccList;
     @Value("${payment.online.instamojo.api.endpoint}")
     private String instamojoApiEndpoint;
     @Value("${payment.online.instamojo.auth.endpoint}")
@@ -101,7 +103,6 @@ public class SubscriptionController {
         _log.info("Sending Email about subscription to " + subscriber.getEmail());
         _log.info(subscription);
         String[] recipients = {subscriber.getEmail()};
-        String[] bccList = {"admin@madeintrees.com"};
         Mailer mailer = new Mailer();
         mailer.setRecipients(recipients);
         mailer.setBccList(bccList);
