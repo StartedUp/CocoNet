@@ -61,7 +61,8 @@
 				<strong>Success! </strong>Congratz!! [[${subscriberByEmailAndToken.firstName}]] [[${subscriberByEmailAndToken.lastName}]]. Your account is activated.
 			</div>
 			<div class="alert alert-info text-center" sec: th:if="${param.logout}">Logged out succesfully</div>
-            <div class="alert alert-danger text-center" sec: th:if="${param.error}">Verify your email if not verified</div>
+            <div class="alert alert-danger text-center" sec: th:if="${param.error}">Verify your email if not verified or</div>
+			<div class="alert-danger" th:if="${param.error}">Invalid username or password.</div>
 			<div class="alert alert-info text-center" sec: th:if="${param.emailUpdate}">Your email has been updated</div>
 			<div class="alert alert-info text-center" sec: th:if="${param.passwordUpdate}">Your password has been updated</div>
 			<article class="col-xs-12 maincontent">
@@ -82,7 +83,7 @@
 
 							<form role="form" th:action="@{/loginPage}" method="post">
 								<div class="top-margin">
-									<label>Username/Email <span class="text-danger">*</span></label>
+									<label>User Email <span class="text-danger">*</span></label>
 									<input type="text" name="email" class="form-control">
 								</div>
 								<div class="alert-danger" th:if="${param.error}">
