@@ -116,6 +116,7 @@ public class ProductController{
                 mailTemplateData.put("paymentType", subscription.getPaymentType());
                 mailTemplateData.put("totalPrice", subscription.getTotalPrice() + "");
                 mailTemplateData.put("deliveryAddress", subscription.getDeliveryAddress().toString());
+                mailTemplateData.put("preferredDeliveryTime", subscription.getPreferredDeliveryTime().toString());
                 mailTemplateData.put("numberOfCoconuts", (subscription.getTotalQuantity()) + "");
                 mailTemplateData.put("templateName", "mailTemplates/subscriptionDetails");
                 mailService.prepareAndSend(mailer, mailTemplateData);

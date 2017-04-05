@@ -115,6 +115,7 @@ public class SubscriptionController {
         mailTemplateData.put("endDate", (subscription.getEndDate().toString()).substring(0, 10));
         mailTemplateData.put("paymentType", subscription.getPaymentType());
         mailTemplateData.put("totalPrice", subscription.getTotalPrice() + "");
+        mailTemplateData.put("preferredDeliveryTime", subscription.getPreferredDeliveryTime().toString());
         mailTemplateData.put("deliveryAddress", subscription.getDeliveryAddress().toString());
         mailTemplateData.put("numberOfCoconuts", (subscription.getTotalQuantity()) + "");
         mailTemplateData.put("templateName", "mailTemplates/subscriptionDetails");
