@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Made In Trees</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet" href="/css/styles.css"  th:href="@{/css/styles.css}">-->
+</head>
+<body style="background-color: #76b852" id="page-top" class="index">
+<h1 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">Made in Trees</h1><br><br><br>
+<div class="col-lg-12 text-right bold">
+    <a class="btn btn-default" style="text-align: right" href="javascript: document.logoutForm.submit()">Logout</a>
+    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
+</div>
+<hr>
+<div class="btn-group btn-group-justified">
+    <a class="btn btn-primary" href="/admin">Admin</a>
+    <a class="btn btn-primary" href="/user">User</a>
+</div>
+</body>
+</html>
