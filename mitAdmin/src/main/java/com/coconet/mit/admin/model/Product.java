@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -31,9 +32,8 @@ public class Product {
     private String sizeInWord;
     @Column(name = "size_in_number", nullable = false)
     private BigDecimal sizeInNumber;
-    /*@NotEmpty
+    @NotEmpty
     @NotNull
-    @DecimalMax("50.0")*/
     @Column(name = "price_per_unit", nullable = false)
     private BigDecimal pricePerUnit;
     @JsonIgnore

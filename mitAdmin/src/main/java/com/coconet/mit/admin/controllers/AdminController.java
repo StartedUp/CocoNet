@@ -1,6 +1,6 @@
 package com.coconet.mit.admin.controllers;
 
-import com.coconet.mit.commons.model.*;
+import com.coconet.mit.admin.model.*;
 import com.coconet.mit.admin.service.ProductManager;
 import com.coconet.mit.admin.service.RoleManager;
 import com.coconet.mit.admin.service.UserManager;
@@ -34,7 +34,7 @@ public class AdminController {
     private RoleManager roleManager;
     @Autowired
     private ProductManager productManager;
-    List<Product> products;
+    List<com.coconet.mit.admin.model.Product> products;
     @Value("${LOCAL_UPLOAD_PATH}")
     private String LOCAL_UPLOAD_PATH;
     //private String LOCAL_UPLOAD_PATH="/home/gokulraj/Repository/MyRepo/madeintrees/src/main/resources/static/images/products/";
