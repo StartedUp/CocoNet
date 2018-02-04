@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.dao;
 
-import com.coconet.mit.customerPortal.model.Product;
+import com.coconet.mit.commons.model.Product;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
 package com.coconet.mit.admin.service;
 
-import com.coconet.mit.admin.model.Subscription;
+import com.coconet.mit.commons.model.Subscription;
 
 import java.util.List;
 

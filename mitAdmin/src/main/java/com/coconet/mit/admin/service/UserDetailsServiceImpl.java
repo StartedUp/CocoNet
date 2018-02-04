@@ -1,8 +1,8 @@
 package com.coconet.mit.admin.service;
 
-import com.coconet.mit.admin.model.LoggedInUser;
-import com.coconet.mit.admin.model.Role;
-import com.coconet.mit.admin.model.User;
+import com.coconet.mit.commons.model.LoggedInUser;
+import com.coconet.mit.commons.model.Role;
+import com.coconet.mit.commons.model.User;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

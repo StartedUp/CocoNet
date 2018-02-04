@@ -1,9 +1,9 @@
 package com.coconet.mit.customerPortal.util;
 
-import com.coconet.mit.customerPortal.model.PaymentDetails;
-import com.coconet.mit.customerPortal.model.Subscription;
-import com.coconet.mit.customerPortal.model.SubscriptionDeliveryRecord;
-import com.coconet.mit.customerPortal.model.SubscriptionPlan;
+import com.coconet.mit.commons.model.PaymentDetails;
+import com.coconet.mit.commons.model.Subscription;
+import com.coconet.mit.commons.model.SubscriptionDeliveryRecord;
+import com.coconet.mit.commons.model.SubscriptionPlan;
 import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
 
 import java.math.BigDecimal;

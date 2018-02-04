@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.dao;
 
-import com.coconet.mit.customerPortal.model.SubscriptionDeliveryRecord;
+import com.coconet.mit.commons.model.SubscriptionDeliveryRecord;
 
 /**
  * Created by Prithu on 21-03-2017.

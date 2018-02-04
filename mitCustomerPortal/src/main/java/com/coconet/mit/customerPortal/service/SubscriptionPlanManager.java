@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.service;
 
-import com.coconet.mit.customerPortal.model.SubscriptionPlan;
+import com.coconet.mit.commons.model.SubscriptionPlan;
 
 import java.util.List;
 

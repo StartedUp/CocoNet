@@ -1,7 +1,7 @@
 package com.coconet.mit.admin.service;
 
 import com.coconet.mit.admin.dao.RoleDao;
-import com.coconet.mit.admin.model.Role;
+import com.coconet.mit.commons.model.Role;
 import com.coconet.mit.admin.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

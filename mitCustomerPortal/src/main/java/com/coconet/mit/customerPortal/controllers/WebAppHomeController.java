@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.controllers;
 
-import com.coconet.mit.customerPortal.model.SubscriptionPlan;
+import com.coconet.mit.commons.model.SubscriptionPlan;
 import com.coconet.mit.customerPortal.service.SubscriptionPlanManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

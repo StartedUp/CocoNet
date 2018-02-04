@@ -1,6 +1,6 @@
 package com.coconet.mit.admin.service;
 
-import com.coconet.mit.admin.model.Role;
+import com.coconet.mit.commons.model.Role;
 
 import java.util.List;
 

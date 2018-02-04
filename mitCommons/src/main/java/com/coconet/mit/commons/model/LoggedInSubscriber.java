@@ -1,4 +1,4 @@
-package com.coconet.mit.customerPortal.model;
+package com.coconet.mit.commons.model;
 
 import org.springframework.security.core.userdetails.User;
 

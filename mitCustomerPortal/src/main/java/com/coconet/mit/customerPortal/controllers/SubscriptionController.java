@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.controllers;
 
-import com.coconet.mit.customerPortal.model.*;
+import com.coconet.mit.commons.model.*;
 import com.coconet.mit.customerPortal.service.MailService;
 import com.coconet.mit.customerPortal.service.SubscriberManager;
 import com.coconet.mit.customerPortal.service.SubscriptionManager;

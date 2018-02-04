@@ -1,6 +1,6 @@
 package com.coconet.mit.admin.repository;
 
-import com.coconet.mit.admin.model.Product;
+import com.coconet.mit.commons.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

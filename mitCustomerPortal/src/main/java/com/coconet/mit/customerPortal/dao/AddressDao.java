@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.dao;
 
-import com.coconet.mit.customerPortal.model.Address;
+import com.coconet.mit.commons.model.Address;
 
 /**
  * Created by Prithu on 10-03-2017.

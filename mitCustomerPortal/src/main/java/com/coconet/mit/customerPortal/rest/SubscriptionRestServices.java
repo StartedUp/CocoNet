@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.rest;
 
-import com.coconet.mit.customerPortal.model.*;
+import com.coconet.mit.commons.model.*;
 import com.coconet.mit.customerPortal.service.MailService;
 import com.coconet.mit.customerPortal.service.SubscriptionDeliveryRecordManager;
 import com.coconet.mit.customerPortal.service.SubscriptionManager;

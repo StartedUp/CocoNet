@@ -1,9 +1,9 @@
 package com.coconet.mit.customerPortal.service;
 
-import com.coconet.mit.customerPortal.model.Product;
-import com.coconet.mit.customerPortal.model.Subscriber;
-import com.coconet.mit.customerPortal.model.Subscription;
-import com.coconet.mit.customerPortal.model.SubscriptionPlan;
+import com.coconet.mit.commons.model.Product;
+import com.coconet.mit.commons.model.Subscriber;
+import com.coconet.mit.commons.model.Subscription;
+import com.coconet.mit.commons.model.SubscriptionPlan;
 import com.instamojo.wrapper.api.Instamojo;
 import com.instamojo.wrapper.api.InstamojoImpl;
 import com.instamojo.wrapper.exception.ConnectionException;

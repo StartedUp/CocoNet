@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.service;
 
-import com.coconet.mit.customerPortal.model.Subscription;
+import com.coconet.mit.commons.model.Subscription;
 
 /**
  * Created by Prithu on 10-03-2017.

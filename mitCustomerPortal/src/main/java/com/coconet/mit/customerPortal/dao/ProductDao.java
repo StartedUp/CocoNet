@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.dao;
 
-import com.coconet.mit.customerPortal.model.Product;
+import com.coconet.mit.commons.model.Product;
 
 import java.util.List;
 

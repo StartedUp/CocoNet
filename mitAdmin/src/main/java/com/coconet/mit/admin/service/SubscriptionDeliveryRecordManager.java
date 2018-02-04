@@ -1,6 +1,6 @@
 package com.coconet.mit.admin.service;
 
-import com.coconet.mit.admin.model.SubscriptionDeliveryRecord;
+import com.coconet.mit.commons.model.SubscriptionDeliveryRecord;
 
 import java.util.Date;
 import java.util.List;

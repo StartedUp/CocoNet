@@ -1,6 +1,6 @@
 package com.coconet.mit.admin.repository;
 
-import com.coconet.mit.admin.model.SubscriptionDeliveryRecord;
+import com.coconet.mit.commons.model.SubscriptionDeliveryRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;

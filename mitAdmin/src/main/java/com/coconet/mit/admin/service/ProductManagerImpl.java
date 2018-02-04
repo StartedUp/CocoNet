@@ -1,6 +1,6 @@
 package com.coconet.mit.admin.service;
 
-import com.coconet.mit.admin.model.Product;
+import com.coconet.mit.commons.model.Product;
 import com.coconet.mit.admin.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

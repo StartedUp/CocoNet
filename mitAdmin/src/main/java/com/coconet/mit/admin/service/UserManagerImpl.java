@@ -1,7 +1,7 @@
 package com.coconet.mit.admin.service;
 
 import com.coconet.mit.admin.dao.UserDao;
-import com.coconet.mit.admin.model.User;
+import com.coconet.mit.commons.model.User;
 import com.coconet.mit.admin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

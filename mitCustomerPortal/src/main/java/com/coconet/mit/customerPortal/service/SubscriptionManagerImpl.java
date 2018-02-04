@@ -1,7 +1,7 @@
 package com.coconet.mit.customerPortal.service;
 
 import com.coconet.mit.customerPortal.dao.SubscriptionDao;
-import com.coconet.mit.customerPortal.model.Subscription;
+import com.coconet.mit.commons.model.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

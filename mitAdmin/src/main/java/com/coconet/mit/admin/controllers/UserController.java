@@ -1,6 +1,6 @@
 package com.coconet.mit.admin.controllers;
 
-import com.coconet.mit.admin.model.SubscriptionDeliveryRecord;
+import com.coconet.mit.commons.model.SubscriptionDeliveryRecord;
 import com.coconet.mit.admin.service.SubscriptionDeliveryRecordManager;
 import com.coconet.mit.admin.service.SubscriptionManager;
 import org.apache.commons.logging.Log;

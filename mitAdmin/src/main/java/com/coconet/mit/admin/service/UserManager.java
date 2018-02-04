@@ -1,6 +1,6 @@
 package com.coconet.mit.admin.service;
 
-import com.coconet.mit.admin.model.User;
+import com.coconet.mit.commons.model.User;
 
 /**
  * Created by Prithu on 21-03-2017.

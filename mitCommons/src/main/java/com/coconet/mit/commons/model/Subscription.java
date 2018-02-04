@@ -17,7 +17,7 @@ import java.util.Set;
 @Table(name = "subscription")
 public class Subscription {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @NotNull

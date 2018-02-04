@@ -1,8 +1,8 @@
 package com.coconet.mit.customerPortal.rest;
 
-import com.coconet.mit.customerPortal.model.Address;
-import com.coconet.mit.customerPortal.model.LoggedInSubscriber;
-import com.coconet.mit.customerPortal.model.Subscriber;
+import com.coconet.mit.commons.model.Address;
+import com.coconet.mit.commons.model.LoggedInSubscriber;
+import com.coconet.mit.commons.model.Subscriber;
 import com.coconet.mit.customerPortal.service.SubscriberManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
