@@ -37,6 +37,7 @@ public class SubscriberDetailsService implements UserDetailsService {
             loggedInSubscriber.setLastName(subscriber.getLastName());
             return loggedInSubscriber;
         }catch (Exception e){
+            _log.info("Exception fetching subscriber by email ", e);
             throw new UsernameNotFoundException("Subcriber Email not found");
         }
     }

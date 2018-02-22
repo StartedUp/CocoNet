@@ -33,7 +33,7 @@ public class OnlinePaymentProcessor {
     public String placeOrder(Subscription subscription){
         PaymentOrder order = new PaymentOrder();
         Subscriber subscriber = subscription.getSubscriber();
-        Product product=subscription.getSubscriptionPlan().getProduct();
+        Product product=subscription.getProduct();
         SubscriptionPlan subscriptionPlan =subscription.getSubscriptionPlan();
         order.setName(subscriber.getFirstName()+" "+subscriber.getLastName());
         order.setEmail(subscriber.getEmail());

@@ -11,6 +11,8 @@
 		<module>mitCustomerPortal</module>
 		<module>mitAdmin</module>
 		<module>mitCommons</module>
+		<module>mitDbService</module>
+		<module>mitAppService</module>
 	</modules>
 	<name>CocoNet</name>
 	<description>Buy tender coconut online</description>

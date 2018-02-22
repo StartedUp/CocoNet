@@ -79,6 +79,11 @@ public class Subscription {
     @OneToMany(targetEntity =PaymentDetails.class, mappedBy = "subscription", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PaymentDetails> paymentDetailsSet;
 
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     public int getId() {
         return id;
     }
@@ -237,6 +242,15 @@ public class Subscription {
 
     public void setPaymentDetailsSet(Set<PaymentDetails> paymentDetailsSet) {
         this.paymentDetailsSet = paymentDetailsSet;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Subscription setProduct(Product product) {
+        this.product = product;
+        return this;
     }
 
     @Override

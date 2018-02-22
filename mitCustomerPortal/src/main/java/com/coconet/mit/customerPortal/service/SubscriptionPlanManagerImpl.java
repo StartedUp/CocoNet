@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.service;
 
-import com.coconet.mit.customerPortal.dao.SubscriptionPlanDao;
+import com.coconet.mit.appService.service.SubscriptionPlanService;
 import com.coconet.mit.commons.model.SubscriptionPlan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +15,15 @@ import java.util.List;
 @Transactional
 public class SubscriptionPlanManagerImpl implements SubscriptionPlanManager{
     @Autowired
-    private SubscriptionPlanDao subscriptionPlanDao;
+    private SubscriptionPlanService subscriptionPlanService;
 
     @Override
     public List<SubscriptionPlan> subscriptionPlans() {
-        return subscriptionPlanDao.subscriptionPlans();
+        return subscriptionPlanService.subscriptionPlans();
     }
 
     @Override
     public SubscriptionPlan getSubscriptionPlan(int id) {
-        return subscriptionPlanDao.getSubscriptionPlan(id);
+        return subscriptionPlanService.getSubscriptionPlan(id);
     }
 }

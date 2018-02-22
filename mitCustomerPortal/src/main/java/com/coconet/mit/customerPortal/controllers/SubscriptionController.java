@@ -68,7 +68,7 @@ public class SubscriptionController {
     public String onlinePaymentStatus(@RequestParam("id") String paymentRequestId, @RequestParam("transaction_id") int transactionId, @RequestParam("payment_id") String paymentId){
         Subscription subscription=subscriptionManager.getSubscriptionById(transactionId);
         SubscriptionPlan subscriptionPlan=subscription.getSubscriptionPlan();
-        Product product=subscriptionPlan.getProduct();
+        Product product=subscription.getProduct();
         try {
             Instamojo api = InstamojoImpl.getApi(instamojoClientId, instamojoClientSecret, instamojoApiEndpoint, instamojoAuthEndpoint);
 
@@ -105,10 +105,10 @@ public class SubscriptionController {
         Mailer mailer = new Mailer();
         mailer.setRecipients(recipients);
         mailer.setBccList(bccList);
-        mailer.setSubject(subscriptionPlan.getProduct().getProductName() + " Subscription Initialized and Activated");
+        mailer.setSubject(subscription.getProduct().getProductName() + " Subscription Initialized and Activated");
         HashMap<String, String> mailTemplateData = new HashMap<String, String>();
         mailTemplateData.put("userName", subscriber.getFirstName() + " " + subscriber.getLastName());
-        mailTemplateData.put("productSubscriptionPlanName", subscriptionPlan.getProduct().getProductName() + " " +
+        mailTemplateData.put("productSubscriptionPlanName", subscription.getProduct().getProductName() + " " +
                 subscriptionPlan.getPlanName());
         mailTemplateData.put("startDate", (subscription.getStartDate().toString()).substring(0, 10));
         mailTemplateData.put("endDate", (subscription.getEndDate().toString()).substring(0, 10));

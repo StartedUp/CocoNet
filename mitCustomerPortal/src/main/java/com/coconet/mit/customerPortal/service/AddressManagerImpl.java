@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.service;
 
-import com.coconet.mit.customerPortal.dao.AddressDao;
+import com.coconet.mit.appService.service.AddressService;
 import com.coconet.mit.commons.model.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AddressManagerImpl implements AddressManager{
     @Autowired
-    private AddressDao addressDao;
+    private AddressService addressService;
 
     @Override
     public Address getAddress(int addressId) {
-        return addressDao.getAddress(addressId);
+        return addressService.getAddress(addressId);
     }
 }

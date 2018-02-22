@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.service;
 
-import com.coconet.mit.customerPortal.dao.SubscriptionDeliveryRecordDao;
+import com.coconet.mit.appService.service.SubscriptionDeliveryRecordService;
 import com.coconet.mit.commons.model.SubscriptionDeliveryRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,14 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class SubscriptionDeliveryRecordManagerImpl implements SubscriptionDeliveryRecordManager {
 
     @Autowired
-    private SubscriptionDeliveryRecordDao subscriptionDeliveryRecordDao;
+    private SubscriptionDeliveryRecordService subscriptionDeliveryRecordService;
     @Override
     public SubscriptionDeliveryRecord getSubscriptionDeliveryRecordById(int subscriptionDeliveryRecord) {
-        return subscriptionDeliveryRecordDao.getSubscriptionDeliveryRecordById(subscriptionDeliveryRecord);
+        return subscriptionDeliveryRecordService.getSubscriptionDeliveryRecordById(subscriptionDeliveryRecord);
     }
 
     @Override
     public void saveOrUpdate(SubscriptionDeliveryRecord subscriptionDeliveryRecord) {
-        subscriptionDeliveryRecordDao.saveOrUpdate(subscriptionDeliveryRecord);
+        subscriptionDeliveryRecordService.saveOrUpdate(subscriptionDeliveryRecord);
     }
 }

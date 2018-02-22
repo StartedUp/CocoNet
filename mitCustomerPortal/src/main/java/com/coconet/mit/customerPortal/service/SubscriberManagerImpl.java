@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.service;
 
-import com.coconet.mit.customerPortal.dao.SubscriberDao;
+import com.coconet.mit.appService.service.SubscriberService;
 import com.coconet.mit.commons.model.Subscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional
 public class SubscriberManagerImpl implements SubscriberManager {
     @Autowired
-    private SubscriberDao subscriberDao;
+    private SubscriberService subscriberService;
     @Override
     public List<Subscriber> list() {
         return null;
@@ -28,26 +28,26 @@ public class SubscriberManagerImpl implements SubscriberManager {
 
     @Override
     public void saveOrUpdate(Subscriber subscriber) {
-        subscriberDao.saveOrUpdate(subscriber);
+        subscriberService.saveOrUpdate(subscriber);
     }
 
     @Override
     public void update(Subscriber subscriber) {
-        subscriberDao.update(subscriber);
+        subscriberService.update(subscriber);
     }
 
     @Override
     public Subscriber findByEmail(String email) {
-        return  subscriberDao.findByEmail(email);
+        return  subscriberService.findByEmail(email);
     }
 
     @Override
     public Subscriber findByEmailAndToken(String email, String token) {
-        return subscriberDao.findByEmailAndToken(email, token);
+        return subscriberService.findByEmailAndToken(email, token);
     }
 
     @Override
     public Subscriber findByToken(String token) {
-        return subscriberDao.findByToken(token);
+        return subscriberService.findByToken(token);
     }
 }

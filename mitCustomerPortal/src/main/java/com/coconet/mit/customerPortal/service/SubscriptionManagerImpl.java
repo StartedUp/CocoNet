@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.service;
 
-import com.coconet.mit.customerPortal.dao.SubscriptionDao;
+import com.coconet.mit.appService.service.SubscriptionService;
 import com.coconet.mit.commons.model.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,24 +13,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SubscriptionManagerImpl implements SubscriptionManager{
     @Autowired
-    private SubscriptionDao subscriptionDao;
+    private SubscriptionService subscriptionService;
     @Override
     public void saveOrUpdate(Subscription subscription) {
-        subscriptionDao.saveOrUpdate(subscription);
+        subscriptionService.saveOrUpdate(subscription);
     }
 
     @Override
     public Subscription getSubscription(Subscription subscription) {
-        return subscriptionDao.getSubscription(subscription);
+        return subscriptionService.getSubscription(subscription);
     }
 
     @Override
     public Subscription getSubscriptionById(int id) {
-        return subscriptionDao.getSubscriptionById(id);
+        return subscriptionService.getSubscriptionById(id);
     }
 
     @Override
     public Subscription getSubscriptionByIdEager(int id) {
-        return subscriptionDao.getSubscriptionByIdEager(id);
+        return subscriptionService.getSubscriptionByIdEager(id);
     }
 }

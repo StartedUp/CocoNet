@@ -1,6 +1,7 @@
 package com.coconet.mit.customerPortal.controllers;
 
-import com.coconet.mit.commons.model.SubscriptionPlan;
+import com.coconet.mit.commons.model.Product;
+import com.coconet.mit.customerPortal.service.ProductManager;
 import com.coconet.mit.customerPortal.service.SubscriptionPlanManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,20 +22,22 @@ import java.util.List;
 public class WebAppHomeController {
     @Autowired
     private SubscriptionPlanManager subscriptionPlanManager;
+    @Autowired
+    private ProductManager productManager;
     private static final Log _log = LogFactory.getLog(WebAppHomeController.class);
 
     @RequestMapping("/")
     public String webAppHome(Model model){
-        List<SubscriptionPlan> subscriptionPlans=subscriptionPlanManager.subscriptionPlans();
-        _log.info(subscriptionPlans);
-        model.addAttribute("subscriptionPlans", subscriptionPlans);
+        List<Product> products=productManager.products();
+        _log.info(products);
+        model.addAttribute("products", products);
         return "webAppHome";
     }
     @RequestMapping("/welcome")
     public String welcomeHome(Model model){
-        List<SubscriptionPlan> subscriptionPlans=subscriptionPlanManager.subscriptionPlans();
-        _log.info(subscriptionPlans);
-        model.addAttribute("subscriptionPlans", subscriptionPlans);
+        List<Product> products=productManager.products();
+        _log.info(products);
+        model.addAttribute("products", products);
         return "webAppHome";
     }
     @RequestMapping("/loginPage")

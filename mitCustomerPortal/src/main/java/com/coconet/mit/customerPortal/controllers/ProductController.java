@@ -36,6 +36,8 @@ public class ProductController{
     @Autowired
     private SubscriberManager subscriberManager;
     @Autowired
+    private ProductManager productManager;
+    @Autowired
     private SubscriptionManager subscriptionManager;
     @Autowired
     private AddressManager addressManager;
@@ -45,23 +47,20 @@ public class ProductController{
     private String[] bccList;
     private static final Log _log = LogFactory.getLog(ProductController.class);
 
-    @RequestMapping(value = "/product/{productId}/subscriptionPlan/{subscriptionPlanId}")
-    public String showProductDetails(@PathVariable("productId") int productId,
-                                     @PathVariable("subscriptionPlanId") int subscriptionPlanId,
-                                     Model model){
+    @RequestMapping(value = "/product/{productId}")
+    public String showProductDetails(@PathVariable("productId") int productId, Model model){
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             LoggedInSubscriber loggedInSubscriber = (LoggedInSubscriber)auth.getPrincipal();
             Subscriber subscriber = subscriberManager.findByEmail(loggedInSubscriber.getEmail());
-            SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(subscriptionPlanId);
+            SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(1);
+            Product product=productManager.findById(productId);
             Subscription subscription =new Subscription();
             Calendar startDateCal = Calendar.getInstance();
             startDateCal.setTime(new Date());
             startDateCal.add(Calendar.DATE,1);
-            subscription=SubscriptionUtil.startAndEndDateSetter(subscription, subscriptionPlan, startDateCal.getTime());
-            model.addAttribute("subscriptionPlan", subscriptionPlan);
             model.addAttribute("subscription",subscription);
-            model.addAttribute("subscriber",subscriber);
+            model.addAttribute("subscriber",subscriber).addAttribute("product", product);
             _log.info(subscriber.getAddresses());
             return "product-details";
         }catch (Exception e){
@@ -77,6 +76,7 @@ public class ProductController{
             LoggedInSubscriber loggedInSubscriber = (LoggedInSubscriber)auth.getPrincipal();
             Subscriber subscriber = subscriberManager.findByEmail(loggedInSubscriber.getEmail());
             SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(subscription.getSubscriptionPlan().getId());
+            Product product=productManager.findById(subscription.getProduct().getId());
             model.addAttribute("subscriptionPlan", subscriptionPlan);
             model.addAttribute("subscription",subscription);
             model.addAttribute("subscriber",subscriber);
@@ -84,7 +84,7 @@ public class ProductController{
                 _log.info("hasErrors :" + bindingResult.hasErrors() + bindingResult.toString());
                 return "product-details";
             }
-            BigDecimal pricePerUnit=subscriptionPlan.getProduct().getPricePerUnit();
+            BigDecimal pricePerUnit=subscription.getProduct().getPricePerUnit();
             BigDecimal totalQuantity = subscription.getTotalQuantity();
             BigDecimal price = SubscriptionUtil.priceCalculator(totalQuantity, pricePerUnit);
             subscription.setActualPrice(price);
@@ -106,10 +106,10 @@ public class ProductController{
                 Mailer mailer = new Mailer();
                 mailer.setRecipients(recipients);
                 mailer.setBccList(bccList);
-                mailer.setSubject(subscriptionPlan.getProduct().getProductName() + " Subscription Initialized");
+                mailer.setSubject(subscription.getProduct().getProductName() + " Subscription Initialized");
                 HashMap<String, String> mailTemplateData = new HashMap<String, String>();
                 mailTemplateData.put("userName", subscriber.getFirstName() + " " + subscriber.getLastName());
-                mailTemplateData.put("productSubscriptionPlanName", subscriptionPlan.getProduct().getProductName() + " " +
+                mailTemplateData.put("productSubscriptionPlanName", subscription.getProduct().getProductName() + " " +
                         subscriptionPlan.getPlanName());
                 mailTemplateData.put("startDate", (subscription.getStartDate().toString()).substring(0, 10));
                 mailTemplateData.put("endDate", (subscription.getEndDate().toString()).substring(0, 10));

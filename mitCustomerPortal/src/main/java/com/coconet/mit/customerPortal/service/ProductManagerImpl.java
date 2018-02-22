@@ -1,6 +1,6 @@
 package com.coconet.mit.customerPortal.service;
 
-import com.coconet.mit.customerPortal.dao.ProductDao;
+import com.coconet.mit.appService.service.ProductService;
 import com.coconet.mit.commons.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,15 @@ import java.util.List;
 @Transactional
 public class ProductManagerImpl implements ProductManager {
     @Autowired
-    ProductDao productDao;
+    ProductService productService;
 
     @Override
     public List<Product> products() {
-        return productDao.products();
+        return productService.products();
+    }
+
+    @Override
+    public Product findById(int id) {
+        return productService.findById(id);
     }
 }

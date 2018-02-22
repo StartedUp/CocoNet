@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface ProductManager {
     public List<Product> products();
+    Product findById(int id);
 }

@@ -1,11 +1,9 @@
 package com.coconet.mit.commons.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
 
 /**
  * Created by Prithu on 04-03-2017.
@@ -36,9 +34,9 @@ public class Product {
     @DecimalMax("50.0")*/
     @Column(name = "price_per_unit", nullable = false)
     private BigDecimal pricePerUnit;
-    @JsonIgnore
+    /*@JsonIgnore
     @OneToMany(targetEntity = SubscriptionPlan.class, mappedBy = "product",cascade= CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<SubscriptionPlan> subscriptionPlan;
+    private Set<SubscriptionPlan> subscriptionPlan;*/
 
     public int getId() {
         return id;

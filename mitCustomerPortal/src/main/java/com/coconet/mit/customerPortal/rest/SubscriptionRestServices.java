@@ -87,7 +87,7 @@ public class SubscriptionRestServices {
     public void sendUndeliveredReport(Subscription subscription, SubscriptionDeliveryRecord subscriptionDeliveryRecord){
         Subscriber subscriber=subscription.getSubscriber();
         SubscriptionPlan subscriptionPlan = subscription.getSubscriptionPlan();
-        Product product=subscriptionPlan.getProduct();
+        Product product=subscription.getProduct();
         _log.info("Sending Email about undelivered report to " + subscriber.getEmail());
         String[] recipients = {subscriber.getEmail(),"admin@madeintrees.com"};
         Mailer mailer = new Mailer();

@@ -81,20 +81,21 @@
 	<!-- Page Features -->
 	<div class="row text-center">
 
-		<div class="col-md-6 col-sm-12 hero-feature" th:each="subscriptionPlan,stat : ${subscriptionPlans}">
+		<div class="col-md-6 col-sm-12 hero-feature" th:each="product,stat : ${products}">
 			<div class="thumbnail">
 				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 25%;" alt="">
 				<div class="caption">
 					<h3 th:text="${'Plan-'+stat.count}">Subscription 1</h3>
-					<p th:text="${subscriptionPlan.planName}">Get it on weekdays.</p>
-					<p th:text="${'₹'+subscriptionPlan.product.pricePerUnit +' per '+subscriptionPlan.product.measurementUnit}"
+					<p th:text="${product.productName}"></p>
+					<p th:text="${'₹'+product.pricePerUnit +' per '+product.measurementUnit}"></p>
 					<p>
-						<a th:href="@{'/product/'+${subscriptionPlan.product.id}+'/subscriptionPlan/'+${subscriptionPlan.id}}" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default" data-toggle="modal" th:attr="data-target=${'#planId-'+subscriptionPlan.id}">More Info</a>
+						<a th:href="@{'/product/'+${product.id}}" class="btn btn-primary">Buy Now!</a>
+						<a href="#" class="btn btn-default" data-toggle="modal" th:attr="data-target=${'#planId-'+product.id}">More Info</a>
 					</p>
 				</div>
 			</div>
 			<!-- Modal -->
-			<div class="modal fade" th:id="${'planId-'+subscriptionPlan.id}" role="dialog">
+			<div class="modal fade" th:id="${'planId-'+product.id}" role="dialog">
 				<div class="modal-dialog">
 					<!-- Modal content-->
 					<div class="modal-content">
@@ -103,7 +104,7 @@
 							<h4 class="modal-title">Scheme details</h4>
 						</div>
 						<div class="modal-body">
-							<p th:text="${subscriptionPlan.description}"></p>
+							<p th:text="${product.productName}"></p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

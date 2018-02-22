@@ -1,4 +1,4 @@
-package com.coconet.mit.customerPortal.dao;
+package com.coconet.mit.dbService.dao;
 
 import com.coconet.mit.commons.model.SubscriptionPlan;
 import org.hibernate.SessionFactory;

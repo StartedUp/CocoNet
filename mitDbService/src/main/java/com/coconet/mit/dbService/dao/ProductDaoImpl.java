@@ -1,4 +1,4 @@
-package com.coconet.mit.customerPortal.dao;
+package com.coconet.mit.dbService.dao;
 
 import com.coconet.mit.commons.model.Product;
 import org.hibernate.SessionFactory;
@@ -17,6 +17,11 @@ public class ProductDaoImpl implements ProductDao{
 
     @Override
     public List<Product> products() {
-        return sessionFactory.getCurrentSession().createQuery("from product").list();
+        return sessionFactory.getCurrentSession().createQuery("from Product").list();
+    }
+
+    @Override
+    public Product findById(int id) {
+        return sessionFactory.getCurrentSession().get(Product.class, id);
     }
 }
