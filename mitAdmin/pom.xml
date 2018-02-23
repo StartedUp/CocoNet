@@ -13,8 +13,8 @@
     <artifactId>mitAdmin</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.coconet.mit.commons</groupId>
-            <artifactId>mitCommons</artifactId>
+            <groupId>com.coconet.mit.appService</groupId>
+            <artifactId>mitAppService</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
