@@ -11,6 +11,7 @@ public interface ProductManager {
     public Product save(Product product);
     public List<Product> findAll();
     public void deleteById(int id);
+    Product findById(int id);
   /*  public List<Event> findByEndDateAfter(Date endDate);
     public Event findById(Integer eventId);*/
 

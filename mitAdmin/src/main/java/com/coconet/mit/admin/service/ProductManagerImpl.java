@@ -28,8 +28,10 @@ public class ProductManagerImpl implements ProductManager {
     }
     @Override
     public Product save(Product product){
-        return product;
-
+        return productService.save(product);
     }
 
+    public Product findById(int id){
+        return productService.findById(id);
+    }
 }

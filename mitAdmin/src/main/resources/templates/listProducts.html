@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>Made In Trees</title>
     <meta charset="utf-8">
@@ -40,53 +41,55 @@
 </div>
 <hr>
 <p style="text-align: center" class="alert-info" th:if="${addProductSuccess}">Product Added...!!!</p>
-    <p style="text-align: center" class="alert-info" th:if="${uploadStatus}">Files Upload Success!!!"</p>
+<p style="text-align: center" class="alert-info" th:if="${uploadStatus}">Files Upload Success!!!"</p>
 
 <section>
     <div class="container" id="maincontent" tabindex="2">
+        <h3 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">All Products</h3><br><br><br>
         <div class="row">
             <div class="col-lg-12">
-                <br><div class="table-responsive">
-                <table style="border-style: solid" class="table table-hover table-bordered text-center" th:if="${!products.isEmpty()}">
-                    <thead>
-                    <tr style="color:#c7254e">
-                        <th>S.No</th>
-                        <th>Product ID</th>
-                        <th>Product Name</th>
-                        <th>Measurement Unit</th>
-                        <th>Variety Name</th>
-                        <th>Color</th>
-                        <th>Size In Word</th>
-                        <th>Size In Number</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr style="color: #122b40" th:each="product,stat : ${products}">
-                        <form name="removeProductForm" th:action="@{/removeProduct}" method="post">
-                        <td th:text="${stat.count}"></td>
-                        <td th:text="${product.id}"></td>
-                        <td th:text="${product.productName}"></td>
-                        <td th:text="${product.measurementUnit}"></td>
-                        <td th:text="${product.varietyName}"></td>
-                        <td th:text="${product.colour}"></td>
-                        <td th:text="${product.sizeInWord}"></td>
-                        <td th:text="${product.sizeInNumber}"></td>
-                        <td><input th:id="g" type="hidden" th:value="${product.id}" name="productId"/>
-                            <button type="submit" class="removebutton">
-                                Remove Product
-                            </button>
-                        </td>
+                <br>
+                <div class="table-responsive">
+                    <table style="border-style: solid" class="table table-hover table-bordered text-center"
+                           th:if="${!products.isEmpty()}">
+                        <thead>
+                        <tr style="color:#c7254e">
+                            <th>S.No</th>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Measurement Unit</th>
+                            <th>Variety Name</th>
+                            <th>Color</th>
+                            <th>Size In Word</th>
+                            <th>Size In Number</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="color: #122b40" th:each="product,stat : ${products}">
+                            <form name="removeProductForm" action="#" method="post">
+                                <td th:text="${stat.count}"></td>
+                                <td th:text="${product.id}"></td>
+                                <td><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}"></a></td>
+                                <!--<td th:text="${product.productName}"></td>-->
+                                <td th:text="${product.measurementUnit}"></td>
+                                <td th:text="${product.varietyName}"></td>
+                                <td th:text="${product.colour}"></td>
+                                <td th:text="${product.sizeInWord}"></td>
+                                <td th:text="${product.sizeInNumber}"></td>
+                                <td><input th:id="g" type="hidden" th:value="${product.id}" name="productId"/>
+                                    <button type="submit" class="removebutton">Remove Product</button>
+                                </td>
                             </form>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </section>
-    </div>
-    </div>
+</div>
+</div>
 </body>
 </html>

@@ -176,4 +176,12 @@ public class AdminController {
         model.addAttribute("imageFilesLarge",imageFilesL);
         return "productGalleryDisplay";
     }
+    @RequestMapping("/product/{productId}")
+    public String showspecificProductDetails(Model model, @PathVariable("productId") int productId){
+        Product product = productManager.findById(productId);
+        System.out.println("Product details : "+product);
+        model.addAttribute("specificProduct", product);
+        return "productDetails";
+    }
+
 }

@@ -11,4 +11,6 @@ public interface ProductDao {
     List<Product> products();
 
     Product findById(int id);
+
+    void save(Product product);
 }
