@@ -19,7 +19,7 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public void deleteById(int id) {
-        productService.delete(id);
+
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ProductManagerImpl implements ProductManager {
     }
     @Override
     public Product save(Product product){
-        return productService.save(product);
+        return product;
 
     }
 
