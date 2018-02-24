@@ -1,7 +1,7 @@
 package com.coconet.mit.admin.service;
 
 import com.coconet.mit.commons.model.SubscriptionDeliveryRecord;
-import com.coconet.mit.admin.repository.SubscriptionDeliveryRecordRepository;
+import com.coconet.mit.dbService.dao.SubscriptionDeliveryRecordDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,15 +17,15 @@ import java.util.List;
 public class SubscriptionDeliveryRecordManagerImpl implements SubscriptionDeliveryRecordManager {
 
     @Autowired
-    private SubscriptionDeliveryRecordRepository subscriptionDeliveryRecordRepository;
+    private SubscriptionDeliveryRecordDao subscriptionDeliveryRecordDao;
 
     @Override
     public List<SubscriptionDeliveryRecord> findByDate(Date date) {
-        return subscriptionDeliveryRecordRepository.findByDate(date);
+        return subscriptionDeliveryRecordDao.findByDate(date);
     }
 
     @Override
     public void save(SubscriptionDeliveryRecord subscriptionDeliveryRecord) {
-        subscriptionDeliveryRecordRepository.save(subscriptionDeliveryRecord);
+        subscriptionDeliveryRecordDao.save(subscriptionDeliveryRecord);
     }
 }

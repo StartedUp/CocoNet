@@ -1,8 +1,8 @@
-package com.coconet.mit.admin.service;
+package com.coconet.mit.appService.service;
 
-import com.coconet.mit.appService.service.RoleService;
 import com.coconet.mit.commons.model.Role;
 import com.coconet.mit.dbService.dao.RoleDao;
+import com.coconet.mit.dbService.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +14,14 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class RoleManagerImpl implements RoleManager{
+public class RoleServiceImpl implements RoleService {
     @Autowired
-    private RoleService roleService;
+    private RoleDao roleDao;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public List<Role> findAll() {
-        return roleService.findAll();
+        return roleRepository.findAll();
     }
 }

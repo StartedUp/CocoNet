@@ -1,7 +1,7 @@
 package com.coconet.mit.admin.service;
 
+import com.coconet.mit.appService.service.SubscriptionService;
 import com.coconet.mit.commons.model.Subscription;
-import com.coconet.mit.admin.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,20 +15,20 @@ import java.util.List;
 @Transactional
 public class SubscriptionManagerImpl implements SubscriptionManager {
     @Autowired
-    private SubscriptionRepository subscriptionRepository;
+    private SubscriptionService subscriptionService;
 
     @Override
     public List<Subscription> findBySubscriptionStatus(String subscriptionStatus) {
-        return subscriptionRepository.findBySubscriptionStatus(subscriptionStatus);
+        return subscriptionService.findBySubscriptionStatus(subscriptionStatus);
     }
 
     @Override
     public List<Subscription> findBySubscriptionStatusAndPaymentType(String subscriptionStatus, String paymentType) {
-        return subscriptionRepository.findBySubscriptionStatusAndPaymentType(subscriptionStatus, paymentType);
+        return subscriptionService.findBySubscriptionStatusAndPaymentType(subscriptionStatus, paymentType);
     }
 
     @Override
     public Subscription findById(Integer id) {
-        return subscriptionRepository.findById(id);
+        return subscriptionService.getSubscriptionById(id);
     }
 }
