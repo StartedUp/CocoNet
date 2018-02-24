@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by Prithu on 04-03-2017.
@@ -34,6 +35,9 @@ public class Product {
     @DecimalMax("50.0")*/
     @Column(name = "price_per_unit", nullable = false)
     private BigDecimal pricePerUnit;
+
+    @OneToMany(targetEntity = ProductImage.class, mappedBy = "product",cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ProductImage> productImages;
     /*@JsonIgnore
     @OneToMany(targetEntity = SubscriptionPlan.class, mappedBy = "product",cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SubscriptionPlan> subscriptionPlan;*/
