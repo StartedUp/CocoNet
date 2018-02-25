@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<!--<head th:include="fragments/header :: head">-->
+    <meta charset="UTF-8" />
+    <title>Add Product</title>
+    <link rel="stylesheet" href="css/registerForm.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #76b852" id="page-top" class="index">
+<!--<div th:include="fragments/header :: header"></div>-->
+<section id="registration" th:name="register">
+    <div class="container">
+        <div  class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">Made in Trees-Products</h1><br><br><br>
+                <hr class="star-primary">
+            </div>
+            <div class="row">
+                <div class="col-lg-1 text-left bold">
+                    <a class="btn btn-default" style="text-align: left" href="/listProducts">Go BACK</a>
+                </div>
+                <div class="col-lg-2 text-right bold">
+                    <a class="btn btn-default" style="text-align: left" href="/uploadImages">Upload Images</a>
+                </div>
+                <div class="col-lg-2 text-right bold">
+                    <a class="btn btn-default" style="text-align: left" href="/productGallery">View Product Images</a>
+                </div>
+                <div class="col-lg-7 text-right bold">
+                    <a class="btn btn-default" style="text-align: right" href="javascript: document.logoutForm.submit()">Logout</a>
+                    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                        <input hidden type="submit" value="Sign Out"/>
+                    </form>
+                </div>
+            </div>
+        <p style="text-align: center" class="alert-info" th:if="${addProductSuccess}">Product Added...!!!</p>
+        <p style="text-align: center" class="alert-info" th:if="${addProductError}">Error in the provided inputs!!!</p>
+        <hr>
+            <h3 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">Product Details</h3><br><br><br>
+            <div class="row">
+            <div class="col-lg-7 col-lg-offset-4">
+                <form action="/addThisProduct" method="post" class="register-form">
+                    <div class="row control-group">
+                        <div class="form-group col-xs-7 floating-label-form-group controls">
+                            <label for="productName">Product Name</label>
+                            <input name="productName" class="form-control" type="text" th:value="${specificProduct.ProductName}" required/>
+                            <input name="id" class="form-control" type="hidden" th:value="${specificProduct.id}" required/>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-6 floating-label-form-group controls">
+                            <label for="measurementUnit">Measurement Unit</label>
+                            <input name="measurementUnit" class="form-control " type="text" th:value="${specificProduct.measurementUnit}" required/>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-7 floating-label-form-group controls">
+                            <label for="varietyName">Variety Name</label>
+                            <input name="varietyName" type="text"  class="form-control" th:value="${specificProduct.varietyName}" required />
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-6 floating-label-form-group controls">
+                            <label for="colour">Colour</label>
+                            <input name="colour" class="form-control" type="text" th:value="${specificProduct.colour}" required/>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-7 floating-label-form-group controls">
+                            <label for="sizeInWord">Size In Word</label>
+                            <input name="sizeInWord" class="form-control" type="text" th:value="${specificProduct.sizeInWord}" required/>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-6 floating-label-form-group controls">
+                            <label for="sizeInNumber">Size In Number</label>
+                            <input name="sizeInNumber" class="form-control" type="number" th:value="${specificProduct.sizeInNumber}" required/>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-7 floating-label-form-group controls">
+                            <label for="pricePerUnit">Price Per Unit</label>
+                            <input name="pricePerUnit" class="form-control" type="number" th:value="${specificProduct.pricePerUnit}" required/>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <input value="Update Product" type="submit" class="btn btn-success" style="background-color: #2f89bd"/>
+                        </div>
+                    </div>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                </form>
+            </div>
+        </div>
+    </div>
+        </div>
+</section>
+</body>
+</html>

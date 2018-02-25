@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Created by Prithu on 4/2/18.
  */
 @Entity
+@Table(name = "product_image")
 public class ProductImage {
 
     @Id

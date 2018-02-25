@@ -12,6 +12,8 @@ public interface ProductService {
 
     Product findById(int id);
 
+    Product save(Product product);
+
     //void delete(int id);
 
     //Product save(Product product);
