@@ -35,7 +35,7 @@ public class AdminController {
     @Autowired
     private ProductManager productManager;
     List<Product> products;
-    @Value("${LOCAL_UPLOAD_PATH}")
+    @Value("product.images.root.path")
     private String LOCAL_UPLOAD_PATH;
     //private String LOCAL_UPLOAD_PATH="/home/gokulraj/Repository/MyRepo/madeintrees/src/main/resources/static/images/products/";
     @RequestMapping(value = "/")
@@ -116,7 +116,7 @@ public class AdminController {
         new File(LOCAL_UPLOAD_PATH + productName +"/"+ productImgSize).mkdir();
         //Save the uploaded file to this folder
         String UPLOADED_FOLDER = LOCAL_UPLOAD_PATH+productName+"/"+ productImgSize+"/";
-        System.out.println(UPLOADED_FOLDER);
+        System.out.println("tes");
         for (MultipartFile file:files){
             if (files.length==0){
                 redirectAttributes.
