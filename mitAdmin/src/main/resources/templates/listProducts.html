@@ -20,19 +20,13 @@
 <h1 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">Made in Trees</h1><br><br><br>
 <hr>
 <div class="row">
-    <div class="col-lg-2 text-right bold">
+    <div class="col-lg-3 text-right bold">
         <a class="btn btn-default" style="text-align: left" href="/admin">Go BACK</a>
     </div>
-    <div class="col-lg-1 text-left bold">
+    <div class="col-lg-4 text-left bold">
         <a class="btn btn-default" style="text-align: left" href="/addProduct">Add Product</a>
     </div>
-    <div class="col-lg-2 text-right bold">
-        <a class="btn btn-default" style="text-align: left" href="/uploadImages">Upload Images</a>
-    </div>
-    <div class="col-lg-2 text-right bold">
-        <a class="btn btn-default" style="text-align: left" href="/productGallery">View Product Images</a>
-    </div>
-    <div class="col-lg-5 text-right bold">
+    <div class="col-lg-4 text-right bold">
         <a class="btn btn-default" style="text-align: right" href="javascript: document.logoutForm.submit()">Logout</a>
         <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
             <input hidden type="submit" value="Sign Out"/>
