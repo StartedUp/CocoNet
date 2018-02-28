@@ -97,18 +97,27 @@ public class AdminController {
         model.addAttribute("removeProductSuccess",true);
         return "redirect:/listProducts";
     }
-    @RequestMapping("/uploadImages")
-    public String showUploadImagePage(Model model){
-        products = productManager.findAll();
-        model.addAttribute("products", products);
+    @RequestMapping("/product/{productId}/uploadImages")
+    public String showUploadImagePage(@PathVariable("productId") int productId, Model model){
+        Product product = productManager.findById(productId);
+        model.addAttribute("product", product);
         return "uploadProductImages";
     }
+
+    @PostMapping("/updateProduct")
+    public String updateProduct(
+            @ModelAttribute("product") Product product,
+            @RequestParam("image")MultipartFile[] files) {
+        productManager.updateWithImages(product, files);
+        return "redirect:/listProducts";
+    }
     @PostMapping("/addProductImages")
-    public String uploadAlbumToGallery(@RequestParam("productName") String productName,
-                                       @RequestParam("productImgSize") String productImgSize,
-                                       @RequestParam("image")MultipartFile[] files,
-                                       RedirectAttributes redirectAttributes,
-                                        Model model)
+    public String uploadAlbumToGallery(
+            @RequestParam("productName") String productName,
+            @RequestParam("productImgSize") String productImgSize,
+            @RequestParam("image")MultipartFile[] files,
+            RedirectAttributes redirectAttributes,
+            Model model)
     {
         System.out.println(productName+"...."+productImgSize+"..."+files.length+" files");
         //Creating a new directory with Product Name

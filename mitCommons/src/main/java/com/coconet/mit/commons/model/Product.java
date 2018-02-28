@@ -106,6 +106,15 @@ public class Product {
         this.pricePerUnit = pricePerUnit;
     }
 
+    public List<ProductImage> getProductImages() {
+        return productImages;
+    }
+
+    public Product setProductImages(List<ProductImage> productImages) {
+        this.productImages = productImages;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Product{" +

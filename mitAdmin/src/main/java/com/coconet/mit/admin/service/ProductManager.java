@@ -1,6 +1,7 @@
 package com.coconet.mit.admin.service;
 
 import com.coconet.mit.commons.model.Product;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -12,6 +13,10 @@ public interface ProductManager {
     public List<Product> findAll();
     public void deleteById(int id);
     Product findById(int id);
+
+    void updateWithImages(Product product, MultipartFile[] files);
+
+    void saveUploadedImages(Product product, MultipartFile[] files);
   /*  public List<Event> findByEndDateAfter(Date endDate);
     public Event findById(Integer eventId);*/
 
