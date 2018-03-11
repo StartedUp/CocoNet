@@ -95,13 +95,15 @@ public class ProductManagerImpl implements ProductManager {
 
     private void setImageNames(List<ProductImage> productImages, MultipartFile[] files) {
         int index=0;
+        int filesIndex=0;
         for (ProductImage productImage: productImages) {
-            if (productImage.getId()==0 && index<files.length) {
-                String extension = FilenameUtils.getExtension(files[index++].getOriginalFilename());
+            if (productImage.getId()==0 && filesIndex<files.length) {
+                String extension = FilenameUtils.getExtension(files[filesIndex++].getOriginalFilename());
                 String productName = productImages.get(index).getProduct().getProductName().toLowerCase().replaceAll(" ","_");
                 long id = new Date().getTime();
                 productImage.setName(productName+"_"+id+"."+extension);
             }
+            index++;
         }
     }
 }
