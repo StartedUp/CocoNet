@@ -42,7 +42,7 @@
                                                    ${T(com.coconet.mit.commons.enums.ProductImageEnum).values()}">
                                     <input type="hidden" name="product" th:value="${product.id}">
                                     <input type="radio" th:value="${productImageEnum.getImageSize()}"
-                                           name="productImages[0].size">
+                                           th:name="|productImages[${#lists.size(product.productImages)}].size|">
                                     <span th:text="${productImageEnum.getSizeName()}"></span>
                                 </label>
                             </div>
@@ -74,7 +74,7 @@
     </div>
 </section>
 <script type="text/javascript">
-    var imagesCount=0;
+    var imagesCount=$('#imagesCount').val();
     $(document).ready(function () {
         $('#addNew').on('click', function() {
             $("#imageUpload").clone().prop('id', 'imageUpload_'+ ++imagesCount)

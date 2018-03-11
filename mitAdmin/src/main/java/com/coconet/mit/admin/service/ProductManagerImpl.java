@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,47 +49,59 @@ public class ProductManagerImpl implements ProductManager {
     public void saveUploadedImages(Product product, MultipartFile[] files) {
         List<ProductImage> productImages = product.getProductImages();
         int index=0;
-        for (MultipartFile file:files){
-            ProductImage productImage = productImages.get(index++);
-            String imagePath=productImage.getUrl();
-            File imageFile=new File("mitAdmin/src/main/resources/static/"+imagePath);
-            if (!imageFile.exists()) {
-                imageFile.getParentFile().mkdirs();
-            }
-            try {
-                byte[] bytes=file.getBytes();
-                Files.write(imageFile.toPath(),bytes);
-            }catch (Exception e){
-                e.printStackTrace();
+        for (ProductImage productImage: productImages){
+            if (productImage.getId()==0 && index<files.length) {
+                String imagePath=productImage.getUrl();
+                File imageFile=new File("mitAdmin/src/main/resources/static/"+imagePath);
+                File imageFileCustomerPortal=new File("mitCustomerPortal/src/main/resources/static/"+imagePath);
+                if (!imageFile.exists()) {
+                    imageFile.getParentFile().mkdirs();
+                }
+                if(!imageFileCustomerPortal.exists()) {
+                    imageFileCustomerPortal.getParentFile().mkdirs();
+                }
+                try {
+                    byte[] bytes=files[index++].getBytes();
+                    Files.write(imageFile.toPath(),bytes);
+                    Files.write(imageFileCustomerPortal.toPath(),bytes);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     @Override
     public void updateWithImages(Product productWithImages, MultipartFile[] files) {
-        List<ProductImage> productImages = productWithImages.getProductImages();
+        List<ProductImage> productNewImages = productWithImages.getProductImages();
         Product product = productService.findById(productWithImages.getId());
         productWithImages=productService.findById(productWithImages.getId());
-        productImages.forEach(productImage -> productImage.setProduct(product));
-        productWithImages.setProductImages(productImages);
-        productService.save(productWithImages);
-        productImages=productWithImages.getProductImages();
-        setImageNames(productImages, files);
-        productImages.forEach(productImage -> productImage
-                .setUrl(productImagesRootPath+(product.getProductName().replaceAll(" ","_").toLowerCase())
-                        +"/"+productImage.getName()));
-        product.setProductImages(productImages);
+        /*if (productWithImages.getProductImages()!=null) {
+            productNewImages.addAll(productWithImages.getProductImages());
+        }*/
+        productNewImages.forEach(productImage -> productImage.setProduct(product));
+        setImageNames(productNewImages, files);
+        productNewImages.forEach(productImage -> {
+            if (productImage.getId()==0) {
+                productImage
+                    .setUrl(productImagesRootPath+(product.getProductName().replaceAll(" ","_").toLowerCase())
+                            +"/"+productImage.getName());
+            }
+        });
+        product.setProductImages(productNewImages);
         saveUploadedImages(product, files);
         productService.save(product);
     }
 
     private void setImageNames(List<ProductImage> productImages, MultipartFile[] files) {
         int index=0;
-        for (MultipartFile file:files) {
-            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-            String productName = productImages.get(index).getProduct().getProductName().toLowerCase().replaceAll(" ","_");
-            int id = productImages.get(index).getId();
-            productImages.get(index).setName(productName+"_"+id+"."+extension);
+        for (ProductImage productImage: productImages) {
+            if (productImage.getId()==0 && index<files.length) {
+                String extension = FilenameUtils.getExtension(files[index++].getOriginalFilename());
+                String productName = productImages.get(index).getProduct().getProductName().toLowerCase().replaceAll(" ","_");
+                long id = new Date().getTime();
+                productImage.setName(productName+"_"+id+"."+extension);
+            }
         }
     }
 }

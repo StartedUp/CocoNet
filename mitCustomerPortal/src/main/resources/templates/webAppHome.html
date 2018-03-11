@@ -82,8 +82,16 @@
 	<div class="row text-center">
 
 		<div class="col-md-6 col-sm-12 hero-feature" th:each="product,stat : ${products}">
-			<div class="thumbnail">
-				<img th:src="@{/images/tender_coconut_1.jpg}" style="max-width: 25%;" alt="">
+			<div class="thumbnail text-center">
+				<div class="bxslider">
+					<div th:if="${!#lists.isEmpty(product.productImages)}"
+						th:each="productImage : ${product.productImages}">
+						<img th:src="@{${productImage.url}}" alt="">
+					</div>
+					<div th:if="${#lists.isEmpty(product.productImages)}">
+						<img src="/dummy.jpg" alt="">
+					</div>
+				</div>
 				<div class="caption">
 					<h3 th:text="${'Plan-'+stat.count}">Subscription 1</h3>
 					<p th:text="${product.productName}"></p>
@@ -314,5 +322,13 @@
 	<script src="../static/js/headroom.min.js" th:src="@{/js/headroom.min.js}"></script>
 	<script src="../static/js/jQuery.headroom.min.js" th:src="@{/js/jQuery.headroom.min.js}"></script>
 	<script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
+	<div th:include="fragments/head :: bxSlider" th:remove="tag"></div>
+	<script>
+		$(document).ready(function () {
+			$('.bxslider').bxSlider({
+				slideWidth: 600
+			});
+		})
+	</script>
 </body>
 </html>
