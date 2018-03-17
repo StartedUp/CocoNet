@@ -26,7 +26,6 @@ public class Subscription {
     @NotNull
     @Column(name = "end_date")
     private Date endDate;
-    @NotNull
     @Column(name = "preferred_delivery_time")
     private Time preferredDeliveryTime;
     @NotNull

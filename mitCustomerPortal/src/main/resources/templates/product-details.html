@@ -150,13 +150,13 @@
                     <input  th:if="${param.subscriptionId}" hidden id="subscription" name="id" th:value="${param.subscriptionId}" type="text">
                     <input hidden id="subscriber" name="subscriber.id" th:value="${subscriber.id}" type="text">
                     <input type="hidden" name="product.id" id="product" th:value="${product.id}">
-                    <!--<input id="subscriptionPlan" name="subscriptionPlan.id" th:value="${1}" type="text">-->
+                    <input id="subscriptionPlan" name="subscriptionPlan.id" th:value="${5}" type="hidden">
                     <!--<input hidden id="startDate" name="startDate" th:value="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}" type="text">
                     <input hidden id="endDate" name="endDate" th:value="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}" type="text">-->
                     <input id="totalNumberOfDays" hidden name="totalNumberOfDays" th:value="${subscription.totalNumberOfDays}" type="text">
                     <input hidden id="totalQuantity" name="totalQuantity" type="text">
-                    <input hidden id="discountPercentage" name="discountPercentage"  type="text">
-                    <input hidden id="discount" name="discount" value="0.0" type="text">
+                    <!--<input hidden id="discountPercentage" name="discountPercentage"  type="text">-->
+                    <!--<input hidden id="discount" name="discount" value="0.0" type="text">-->
                     <input hidden id="paymentStatus" name="paymentStatus" value="pending" type="text">
 
                     <input hidden id="actualPrice" name="actualPrice" type="text">
