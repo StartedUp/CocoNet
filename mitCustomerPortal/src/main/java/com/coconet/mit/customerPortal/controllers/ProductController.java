@@ -53,7 +53,7 @@ public class ProductController{
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             LoggedInSubscriber loggedInSubscriber = (LoggedInSubscriber)auth.getPrincipal();
             Subscriber subscriber = subscriberManager.findByEmail(loggedInSubscriber.getEmail());
-            SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(1);
+            //SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(1);
             Product product=productManager.findById(productId);
             Subscription subscription =new Subscription();
             Calendar startDateCal = Calendar.getInstance();

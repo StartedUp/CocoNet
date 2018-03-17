@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SubscriberRepository extends JpaRepository<Subscriber, Integer> {
+    Subscriber findByEmail(String email);
 }
