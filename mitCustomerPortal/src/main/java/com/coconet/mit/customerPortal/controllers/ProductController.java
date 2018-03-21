@@ -53,7 +53,7 @@ public class ProductController{
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             LoggedInSubscriber loggedInSubscriber = (LoggedInSubscriber)auth.getPrincipal();
             Subscriber subscriber = subscriberManager.findByEmail(loggedInSubscriber.getEmail());
-            SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(1);
+            //SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(1);
             Product product=productManager.findById(productId);
             Subscription subscription =new Subscription();
             Calendar startDateCal = Calendar.getInstance();
@@ -77,6 +77,9 @@ public class ProductController{
             Subscriber subscriber = subscriberManager.findByEmail(loggedInSubscriber.getEmail());
             SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(subscription.getSubscriptionPlan().getId());
             Product product=productManager.findById(subscription.getProduct().getId());
+            subscription.setSubscriber(subscriber);
+            subscription.setSubscriptionPlan(subscriptionPlan);
+            subscription.setProduct(product);
             model.addAttribute("subscriptionPlan", subscriptionPlan);
             model.addAttribute("subscription",subscription);
             model.addAttribute("subscriber",subscriber);
@@ -88,13 +91,15 @@ public class ProductController{
             BigDecimal totalQuantity = subscription.getTotalQuantity();
             BigDecimal price = SubscriptionUtil.priceCalculator(totalQuantity, pricePerUnit);
             subscription.setActualPrice(price);
-            subscription.setTotalPrice(price);
+            subscription.setTotalPrice(new BigDecimal(999.00));
             subscription.setPaymentStatus("pending");
             subscription.setSubscriptionStatus("initialized");
             subscription.setSubscriber(subscriber);
             subscription.setSubscriptionPlan(subscriptionPlan);
             subscription.setDeliveryAddress(addressManager.getAddress(subscription.getDeliveryAddress().getId()));
             subscription.setCreateDate(new Date());
+            subscription.setStartDate(new Date());
+            subscription.setEndDate(new Date());
             subscriptionManager.saveOrUpdate(subscription); /*Saving subscription*/
             if (subscription.getPaymentType().equals("cod")) {
                 subscription=SubscriptionUtil.setSubscriptionDeliveryRecords(subscription);
