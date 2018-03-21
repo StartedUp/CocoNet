@@ -11,7 +11,7 @@
 
     <groupId>com.coconet.mit.customerPortal</groupId>
     <artifactId>mitCustomerPortal</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

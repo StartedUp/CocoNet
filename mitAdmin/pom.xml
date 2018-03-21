@@ -11,6 +11,7 @@
 
     <groupId>com.coconet.mit.admin</groupId>
     <artifactId>mitAdmin</artifactId>
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.coconet.mit.appService</groupId>
