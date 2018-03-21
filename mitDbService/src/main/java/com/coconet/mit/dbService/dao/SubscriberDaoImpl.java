@@ -57,18 +57,7 @@ public class SubscriberDaoImpl implements SubscriberDao {
 
     @Override
     public Subscriber findByEmail(String email) {
-        String queryByEmail = "from Subscriber where email=:email";
-        Session session= sessionFactory.openSession();
-        /*Subscriber subscriber= (Subscriber) session.createQuery(queryByEmail)
-                .setParameter("email", email).uniqueResult();*/
-        session.close();
-        Subscriber subscriber = null;
-        try {
-            subscriber = jdbcTemplate.queryForObject(FETCH_SUBSCRIBER_BY_EMAIL, new SubscriberMapper(), email);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-        return subscriber;
+        return subscriberRepository.findByEmail(email);
     }
 
     @Override

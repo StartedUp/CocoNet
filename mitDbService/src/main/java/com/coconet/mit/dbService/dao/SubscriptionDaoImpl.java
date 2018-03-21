@@ -21,7 +21,7 @@ public class SubscriptionDaoImpl implements  SubscriptionDao{
     private SubscriptionRepository subscriptionRepository;
     @Override
     public void saveOrUpdate(Subscription subscription) {
-        this.sessionFactory.getCurrentSession().saveOrUpdate(subscription);
+        subscriptionRepository.save(subscription);
     }
 
     @Override
@@ -32,8 +32,7 @@ public class SubscriptionDaoImpl implements  SubscriptionDao{
 
     @Override
     public Subscription getSubscriptionById(int id) {
-        return (Subscription)this.sessionFactory.getCurrentSession().createQuery("from Subscription where id=:id").setParameter("id",id
-        ).uniqueResult();
+        return subscriptionRepository.findOne(id);
     }
 
     @Override

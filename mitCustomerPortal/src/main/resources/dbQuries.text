@@ -1,0 +1,6 @@
+// Hard coded the subscription plan 18/03/2018
+INSERT INTO `coconet`.`subscription_plan` (`id`, `plan_name`, `Description`, `subscription_duration_type`, `subscription_duration_number`, `routine_pattern`, `discount_percentage`) VALUES ('5', 'One time delivery', 'The product is delivered once.', 'day', '1', '', '0');
+// changed the preferred delivery time not null 18/03/2018
+ALTER TABLE `coconet`.`subscription`
+CHANGE COLUMN `preferred_delivery_time` `preferred_delivery_time` TIME NULL DEFAULT '10:00:00' ;
+

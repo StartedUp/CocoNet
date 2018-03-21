@@ -114,7 +114,7 @@ public class SubscriptionController {
         mailTemplateData.put("endDate", (subscription.getEndDate().toString()).substring(0, 10));
         mailTemplateData.put("paymentType", subscription.getPaymentType());
         mailTemplateData.put("totalPrice", subscription.getTotalPrice() + "");
-        mailTemplateData.put("preferredDeliveryTime", subscription.getPreferredDeliveryTime().toString());
+        mailTemplateData.put("preferredDeliveryTime", ""); // TODO: 18/3/18 remove hard coded. "" 
         mailTemplateData.put("deliveryAddress", subscription.getDeliveryAddress().toString());
         mailTemplateData.put("numberOfCoconuts", (subscription.getTotalQuantity()) + "");
         mailTemplateData.put("templateName", "mailTemplates/subscriptionDetails");

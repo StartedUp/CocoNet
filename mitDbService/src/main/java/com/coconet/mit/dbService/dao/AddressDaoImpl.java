@@ -1,6 +1,7 @@
 package com.coconet.mit.dbService.dao;
 
 import com.coconet.mit.commons.model.Address;
+import com.coconet.mit.dbService.repository.AddressRepository;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,8 +14,11 @@ public class AddressDaoImpl implements AddressDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     @Override
     public Address getAddress(int addressId) {
-        return (Address)this.sessionFactory.getCurrentSession().createQuery("from Address where id =:id").setParameter("id",addressId).uniqueResult();
+        return addressRepository.findOne(addressId);
     }
 }

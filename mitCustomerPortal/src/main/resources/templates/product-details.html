@@ -65,19 +65,19 @@
     <!-- container -->
     <div class="container">
 
-        <h2 class="text-center top-space" th:inline="text">[[${subscriptionPlan.product.productName}]]-[[${subscriptionPlan.planName}]]</h2>
+        <h2 class="text-center top-space" th:inline="text">[[${product.productName}]]</h2>
         <br>
 
         <div class="row">
             <div class="col-sm-6">
-                <h3>Subscription Start date</h3>
-                <p id="displayStartDate" class="data" th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"></p>
+                <!--<h3>Subscription Start date</h3>
+                <p id="displayStartDate" class="data" &lt;!&ndash;th:text="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}"&ndash;&gt;></p>
                 <label>Choose alternate start Date</label>
                 <input type="text" id="datepicker">
                 <h3>Subscription Ends on</h3>
-                <p id="displayEndDate" class="data" th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"></p>
-                <h3>Price per <span th:text="${subscriptionPlan.product.measurementUnit}"></span></h3>
-                <p class="data" th:inline="text">₹ [[${subscriptionPlan.product.pricePerUnit}]]</p>
+                <p id="displayEndDate" class="data" &lt;!&ndash;th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"&ndash;&gt;></p>-->
+                <h3>Price per <span th:text="${product.measurementUnit}"></span></h3>
+                <p class="data" th:inline="text">₹ [[${product.pricePerUnit}]]</p>
                 <div class="container-fluid">
                     <!-- Modal -->
                     <div class="modal fade" id="myModal" role="dialog">
@@ -144,19 +144,19 @@
             </div>
             <div class="col-sm-6">
                 <form role="form" data-toggle="validator" id="productSubscribeForm" action="/product/subscribe/" method="post">
-                    <input id="measurementUnit" hidden th:value="${subscriptionPlan.product.measurementUnit}" type="text">
-                    <input id="pricePerUnit" hidden th:value="${subscriptionPlan.product.pricePerUnit}" type="text">
+                    <input id="measurementUnit" hidden th:value="${product.measurementUnit}" type="text">
+                    <input id="pricePerUnit" hidden th:value="${product.pricePerUnit}" type="text">
 
                     <input  th:if="${param.subscriptionId}" hidden id="subscription" name="id" th:value="${param.subscriptionId}" type="text">
                     <input hidden id="subscriber" name="subscriber.id" th:value="${subscriber.id}" type="text">
                     <input type="hidden" name="product.id" id="product" th:value="${product.id}">
-                    <input hidden id="subscriptionPlan" name="subscriptionPlan.id" th:value="${1}" type="text">
-                    <input hidden id="startDate" name="startDate" th:value="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}" type="text">
-                    <input hidden id="endDate" name="endDate" th:value="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}" type="text">
+                    <input id="subscriptionPlan" name="subscriptionPlan.id" th:value="${5}" type="hidden">
+                    <!--<input hidden id="startDate" name="startDate" th:value="${#dates.format(subscription.startDate, 'dd-MMM-yyyy')}" type="text">
+                    <input hidden id="endDate" name="endDate" th:value="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}" type="text">-->
                     <input id="totalNumberOfDays" hidden name="totalNumberOfDays" th:value="${subscription.totalNumberOfDays}" type="text">
                     <input hidden id="totalQuantity" name="totalQuantity" type="text">
-                    <input hidden id="discountPercentage" name="discountPercentage" th:value="${subscriptionPlan.discountPercentage}" type="text">
-                    <input hidden id="discount" name="discount" value="0.0" type="text">
+                    <!--<input hidden id="discountPercentage" name="discountPercentage"  type="text">-->
+                    <!--<input hidden id="discount" name="discount" value="0.0" type="text">-->
                     <input hidden id="paymentStatus" name="paymentStatus" value="pending" type="text">
 
                     <input hidden id="actualPrice" name="actualPrice" type="text">
@@ -172,15 +172,16 @@
                         <h4 hidden>Total price = ₹ <span class="data" id="displayTotPrice"></span><span> (Inclusive of all taxes)</span></h4>
                     </div>
                     <div class="form-group top-margin">
-                        <label>Preferred Delivery time</label>
+                        <!--<label>Preferred Delivery time</label>
                             <select  name="preferredDeliveryTime" data-error="Please choose this field" type="text" class="form-control">
-                                <!--<option value=6:00:00">6:00</option>--><option value="7:00:00">07:00</option><!--<option value="8:00:00">08:00</option>
-                                <option value="9:00:00">09:00</option>--><option value="10:00:00" selected>10:00</option>
-                                <!--<option value="11:00:00">11:00</option><option value="12:00:00">12:00</option>
+                                &lt;!&ndash;<option value=6:00:00">6:00</option>&ndash;&gt;<option value="7:00:00">07:00</option>&lt;!&ndash;<option value="8:00:00">08:00</option>
+                                <option value="9:00:00">09:00</option>&ndash;&gt;<option value="10:00:00" selected>10:00</option>
+                                &lt;!&ndash;<option value="11:00:00">11:00</option><option value="12:00:00">12:00</option>
                                 <option value="13:00:00">13:00</option><option value="14:00:00">14:00</option>
-                                <option value="15:00:00">15:00</option><option value="16:00:00">16:00</option>-->
+                                <option value="15:00:00">15:00</option><option value="16:00:00">16:00</option>&ndash;&gt;
                                 <option value="16:00:00">16:00</option><option value="18:00:00">18:00</option>
-                            </select>
+                            </select>-->
+                        <h3>This product will be  delivered within 4 days.</h3>
                     </div>
                     <div th:if="${subscriber.addresses != null}" class="row">
                         <div class="col-sm-5">
@@ -224,7 +225,7 @@
                             data-prefill.name=""
                             data-prefill.email=""
                             data-theme.color="#F37254"
-                    ></script>
+                    </script>
                     <input type="hidden" value="Hidden Element" name="hidden">-->
                 </form>
             </div>
