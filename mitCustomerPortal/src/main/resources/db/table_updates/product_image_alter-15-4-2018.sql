@@ -1,0 +1,1 @@
+ ALTER table product_image MODIFY column product_id BIGINT(20);
