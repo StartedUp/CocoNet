@@ -386,7 +386,7 @@
             }
             console.log('isQuantityInvalid:'+isQuantityInvalid);
             if(!isQuantityInvalid && quantityPerDay!="") {
-                totalQuantity = totalNumberOfDays * quantityPerDay;
+                totalQuantity = totalNumberOfDays&&totalNumberOfDays>0?totalNumberOfDays:1 * quantityPerDay;
                 $.ajax({
                     type: "GET",
                     url: "/subscription/getTotalPrice",
