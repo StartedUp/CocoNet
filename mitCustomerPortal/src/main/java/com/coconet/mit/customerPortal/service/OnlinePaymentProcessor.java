@@ -53,6 +53,7 @@ public class OnlinePaymentProcessor {
             api = InstamojoImpl.getApi(instamojoClientId, instamojoClientSecret, instamojoApiEndpoint, instamojoAuthEndpoint);
         } catch (ConnectionException e) {
             //LOGGER.log(Level.SEVERE, e.toString(), e);
+            e.printStackTrace();
         }
 
         boolean isOrderValid = order.validate();

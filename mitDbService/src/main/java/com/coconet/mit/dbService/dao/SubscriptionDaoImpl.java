@@ -37,7 +37,8 @@ public class SubscriptionDaoImpl implements  SubscriptionDao{
 
     @Override
     public Subscription getSubscriptionByIdEager(int id){
-       Subscription subscription= (Subscription)this.sessionFactory.getCurrentSession().get(Subscription.class,id);
+        Subscription subscription = subscriptionRepository.findOne(id);
+//       Subscription subscription= (Subscription)this.sessionFactory.getCurrentSession().get(Subscription.class,id);
         Hibernate.initialize(subscription.getSubscriptionDeliveryRecords());
         return subscription;
     }

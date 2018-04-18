@@ -52,7 +52,7 @@ public class SubscriberDaoImpl implements SubscriberDao {
 
     @Override
     public void update(Subscriber subscriber) {
-        this.sessionFactory.getCurrentSession().update(subscriber);
+        subscriberRepository.save(subscriber);
     }
 
     @Override
@@ -62,9 +62,8 @@ public class SubscriberDaoImpl implements SubscriberDao {
 
     @Override
     public Subscriber findByEmailAndToken(String email, String token) {
-        String queryByEmailAndToken = "from Subscriber where email=:email and registration_token=:token";
-        return (Subscriber) this.sessionFactory.getCurrentSession().createQuery(queryByEmailAndToken)
-                .setParameter("email",email).setParameter("token",token).uniqueResult();
+//        String queryByEmailAndToken = "from Subscriber where email=:email and registration_token=:token";
+        return (Subscriber) subscriberRepository.findByEmailAndRegistrationToken(email, token);
     }
 
     @Override

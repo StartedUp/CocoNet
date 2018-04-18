@@ -53,7 +53,7 @@ public class ProductController{
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             LoggedInSubscriber loggedInSubscriber = (LoggedInSubscriber)auth.getPrincipal();
             Subscriber subscriber = subscriberManager.findByEmail(loggedInSubscriber.getEmail());
-            //SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(1);
+            SubscriptionPlan subscriptionPlan=subscriptionPlanManager.getSubscriptionPlan(1);
             Product product=productManager.findById(productId);
             Subscription subscription =new Subscription();
             Calendar startDateCal = Calendar.getInstance();
@@ -91,7 +91,7 @@ public class ProductController{
             BigDecimal totalQuantity = subscription.getTotalQuantity();
             BigDecimal price = SubscriptionUtil.priceCalculator(totalQuantity, pricePerUnit);
             subscription.setActualPrice(price);
-            subscription.setTotalPrice(new BigDecimal(999.00));
+            subscription.setTotalPrice(subscription.getTotalPrice());
             subscription.setPaymentStatus("pending");
             subscription.setSubscriptionStatus("initialized");
             subscription.setSubscriber(subscriber);
@@ -99,7 +99,12 @@ public class ProductController{
             subscription.setDeliveryAddress(addressManager.getAddress(subscription.getDeliveryAddress().getId()));
             subscription.setCreateDate(new Date());
             subscription.setStartDate(new Date());
-            subscription.setEndDate(new Date());
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_YEAR, 4);
+            Date deliveryDate = calendar.getTime();
+            _log.error("delivery date "+deliveryDate);
+            subscription.setEndDate(deliveryDate);
+            subscription.setPreferredDeliveryTime(new java.sql.Time(deliveryDate.getTime()));
             subscriptionManager.saveOrUpdate(subscription); /*Saving subscription*/
             if (subscription.getPaymentType().equals("cod")) {
                 subscription=SubscriptionUtil.setSubscriptionDeliveryRecords(subscription);

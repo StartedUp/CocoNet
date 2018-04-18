@@ -70,6 +70,8 @@ public class SubscriptionUtil {
         BigDecimal instamojoCommission = price.multiply(instamojoCommissionPercentage).add(instamojoCommissionValue).setScale(2,BigDecimal.ROUND_HALF_EVEN);
         BigDecimal VAT=instamojoCommission.multiply(taxPercentage).setScale(2,BigDecimal.ROUND_HALF_EVEN);
         BigDecimal totalPrice=price.add(instamojoCommission).add(VAT);
+        System.err.println("price "+price+" instamo "+instamojoCommission+" vat "+VAT);
+        System.err.println("total "+totalPrice);
         return totalPrice;
     }
 

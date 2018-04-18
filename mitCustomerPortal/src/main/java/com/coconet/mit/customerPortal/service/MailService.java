@@ -43,6 +43,7 @@ public class MailService {
             mailSender.send(messagePreparator);
         } catch (MailException e) {
             // runtime exception; compiler will not force you to handle it
+            e.printStackTrace();
         }
     }
 }
