@@ -36,6 +36,9 @@ public class Product {
     @Column(name = "price_per_unit", nullable = false)
     private BigDecimal pricePerUnit;
 
+    @Column(name = "product_description")
+    private String productDescription;
+
     @OneToMany(targetEntity = ProductImage.class, mappedBy = "product",cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductImage> productImages;
     /*@JsonIgnore
@@ -113,6 +116,14 @@ public class Product {
     public Product setProductImages(List<ProductImage> productImages) {
         this.productImages = productImages;
         return this;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     @Override
