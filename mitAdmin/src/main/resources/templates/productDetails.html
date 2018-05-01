@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-<!--<head th:include="fragments/header :: head">-->
-    <meta charset="UTF-8" />
+    <!--<head th:include="fragments/header :: head">-->
+    <meta charset="UTF-8"/>
     <title>Add Product</title>
     <link rel="stylesheet" href="css/registerForm.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -24,7 +25,8 @@
                     <a class="btn btn-default" style="text-align: left" href="/listProducts">Go BACK</a>
                 </div>
                 <div class="col-lg-2 text-right bold">
-                    <a class="btn btn-default" style="text-align: left" th:href="@{${'/product/'+specificProduct.id+'/uploadImages'}}">Upload Images</a>
+                    <a class="btn btn-default" style="text-align: left"
+                       th:href="@{${'/product/'+specificProduct.id+'/uploadImages'}}">Upload Images</a>
                 </div>
                 <div class="col-lg-2 text-right bold">
                     <a class="btn btn-default" style="text-align: left" href="/productGallery">View Product Images</a>
@@ -53,6 +55,14 @@
                                    th:value="${specificProduct.productName}" required/>
                             <input name="id" class="form-control" type="hidden" th:value="${specificProduct.id}"
                                    required/>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-7 floating-label-form-group controls">
+                            <label for="productDescription">Product Description</label>
+                            <textarea name="productDescription" class="form-control" rows="5" cols="55" maxlength="2000"
+                                      th:text="${specificProduct.productDescription}" required>
+                            </textarea>
                         </div>
                     </div>
                     <div class="row control-group">
