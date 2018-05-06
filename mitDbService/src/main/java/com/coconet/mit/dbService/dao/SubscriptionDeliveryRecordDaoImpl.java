@@ -21,7 +21,8 @@ public class SubscriptionDeliveryRecordDaoImpl implements SubscriptionDeliveryRe
     private SubscriptionDeliveryRecordRepository subscriptionDeliveryRecordRepository;
     @Override
     public SubscriptionDeliveryRecord getSubscriptionDeliveryRecordById(int subscriptionDeliveryRecord) {
-        return (SubscriptionDeliveryRecord)this.sessionFactory.getCurrentSession().get(SubscriptionDeliveryRecord.class,subscriptionDeliveryRecord);
+//        return (SubscriptionDeliveryRecord)this.sessionFactory.getCurrentSession().get(SubscriptionDeliveryRecord.class,subscriptionDeliveryRecord);
+        return subscriptionDeliveryRecordRepository.findById(subscriptionDeliveryRecord);
     }
 
     @Override
@@ -36,6 +37,6 @@ public class SubscriptionDeliveryRecordDaoImpl implements SubscriptionDeliveryRe
 
     @Override
     public void saveOrUpdate(SubscriptionDeliveryRecord subscriptionDeliveryRecord){
-        this.sessionFactory.getCurrentSession().saveOrUpdate(subscriptionDeliveryRecord);
+        subscriptionDeliveryRecordRepository.save(subscriptionDeliveryRecord);
     }
 }

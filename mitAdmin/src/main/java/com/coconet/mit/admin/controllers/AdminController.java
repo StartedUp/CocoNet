@@ -1,9 +1,10 @@
 package com.coconet.mit.admin.controllers;
 
-import com.coconet.mit.commons.model.*;
 import com.coconet.mit.admin.service.ProductManager;
 import com.coconet.mit.admin.service.RoleManager;
 import com.coconet.mit.admin.service.UserManager;
+import com.coconet.mit.commons.model.Product;
+import com.coconet.mit.commons.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;

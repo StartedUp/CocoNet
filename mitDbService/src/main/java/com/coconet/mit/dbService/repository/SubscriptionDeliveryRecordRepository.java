@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface SubscriptionDeliveryRecordRepository extends JpaRepository<SubscriptionDeliveryRecord, Integer> {
     public List<SubscriptionDeliveryRecord> findByDate(Date date);
+
+    SubscriptionDeliveryRecord findById(int subscriptionDeliveryRecord);
 }

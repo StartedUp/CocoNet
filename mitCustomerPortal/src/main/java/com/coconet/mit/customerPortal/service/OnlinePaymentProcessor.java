@@ -31,6 +31,7 @@ public class OnlinePaymentProcessor {
     @Value("${domain.name}")
     private String domainName;
     public String placeOrder(Subscription subscription){
+        System.err.println("Subscription "+subscription);
         PaymentOrder order = new PaymentOrder();
         Subscriber subscriber = subscription.getSubscriber();
         Product product=subscription.getProduct();
@@ -60,6 +61,7 @@ public class OnlinePaymentProcessor {
 
         if (isOrderValid) {
             try {
+                System.out.println("Order details "+order);
                 CreatePaymentOrderResponse createPaymentOrderResponse = api.createNewPaymentOrder(order);
                 // print the status of the payment order.
                 longUrl = createPaymentOrderResponse.getPaymentOptions().getPaymentUrl();

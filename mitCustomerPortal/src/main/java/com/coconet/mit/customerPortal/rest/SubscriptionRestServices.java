@@ -10,6 +10,7 @@ import com.coconet.mit.customerPortal.util.SubscriptionUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -38,6 +39,9 @@ public class SubscriptionRestServices {
     private SubscriptionDeliveryRecordManager subscriptionDeliveryRecordManager;
     @Autowired
     private MailService mailService;
+    @Value("$(spring.mail.username)")
+    private String adminMailId;
+
     private static final Log _log = LogFactory.getLog(SubscriptionRestServices.class);
     @RequestMapping(value = "/subscription/getTotalPrice", method = RequestMethod.GET)
     public ResponseEntity<String> calculateTotalPrice(@RequestParam("pricePerUnit") BigDecimal pricePerUnit, @RequestParam("totalQuantity") BigDecimal totalQuantity) {
@@ -89,7 +93,7 @@ public class SubscriptionRestServices {
         SubscriptionPlan subscriptionPlan = subscription.getSubscriptionPlan();
         Product product=subscription.getProduct();
         _log.info("Sending Email about undelivered report to " + subscriber.getEmail());
-        String[] recipients = {subscriber.getEmail(),"admin@madeintrees.com"};
+        String[] recipients = {subscriber.getEmail(), adminMailId};
         Mailer mailer = new Mailer();
         mailer.setRecipients(recipients);
         mailer.setSubject("Undelivered Report");
