@@ -52,4 +52,9 @@ public class SubscriptionDaoImpl implements  SubscriptionDao{
     public List<Subscription> findBySubscriptionStatusAndPaymentType(String subscriptionStatus, String paymentType) {
         return null;
     }
+
+    @Override
+    public Subscription getSubscriptionByOrderId(String orderId) {
+        return subscriptionRepository.findByOrderId(orderId);
+    }
 }

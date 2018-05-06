@@ -33,4 +33,9 @@ public class SubscriptionManagerImpl implements SubscriptionManager{
     public Subscription getSubscriptionByIdEager(int id) {
         return subscriptionService.getSubscriptionByIdEager(id);
     }
+
+    @Override
+    public Subscription getSubscriptionByOrderId(String orderId) {
+        return subscriptionService.getSubscriptionByOrderId(orderId);
+    }
 }

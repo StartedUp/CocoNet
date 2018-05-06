@@ -45,4 +45,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public List<Subscription> findBySubscriptionStatusAndPaymentType(String subscriptionStatus, String paymentType) {
         return subscriptionDao.findBySubscriptionStatusAndPaymentType(subscriptionStatus, paymentType);
     }
+
+    @Override
+    public Subscription getSubscriptionByOrderId(String orderId) {
+        return subscriptionDao.getSubscriptionByOrderId(orderId);
+    }
 }

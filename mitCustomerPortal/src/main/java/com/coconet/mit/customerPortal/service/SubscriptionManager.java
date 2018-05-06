@@ -10,4 +10,6 @@ public interface SubscriptionManager {
     public Subscription getSubscription(Subscription subscription);
     public Subscription getSubscriptionById(int id);
     public Subscription getSubscriptionByIdEager(int id);
+
+    Subscription getSubscriptionByOrderId(String orderId);
 }

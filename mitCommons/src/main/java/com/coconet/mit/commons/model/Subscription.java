@@ -83,6 +83,10 @@ public class Subscription {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @NotNull
+    @Column(unique = true)
+    private String orderId;
+
     public int getId() {
         return id;
     }
@@ -250,6 +254,14 @@ public class Subscription {
     public Subscription setProduct(Product product) {
         this.product = product;
         return this;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     @Override

@@ -16,4 +16,6 @@ public interface SubscriptionService {
     List<Subscription> findBySubscriptionStatus(String subscriptionStatus);
 
     List<Subscription> findBySubscriptionStatusAndPaymentType(String subscriptionStatus, String paymentType);
+
+    Subscription getSubscriptionByOrderId(String orderId);
 }

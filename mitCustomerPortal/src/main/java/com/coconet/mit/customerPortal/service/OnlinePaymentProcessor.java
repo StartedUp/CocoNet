@@ -44,7 +44,7 @@ public class OnlinePaymentProcessor {
         order.setDescription(product.getProductName()+" "+subscriptionPlan.getPlanName());
         order.setRedirectUrl(domainName+"/subscriber/subscription/paymentStatus");
         //order.setWebhookUrl("http://www.google.com/");
-        order.setTransactionId(subscription.getId()+"");
+        order.setTransactionId(subscription.getOrderId());
 
         Instamojo api = null;
         String longUrl = null;

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -100,12 +101,14 @@ public class ProductController{
             subscription.setCreateDate(new Date());
             subscription.setStartDate(new Date());
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_YEAR, 4);
             Date deliveryDate = calendar.getTime();
             _log.error("delivery date "+deliveryDate);
-            subscription.setEndDate(deliveryDate);
+            subscription.setEndDate(new Date());
             subscription.setPreferredDeliveryTime(new java.sql.Time(deliveryDate.getTime()));
+            subscription.setOrderId("");
             subscriptionManager.saveOrUpdate(subscription); /*Saving subscription*/
+            String orderId = subscription.getId()+""+ new Date().getTime();
+            subscription.setOrderId(orderId);
             if (subscription.getPaymentType().equals("cod")) {
                 subscription=SubscriptionUtil.setSubscriptionDeliveryRecords(subscription);
                 subscription=SubscriptionUtil.setPaymentDetails(subscription,null,null);

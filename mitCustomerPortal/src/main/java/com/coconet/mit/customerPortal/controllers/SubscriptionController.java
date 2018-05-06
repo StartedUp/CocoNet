@@ -65,19 +65,19 @@ public class SubscriptionController {
         }
     }
     @RequestMapping(value = "/subscriber/subscription/paymentStatus")
-    public String onlinePaymentStatus(@RequestParam("id") String paymentRequestId, @RequestParam("transaction_id") int transactionId, @RequestParam("payment_id") String paymentId){
-        Subscription subscription=subscriptionManager.getSubscriptionById(transactionId);
+    public String onlinePaymentStatus(@RequestParam("id") String paymentRequestId, @RequestParam("transaction_id") String orderId, @RequestParam("payment_id") String paymentId){
+        Subscription subscription=subscriptionManager.getSubscriptionByOrderId(orderId);
         SubscriptionPlan subscriptionPlan=subscription.getSubscriptionPlan();
         Product product=subscription.getProduct();
         try {
             Instamojo api = InstamojoImpl.getApi(instamojoClientId, instamojoClientSecret, instamojoApiEndpoint, instamojoAuthEndpoint);
 
-            PaymentOrderDetailsResponse paymentOrderDetailsResponse = api.getPaymentOrderDetailsByTransactionId(transactionId+"");
+            PaymentOrderDetailsResponse paymentOrderDetailsResponse = api.getPaymentOrderDetailsByTransactionId(orderId+"");
             // print the status of the payment order.
             _log.info("paymentOrderDetailsResponse.getStatus() "+paymentOrderDetailsResponse.getStatus());
             String status =paymentOrderDetailsResponse.getStatus();
             if (status.equals("completed")){
-                subscription=subscriptionManager.getSubscriptionById(transactionId);
+                subscription=subscriptionManager.getSubscriptionByOrderId(orderId);
                 if (subscription.getSubscriptionStatus()!=null &&!subscription.getSubscriptionStatus().equals("expired")) {
                     subscription.setPaymentStatus(status);
                     subscription.setSubscriptionStatus("active");
@@ -87,12 +87,12 @@ public class SubscriptionController {
                 }
                 return sendSuccessMail(subscription);
             }else {
-                return "/subscriber/" +product.getId()+"/"+subscriptionPlan.getId()+"?onlinePaymentFailed=true&subscriptionId=" + transactionId;
+                return "/subscriber/" +product.getId()+"/"+subscriptionPlan.getId()+"?onlinePaymentFailed=true&subscriptionId=" + orderId;
             }
         } catch (Exception e) {
             //LOGGER.log(Level.SEVERE, e.toString(), e);
             e.printStackTrace();
-            return "/subscriber/" +product.getId()+"/"+subscriptionPlan.getId()+"?onlinePaymentFailed=true&subscriptionId=" + transactionId;
+            return "/subscriber/" +product.getId()+"/"+subscriptionPlan.getId()+"?onlinePaymentFailed=true&subscriptionId=" + orderId;
         }
     }
 
