@@ -36,10 +36,11 @@
             padding-bottom: 0px;
             color: #000;
             text-shadow: none;
-        .btn {
-              text-shadow: none; // No shadow for button elements in carousel-caption
-          }
 
+        .btn {
+            text-shadow: none;
+        / / No shadow for button elements in carousel-caption
+        }
 
         .carousel {
             position: relative;
@@ -79,7 +80,7 @@
                             sec:authentication="name"></span><b style="margin-left: 10px;" class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/subscriber/profile">Profile</a></li>
-                        <li><a href="/subscriber/subscriptions">Active Subscriptions</a></li>
+                        <li><a href="/subscriber/subscriptions">Order Summary</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a>
@@ -118,7 +119,8 @@
             <div class="carousel-inner">
                 <div class="item active">
                     <div class="holder col-sm-8">
-                        <img class="img-responsive" src="/images/dryfruits.jpg" alt="..." style="width:800px;height:300px">
+                        <img class="img-responsive" src="/images/dryfruits.jpg" alt="..."
+                             style="width:800px;height:300px">
                     </div>
                     <div class="col-sm-4">
                         <div class="carousel-caption">
@@ -129,11 +131,11 @@
                 </div>
                 <div class="item">
                     <div class="holder col-sm-8">
-                        <img class="img-responsive" src="/images/Almond.jpg" alt="..." style="width:800px;height:300px">
+                        <img class="img-responsive" src="/images/image2.jpg" alt="..." style="width:800px;height:300px">
                     </div>
                     <div class="col-sm-4">
                         <div class="carousel-caption">
-                            <h2>Almond</h2>
+                            <h2>Dry Fruits</h2>
                             <p>Choose them over your regular unhealthy snacks.</p>
                             <p>Never compromise on your health</p>
                         </div>
@@ -141,12 +143,12 @@
                 </div>
                 <div class="item">
                     <div class="holder col-sm-8">
-                        <img class="img-responsive" src="/images/oil.jpg" alt="..." style="width:800px;height:300px">
+                        <img class="img-responsive" src="/images/image3.jpg" alt="..." style="width:800px;height:300px">
                     </div>
                     <div class="col-sm-4">
                         <div class="carousel-caption">
-                            <h2>Cooking Oil</h2>
-                            <p>All types of cooking oil will be available.</p>
+                            <h2>Pista</h2>
+                            <p>Spend on something which is really worth your money and health.</p>
                         </div>
                     </div>
                 </div>
@@ -340,7 +342,7 @@
                     <h3 class="widget-title">Contact</h3>
                     <div class="widget-body">
                         <p>+91 8438258092<br>
-                            <a href="mailto:#">admin@madeintrees.com</a><br>
+                            <a href="mailto:#">madeintrees@gmail.com</a><br>
                             <br>
                             144 Sornambal Nagar, Ammachatiram, Tirubuvanam 612103
                         </p>
@@ -358,15 +360,20 @@
                 </div>
 
                 <div class="col-md-6 widget">
-                    <h3 class="widget-title">Coconut Water Is A Clean Natural Drink</h3>
+                    <h3 class="widget-title">Dry Fruits Home</h3>
                     <div class="widget-body">
-                        <p>Tender coconut water is a natural source of electrolytes, minerals, vitamins, complex
-                            carbohydrates, Amino acids and other nutrients. The natural carbohydrate content is between
-                            4-5% of the liquid solution. This make coconut water particularly suitable for the
-                            burgeoning sports drink market. According to Sports Science Institute (USA), sports drinks
-                            containing under 5% carbohydrates are likely to provide benefits, while those exceeding 10%
-                            carbohydrate content, like most soft drinks are associated with abdominal cramps, nausea and
-                            diarrhea. </p>
+                        <p>Dry fruits have always been associated with desserts as most of us prefer to use
+                            them as a garnish. But not many of us are aware of the several important and
+                            useful health benefits and uses of dry fruits.
+                            Consumption of dry fruits is beneficial for any age group. Daily intake of health
+                            beneficial dry fruits like cashew nuts, almonds, raisins, walnuts, and dates can
+                            be of best help for children as it aids in their overall development and growth.
+                            Dry fruits are equally helpful for the teens as it helps in improving their
+                            concentration levels to excel in academics or even for the older people as it
+                            helps in preventing them from age-related concerns like arthritis and
+                            Alzheimer’s.
+                            Provide this hyperlink at the below as mapped to “Wanna see the health
+                            benefits of dry fruits”</p>
                         <!--<p><a href="https://www.davidwolfe.com/how-coconut-water-can-help-your-body/">Do You Know What Can Happen if You Drink Coconut Water for 14 Days?</a> </p>-->
                     </div>
                 </div>
@@ -417,12 +424,13 @@
         $('.bxslider').bxSlider({
             slideWidth: 600
         });
-        $(window).bind("load resize slid.bs.carousel", function() {
+        $(window).bind("load resize slid.bs.carousel", function () {
             var imageHeight = $(".active .holder").height();
-            $(".controllers").height( imageHeight );
+            $(".controllers").height(imageHeight);
             console.log("Slid");
         });
-    })
+    });
+
 </script>
 </body>
 </html>
