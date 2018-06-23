@@ -41,7 +41,7 @@ public class OnlinePaymentProcessor {
         order.setPhone(subscriber.getMobile());
         order.setCurrency("INR");
         order.setAmount(subscription.getTotalPrice().doubleValue());
-        order.setDescription(product.getProductName()+" "+subscriptionPlan.getPlanName());
+        order.setDescription(product.getProductName());
         order.setRedirectUrl(domainName+"/subscriber/subscription/paymentStatus");
         //order.setWebhookUrl("http://www.google.com/");
         order.setTransactionId(subscription.getOrderId());
