@@ -95,7 +95,7 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return  "Reciever - "+addressHolderName+"\n"+addressLine1 + ", " + addressLine2 + ", " + city
+		return  "Receiver - "+addressHolderName+"\n"+addressLine1 + ", " + addressLine2 + ", " + city
 				+ ", " + state + ", " + country + ", " + pincode;
 	}
 	@Override
