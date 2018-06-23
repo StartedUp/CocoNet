@@ -79,7 +79,7 @@
                 <input type="text" id="datepicker">
                 <h3>Subscription Ends on</h3>
                 <p id="displayEndDate" class="data" &lt;!&ndash;th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"&ndash;&gt;></p>-->
-                <h3>Price per <span th:text="${product.measurementUnit}"></span></h3>
+                <h3>Price per <span th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></span></h3>
                 <p class="data" th:inline="text">₹ [[${product.pricePerUnit}]]</p>
                 <div class="container-fluid">
                     <!-- Modal -->
@@ -167,8 +167,8 @@
                     <input hidden id="totalPrice" name="totalPrice" type="text">
 
                     <div class="form-group top-margin">
-                        <label>Quantity<span class="text-danger">*</span></label>
-                        <label style="color: red">Minimum order would be 500 grams</label>
+                        <label>Quantity in <span th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></span><span class="text-danger">*</span></label>
+                        <label style="color: red">Minimum order is 500 <span th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></span></label>
                         <input id="quantityPerDay" required name="quantityPerDay" data-error="Please fill this field" type="text" class="form-control">
                         <div class="help-block with-errors"></div>
                     </div>

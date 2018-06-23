@@ -1,24 +1,37 @@
 package com.coconet.mit.commons.enums;
 
+import java.util.stream.Stream;
+
 /**
  * Created by Balaji on 11/5/18.
  */
 public enum MeasurmentUnitsEnum {
-    GRAMS("grams"),
-    KG("killo_grams"),
-    METER("meter"),
-    PIECE("piece"),
-    LITER("liter"),
-    NUMBER("number");
+    GRAM("gram", 1),
+    KG("kilogram", 2),
+    METER("meter", 3),
+    PIECE("piece", 4),
+    LITRE("litre", 5),
+    NUMBER("number", 6);
 
-    private String value;
+    private String description;
+    private int unitCode;
 
-    MeasurmentUnitsEnum(String value) {
-        this.value = value;
+    MeasurmentUnitsEnum(String description, int unitCode) {
+        this.description = description;
+        this.unitCode = unitCode;
     }
 
-    public String getValue() {
-        return value;
+    public String getDescription() {
+        return description;
     }
 
+    public MeasurmentUnitsEnum setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+
+    public int getUnitCode() {
+        return unitCode;
+    }
 }

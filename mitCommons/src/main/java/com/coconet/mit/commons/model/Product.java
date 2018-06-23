@@ -1,10 +1,13 @@
 package com.coconet.mit.commons.model;
 
+import com.coconet.mit.commons.enums.MeasurmentUnitsEnum;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by Prithu on 04-03-2017.
@@ -21,7 +24,7 @@ public class Product {
     private String productName;
     @NotEmpty
     @Column(name="measurement_unit", nullable=false)
-    private String measurementUnit;
+    private int measurementUnit;
     @Column(name="variety_name")
     private String varietyName;
     @Column(name="colour")
@@ -61,11 +64,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getMeasurementUnit() {
+    public int getMeasurementUnit() {
         return measurementUnit;
     }
 
-    public void setMeasurementUnit(String measurementUnit) {
+    public void setMeasurementUnit(int measurementUnit) {
         this.measurementUnit = measurementUnit;
     }
 
@@ -138,5 +141,15 @@ public class Product {
     @Override
     public int hashCode() {
         return this.id+"".hashCode();
+    }
+
+    public MeasurmentUnitsEnum returnMeasurementUnit(int measurementUnitCode){
+        List<MeasurmentUnitsEnum> measurmentUnits = Arrays.asList(MeasurmentUnitsEnum.values());
+        for(MeasurmentUnitsEnum measurmentUnitsEnum:measurmentUnits){
+            if(measurementUnitCode==measurmentUnitsEnum.getUnitCode()){
+                return measurmentUnitsEnum;
+            }
+        }
+        return null;
     }
 }
