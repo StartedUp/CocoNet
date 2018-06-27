@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Created by Prithu on 04-03-2017.
@@ -22,7 +21,6 @@ public class Product {
     @NotEmpty
     @Column(name="product_name", nullable=false)
     private String productName;
-    @NotEmpty
     @Column(name="measurement_unit", nullable=false)
     private int measurementUnit;
     @Column(name="variety_name")
@@ -41,6 +39,9 @@ public class Product {
 
     @Column(name = "product_description")
     private String productDescription;
+
+    @Column(name = "minimum_quantity")
+    private BigDecimal minimumQuantity;
 
     @OneToMany(targetEntity = ProductImage.class, mappedBy = "product",cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductImage> productImages;
@@ -127,6 +128,15 @@ public class Product {
 
     public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
+    }
+
+    public BigDecimal getMinimumQuantity() {
+        return minimumQuantity;
+    }
+
+    public Product setMinimumQuantity(BigDecimal minimumQuantity) {
+        this.minimumQuantity = minimumQuantity;
+        return this;
     }
 
     @Override

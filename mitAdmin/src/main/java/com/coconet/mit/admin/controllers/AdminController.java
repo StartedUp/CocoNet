@@ -3,6 +3,7 @@ package com.coconet.mit.admin.controllers;
 import com.coconet.mit.admin.service.ProductManager;
 import com.coconet.mit.admin.service.RoleManager;
 import com.coconet.mit.admin.service.UserManager;
+import com.coconet.mit.commons.enums.MeasurmentUnitsEnum;
 import com.coconet.mit.commons.model.Product;
 import com.coconet.mit.commons.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -190,6 +192,7 @@ public class AdminController {
         Product product = productManager.findById(productId);
         System.out.println("Product details : "+product);
         model.addAttribute("specificProduct", product);
+        model.addAttribute("measurementUnits", Arrays.asList(MeasurmentUnitsEnum.values()));
         return "productDetails";
     }
 

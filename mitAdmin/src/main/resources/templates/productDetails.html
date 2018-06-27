@@ -68,8 +68,14 @@
                     <div class="row control-group">
                         <div class="form-group col-xs-7 floating-label-form-group controls">
                             <label for="measurementUnit">Measurement Unit</label>
-                            <input name="measurementUnit" class="form-control " type="text"
-                                   th:value="${specificProduct.measurementUnit}" required/>
+                            <!--<input name="measurementUnit" class="form-control " type="text"-->
+                                   <!--th:value="${specificProduct.returnMeasurementUnit(specificProduct.measurementUnit)}" required/>-->
+
+                            <select class="form-control" id="measurementUnit" name="measurementUnit" placeholder="select" required="required">
+                                <th:block th:each="measurementUnit:${measurementUnits}">
+                                <option data-toggle="tooltip" th:value="${measurementUnit.unitCode}" th:text="${measurementUnit}">KILLOGRAM</option>
+                                </th:block>
+                            </select>
                         </div>
                     </div>
                     <div class="row control-group">
@@ -105,6 +111,13 @@
                             <label for="pricePerUnit">Price Per Unit</label>
                             <input name="pricePerUnit" class="form-control" type="number"
                                    th:value="${specificProduct.pricePerUnit}" required/>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-7 floating-label-form-group controls">
+                            <label for="minimumQuantity">Minimum Quantity</label>
+                            <input name="minimumQuantity" class="form-control" type="text"
+                                   th:value="${specificProduct.minimumQuantity}" required/>
                         </div>
                     </div>
                     <div class="row">
