@@ -169,7 +169,7 @@
                     <div class="form-group top-margin">
                         <label>Quantity in <span th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></span><span class="text-danger">*</span></label>
                         <label style="color: red">Minimum order is <span th:text=${product.minimumQuantity}></span> <span th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></span></label>
-                        <input id="quantityPerDay" required name="quantityPerDay" data-error="Please fill this field" type="text" class="form-control" th:attr="data-minimumQuantity=${product.minimumQuantity}">
+                        <input id="quantityPerDay" required name="quantityPerDay" data-error="Please fill this field" type="number" th:min="${product.minimumQuantity}" data-min-error="Kindly enter the quantity more than the minimum order" class="form-control" th:attr="data-minimumQuantity=${product.minimumQuantity}">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="total-price">
@@ -293,10 +293,9 @@
             $('#quantityPerDay').change(function () {
                 var minimumQuantity = Number($(this).data('minimumquantity'))
                 var quantity = Number(this.value);
-                if(quantity && quantity<minimumQuantity){
-                    alert("Kindly select the quantity more than minimum quantity to order");
+                if(quantity && quantity>=minimumQuantity){
+                    priceCalculateAndUpdate();
                 }
-                priceCalculateAndUpdate();
             });
             /*add address form*/
             $('#addAddressForm').submit(function(e) {
