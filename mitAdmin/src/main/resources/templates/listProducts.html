@@ -56,6 +56,7 @@
                             <th>Color</th>
                             <th>Size In Word</th>
                             <th>Size In Number</th>
+                            <th>Minimum Quantity</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -66,11 +67,12 @@
                                 <td th:text="${product.id}"></td>
                                 <td><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}"></a></td>
                                 <!--<td th:text="${product.productName}"></td>-->
-                                <td th:text="${product.measurementUnit}"></td>
+                                <td th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></td>
                                 <td th:text="${product.varietyName}"></td>
                                 <td th:text="${product.colour}"></td>
                                 <td th:text="${product.sizeInWord}"></td>
                                 <td th:text="${product.sizeInNumber}"></td>
+                                <td th:text="${product.minimumQuantity}"></td>
                                 <td><input th:id="g" type="hidden" th:value="${product.id}" name="productId"/>
                                     <button type="submit" class="removebutton">Remove Product</button>
                                 </td>
