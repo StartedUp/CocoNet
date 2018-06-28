@@ -182,7 +182,7 @@
             <div class="caption">
                 <h3 th:text="${'Product-'+stat.count}">Subscription 1</h3>
                 <p th:text="${product.productName}"></p>
-                <p th:text="${'₹'+product.pricePerUnit +' per '+product.measurementUnit}"></p>
+                <p th:text="${'₹'+product.pricePerUnit +' per '+product.returnMeasurementUnit(product.measurementUnit)}"></p>
                 <p>
                     <a th:href="@{'/product/'+${product.id}}" class="btn btn-primary">Buy Now!</a>
                     <a href="#" class="btn btn-default" data-toggle="modal"
