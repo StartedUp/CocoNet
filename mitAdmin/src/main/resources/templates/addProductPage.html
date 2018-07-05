@@ -64,35 +64,39 @@
                         <div class="row control-group">
                             <div class="form-group col-xs-7 floating-label-form-group controls">
                                 <label for="measurementUnit">Measurement Unit</label>
-                                <input name="measurementUnit" class="form-control " type="text"
-                                       placeholder="Measurement Unit" required/>
+                                <!--<input name="measurementUnit" class="form-control " type="text"-->
+                                <!--th:value="${specificProduct.returnMeasurementUnit(specificProduct.measurementUnit)}" required/>-->
+
+                                <select class="form-control" id="measurementUnit" name="measurementUnit" placeholder="select" required="required">
+                                    <th:block th:each="measurementUnit:${measurementUnits}">
+                                        <option data-toggle="tooltip" th:value="${measurementUnit.unitCode}" th:text="${measurementUnit}">KILLOGRAM</option>
+                                    </th:block>
+                                </select>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-7 floating-label-form-group controls">
                                 <label for="varietyName">Variety Name</label>
-                                <input name="varietyName" type="text" class="form-control" placeholder="Variety Name"
-                                       required/>
+                                <input name="varietyName" type="text" class="form-control" placeholder="Variety Name"/>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-7 floating-label-form-group controls">
                                 <label for="colour">Colour</label>
-                                <input name="colour" class="form-control" type="text" placeholder="colour" required/>
+                                <input name="colour" class="form-control" type="text" placeholder="colour"/>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-7 floating-label-form-group controls">
                                 <label for="sizeInWord">Size In Word</label>
-                                <input name="sizeInWord" class="form-control" type="text" placeholder="size In Word"
-                                       required/>
+                                <input name="sizeInWord" class="form-control" type="text" placeholder="size In Word"/>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-7 floating-label-form-group controls">
                                 <label for="sizeInNumber">Size In Number</label>
                                 <input name="sizeInNumber" class="form-control" type="number"
-                                       placeholder="size In Number" required/>
+                                       placeholder="size In Number"/>
                             </div>
                         </div>
                         <div class="row control-group">
@@ -100,6 +104,13 @@
                                 <label for="pricePerUnit">Price Per Unit</label>
                                 <input name="pricePerUnit" class="form-control" type="number"
                                        placeholder="Price Per Unit" required/>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-7 floating-label-form-group controls">
+                                <label for="minimumQuantity">Minimum Quantity</label>
+                                <input name="minimumQuantity" class="form-control" type="text"
+                                       required/>
                             </div>
                         </div>
                         <hr>

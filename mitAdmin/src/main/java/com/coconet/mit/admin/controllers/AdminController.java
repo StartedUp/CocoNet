@@ -65,7 +65,8 @@ public class AdminController {
         return "adminHome";
     }
     @GetMapping("/addProduct")
-    public String addProduct(){
+    public String addProduct(Model model){
+        model.addAttribute("measurementUnits", Arrays.asList(MeasurmentUnitsEnum.values()));
         return "addProductPage";
     }
 
