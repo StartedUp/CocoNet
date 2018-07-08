@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Admin on 17-12-2016.
@@ -30,14 +31,16 @@ public class WebAppHomeController {
     public String webAppHome(Model model){
         List<Product> products=productManager.products();
         _log.info(products);
-        model.addAttribute("products", products);
+        List<Product> activeProducts = products.stream().filter(Product::isActive).collect(Collectors.toList());
+        model.addAttribute("products", activeProducts);
         return "webAppHome";
     }
     @RequestMapping("/welcome")
     public String welcomeHome(Model model){
         List<Product> products=productManager.products();
         _log.info(products);
-        model.addAttribute("products", products);
+        List<Product> activeProducts = products.stream().filter(Product::isActive).collect(Collectors.toList());
+        model.addAttribute("products", activeProducts);
         return "webAppHome";
     }
     @RequestMapping("/loginPage")

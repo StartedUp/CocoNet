@@ -31,5 +31,15 @@ public class ProductServiceImpl implements ProductService {
         productDao.save(product);
         return product;
     }
+
+    @Override
+    public Product updateById(int id, boolean active) {
+        Product product = productDao.findById(id);
+        product.setActive(active);
+        productDao.save(product);
+        return product;
+    }
+
+
 }
 

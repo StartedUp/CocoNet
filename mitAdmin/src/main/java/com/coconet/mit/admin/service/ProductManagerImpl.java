@@ -46,6 +46,11 @@ public class ProductManagerImpl implements ProductManager {
     }
 
     @Override
+    public Product updateById(int id, boolean active) {
+        return productService.updateById(id, active);
+    }
+
+    @Override
     public void saveUploadedImages(Product product, MultipartFile[] files) {
         List<ProductImage> productImages = product.getProductImages();
         int index=0;

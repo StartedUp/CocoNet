@@ -10,12 +10,67 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         .table th {
-
             text-align: center;
-
         }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {display:none;}
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
     </style>
-</head>
+    </head>
 <body style="background-color: #76b852" id="page-top" class="index">
 <h1 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">Made in Trees</h1><br><br><br>
 <hr>
@@ -57,12 +112,12 @@
                             <th>Size In Word</th>
                             <th>Size In Number</th>
                             <th>Minimum Quantity</th>
-                            <th>Action</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr style="color: #122b40" th:each="product,stat : ${products}">
-                            <form name="removeProductForm" action="#" method="post">
+                            <form name="removeProductForm" action="/removeproduct" method="post">
                                 <td th:text="${stat.count}"></td>
                                 <td th:text="${product.id}"></td>
                                 <td><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}"></a></td>
@@ -73,8 +128,14 @@
                                 <td th:text="${product.sizeInWord}"></td>
                                 <td th:text="${product.sizeInNumber}"></td>
                                 <td th:text="${product.minimumQuantity}"></td>
-                                <td><input th:id="g" type="hidden" th:value="${product.id}" name="productId"/>
+                                <!--<td><input th:id="g" type="hidden" th:value="${product.id}" name="productId"/>
                                     <button type="submit" class="removebutton">Remove Product</button>
+                                </td>-->
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox" class="product-active" th:id="${product.id}" th:checked="${product.active}">
+                                        <span class="slider round"></span>
+                                    </label>
                                 </td>
                             </form>
                         </tr>
@@ -87,5 +148,29 @@
 </section>
 </div>
 </div>
+<script>
+    $( document ).ready(function() {
+        $('.product-active').on('change', function () {
+            var productId = Number($(this).attr('id'));
+            var active = Boolean($(this).is(':checked'));
+            $.ajax({
+                url: "  /manage-product",
+                type: "GET",
+                data: {
+                    productId: productId,
+                    active: active
+                },
+                success: function (result) {
+                    alert("This product's active status has been updated.")
+                    $(this).prop('checked', true);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error in updating the product's status")
+                    $(this).prop('checked', false);
+                }
+            })
+        });
+    });
+</script>
 </body>
 </html>

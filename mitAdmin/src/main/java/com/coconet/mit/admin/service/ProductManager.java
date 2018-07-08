@@ -13,6 +13,7 @@ public interface ProductManager {
     public List<Product> findAll();
     public void deleteById(int id);
     Product findById(int id);
+    Product updateById(int id, boolean active);
 
     void updateWithImages(Product product, MultipartFile[] files);
 

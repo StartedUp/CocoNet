@@ -43,6 +43,9 @@ public class Product {
     @Column(name = "minimum_quantity")
     private BigDecimal minimumQuantity;
 
+    @Column(name = "active", nullable=false)
+    private boolean active;
+
     @OneToMany(targetEntity = ProductImage.class, mappedBy = "product",cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductImage> productImages;
     /*@JsonIgnore
@@ -136,6 +139,15 @@ public class Product {
 
     public Product setMinimumQuantity(BigDecimal minimumQuantity) {
         this.minimumQuantity = minimumQuantity;
+        return this;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public Product setActive(boolean active) {
+        this.active = active;
         return this;
     }
 
