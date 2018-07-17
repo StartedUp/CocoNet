@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Made In Trees</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #76b852" id="page-top" class="index">
+<h1 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">Made In Trees</h1><br><br><br>
+<hr>
+<div class="row">
+    <div class="col-lg-2 text-right bold">
+        <a class="btn btn-default" style="text-align: left" href="/listProducts">Go BACK</a>
+    </div>
+    <div class="col-lg-1 text-left bold">
+        <a class="btn btn-default" style="text-align: left" href="/addProduct">Add Product</a>
+    </div>
+    <div class="col-lg-2 text-right bold">
+        <a class="btn btn-default" style="text-align: left" href="/uploadImages">Upload Images</a>
+    </div>
+    <div class="col-lg-5 text-right bold">
+        <a class="btn btn-default" style="text-align: right" href="javascript: document.logoutForm.submit()">Logout</a>
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input hidden type="submit" value="Sign Out"/>
+        </form>
+    </div>
+</div>
+<hr>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h3 style="text-align: center;color: saddlebrown">Product Gallery</h3><br>
+            </div>
+        </div>
+        <div th:if="${message}">
+            <h2 style="text-align: center;color:#5cb85c" class="glyphicon glyphicon-ok">
+                <a th:href="/showAlbum/"></a> <span style="font-family: Consolas" th:text="${message}"></span>
+            </h2>
+        </div>
+        <span th:each="albumName,stat : ${albumNames}">
+           <a th:href="@{'/showAlbum/'+${albumName}}" ><p th:text="${albumName}"></p></a>
+            </span>
+    </div>
+</section>
+</body>
+</html>

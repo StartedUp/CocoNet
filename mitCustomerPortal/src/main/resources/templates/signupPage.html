@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content=""/>
+
+	<title>Made in Trees</title>
+
+	<link rel="shortcut icon" href="../static/images/favicon-16x16.png" th:href="@{/images/favicon-16x16.png}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
+	<link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}"/>
+
+	<!-- Custom styles for our template -->
+	<link rel="stylesheet" href="../static/css/bootstrap-theme.css" media="screen" th:href="@{/css/bootstrap-theme.css}"/>
+	<link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}"/>
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="../static/js/html5shiv.js" th:src="@{/js/html5shiv.js}"></script>
+	<script src="../static/js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
+	<![endif]-->
+</head>
+
+<body>
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-inverse navbar-fixed-top headroom" >
+		<div class="container">
+			<div class="navbar-header">
+				<!-- Button for smallest screens -->
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+				<a class="navbar-brand" href="/"><!--<img src="../static/images/logo.png" th:src="@{/images/coconut-water.jpg}" width="50px" alt="Coco water comes Home">--></a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav pull-right">
+					<li><a href="/">Home</a></li>
+					<li class="hidden"><a href="../static/pages/about.html">About</a></li>
+					<li class="hidden"><a href="#">Contact</a></li>
+					<li class="active"><a class="btn" href="loginPage">SIGN IN / SIGN UP</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
+	<!-- /.navbar -->
+
+	<header id="head" class="secondary"></header>
+
+	<!-- container -->
+	<div class="container">
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Registration</li>
+		</ol>
+		<div class="row">
+			<!-- Article main content -->
+			<article class="col-xs-12 maincontent">
+				<header class="page-header">
+					<h1 class="page-title">Registration</h1>
+				</header>
+				<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h3 class="thin text-center">Register a new account</h3>
+							<hr>
+
+							<form role="form" data-toggle="validator" id="signupForm" action="signup" method="post">
+								<div class="form-group top-margin">
+									<label>First Name<span class="text-danger">*</span></label>
+									<input required name="firstName" data-error="Please fill this field" type="text" class="form-control">
+                                    <div class="help-block with-errors"></div>
+								</div>
+								<div class="form-group top-margin">
+									<label>Last Name</label>
+									<input name="lastName" type="text" class="form-control">
+								</div>
+								<div class="form-group top-margin">
+									<label>Email Address <span class="text-danger">*</span></label>
+									<input required name="email" id="email" data-error="Please fill this field" type="email" class="form-control"><span id="emailOk" style="display: none" class="glyphicon glyphicon-ok text-success"></span>
+                                    <span id="emailRepeat" class="glyphicon glyphicon-remove text-danger" style="display: none">This email is registered already</span>
+                                    <div class="help-block with-errors"></div>
+								</div>
+								<div class="form-group top-margin">
+									<label>Mobile<span class="text-danger">*</span></label>
+									<input required name="mobile" type="text" data-error="Please fill this field" class="form-control">
+                                    <div class="help-block with-errors"></div>
+								</div>
+                              <!--  <table>
+                                    <tr th:each="address, rowStat : *{addresses}">
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                            <label>AddressLine1<span class="text-danger">*</span></label>
+                                            <input required th:value="address.addressLine1" th:field="*{addresses[__${rowStat.index}__].addressLine1}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>AddressLine2<span class="text-danger">*</span></label>
+                                            <input required th:value="address.addressLine2" th:field="*{addresses[__${rowStat.index}__].addressLine2}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                            <label>City<span class="text-danger">*</span></label>
+                                            <input required disabled value="Chennai" th:field="*{addresses[__${rowStat.index}__].city}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>State<span class="text-danger">*</span></label>
+                                            <input required disabled value="TamilNadu" th:field="*{addresses[__${rowStat.index}__].state}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                            <label>Country<span class="text-danger">*</span></label>
+                                            <input required disabled value="India" th:field="*{addresses[__${rowStat.index}__].country}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>PIN code<span class="text-danger">*</span></label>
+                                            <input required th:field="*{addresses[__${rowStat.index}__].pincode}" type="text" data-error="Please fill this field" class="form-control">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        </div>
+                                    </tr>
+                                </table>-->
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label>Password <span class="text-danger">*</span></label>
+										<input required id="password" name="password" type="password" data-error="Please fill this field" class="form-control">
+                                        <div class="help-block with-errors"></div>
+									</div>
+									<div class="form-group col-sm-6">
+										<label>Confirm Password <span class="text-danger">*</span></label>
+										<input required type="password" class="form-control" data-match="#password" data-error="Please fill this field" data-match-error="Whoops, passwords don't match">
+                                        <div class="help-block with-errors"></div>
+									</div>
+								</div>
+
+								<hr>
+
+								<div class="row">
+									<div class="form-group col-lg-4 text-right">
+										<button id="signupSubmit" class="btn btn-action" type="submit">Signup</button>
+									</div>
+								</div>
+								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+							</form>
+						</div>
+					</div>
+				</div>
+			</article>
+			<!-- /Article -->
+
+		</div>
+	</div>	<!-- /container -->
+
+	<!-- Social links. @TODO: replace by link/instructions in template -->
+	<section id="social">
+		<div class="container">
+			<div class="wrapper clearfix">
+				<!-- AddThis Button BEGIN -->
+				<div class="addthis_toolbox addthis_default_style">
+					<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+					<a class="addthis_button_tweet"></a>
+					<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+				</div>
+				<!-- AddThis Button END -->
+			</div>
+		</div>
+	</section>
+	<!-- /social links -->
+
+
+	<footer id="footer" class="top-space">
+
+		<div class="footer1">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-3 widget">
+						<h3 class="widget-title">Contact</h3>
+						<div class="widget-body">
+							<p>+91 8438258092<br>
+								<a href="mailto:#">admin@domain.com</a><br>
+								<br>
+								4th main road, Rajiv Gandhi 2nd street, Perumbakkam, Chennai-600100
+							</p>
+						</div>
+					</div>
+
+					<div class="col-md-3 widget">
+						<h3 th:hidden="true" class="widget-title">Follow us</h3>
+						<div th:hidden="true" class="widget-body">
+							<p class="follow-me-icons">
+								<a href="www.facebook.com"><i class="fa fa-twitter fa-2"></i></a>
+								<a href="www.twitter.com"><i class="fa fa-facebook fa-2"></i></a>
+							</p>
+						</div>
+					</div>
+
+					<div class="col-md-6 widget">
+						<h3 class="widget-title">Coconut Water Is A Clean Natural Drink</h3>
+						<div class="widget-body">
+							<p>Tender coconut water is a natural source of electrolytes, minerals, vitamins, complex carbohydrates, Amino acids and other nutrients. The natural carbohydrate content is between 4-5% of the liquid solution. This make coconut water particularly suitable for the burgeoning sports drink market. According to Sports Science Institute (USA), sports drinks containing under 5% carbohydrates are likely to provide benefits, while those exceeding 10% carbohydrate content, like most soft drinks are associated with abdominal cramps, nausea and diarrhea. </p>
+							<p><a href="https://www.davidwolfe.com/how-coconut-water-can-help-your-body/">Do You Know What Can Happen if You Drink Coconut Water for 14 Days?</a> </p>
+						</div>
+					</div>
+
+				</div> <!-- /row of widgets -->
+			</div>
+		</div>
+
+		<div class="footer2">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-6 widget">
+						<div class="widget-body">
+							<p class="simplenav">
+								<a href="/">Home</a> |
+								<a th:hidden="true" href="../static/pages/about.html">About</a> |
+								<a th:hidden="true" href="../static/pages/contact.html">Contact</a> |
+								<b><a href="/signupPage">Sign up</a></b>
+							</p>
+						</div>
+					</div>
+
+					<div class="col-md-6 widget">
+						<div class="widget-body">
+							<p class="text-right">
+								Copyright &copy; 2017, Prithvi. Designed by Dhanraj and Prithvi</a>
+							</p>
+						</div>
+					</div>
+
+				</div> <!-- /row of widgets -->
+			</div>
+		</div>
+
+	</footer>
+
+	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="../static/js/headroom.min.js" th:src="@{/js/headroom.min.js}"></script>
+	<script src="../static/js/jQuery.headroom.min.js" th:src="@{/js/jQuery.headroom.min.js}"></script>
+	<script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
+	<!--Bootstrap Validator-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#signupForm").submit(function( event ) {
+				$("#signupSubmit").prop("disabled", true).addClass("disabled");
+			});
+            $("#email").change(function () {
+                var email =$("#email").val();
+                $("#emailOk").hide();
+                $("#emailRepeat").hide();
+                $.ajax({
+                    url: "/rest/subscriberEmailCheck",
+                    type: "get", //send it through get method
+                    data: {
+                        email: email
+                    },
+                    success: function(response) {
+                        $("#emailOk").show();
+                    },
+                    error: function(xhr) {
+                        $("#emailRepeat").show();
+                    }
+                });
+            })
+		});
+	</script>
+</body>
+</html>

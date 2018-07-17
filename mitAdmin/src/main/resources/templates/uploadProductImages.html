@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Made In Trees</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #76b852" id="page-top" class="index">
+<h1 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">Made In Trees</h1><br><br><br>
+<hr>
+<div class="row">
+    <div class="col-lg-1 text-left bold">
+        <a class="btn btn-default" style="text-align: left" href="/listProducts">Go BACK</a>
+    </div>
+    <div class="col-lg-2 text-right bold">
+        <a class="btn btn-default" style="text-align: left" href="/productGallery">View Product Images</a>
+    </div>
+    <div class="col-lg-7 text-right bold">
+        <a class="btn btn-default" style="text-align: right" href="javascript: document.logoutForm.submit()">Logout</a>
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input hidden type="submit" value="Sign Out"/>
+        </form>
+    </div>
+</div>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <form enctype="multipart/form-data" th:action="@{/updateProduct}" method="post">
+                    <input type="hidden" id="imagesCount" th:value="${product.productImages==null?0:#lists.size(product.productImages)}">
+                    <input name="id" class="form-control" type="hidden" th:value="${product.id}"
+                           required/>
+                    <h2 style="text-align: center;color:saddlebrown">Upload Images for the added products</h2><br>
+                    <div id="imageUploadContainer">
+                        <div class="row" id="imageUpload">
+                            <div class="col-sm-4">
+                                <br><br>
+                                <label class="radio-inline" th:each="productImageEnum :
+                                                   ${T(com.coconet.mit.commons.enums.ProductImageEnum).values()}">
+                                    <input type="hidden" name="product" th:value="${product.id}">
+                                    <input type="radio" th:value="${productImageEnum.getImageSize()}"
+                                           th:name="|productImages[${#lists.size(product.productImages)}].size|">
+                                    <span th:text="${productImageEnum.getSizeName()}"></span>
+                                </label>
+                            </div>
+                            <div class="col-sm-5" text-center>
+                                <div class="attachFile">
+                                    <label> Select an image file to upload</label>
+                                    <input required name="image" type="file" accept="image/*" class="form-control"
+                                           data-error="Please fill this field">
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <label>*</label><br>
+                        <button type="button" id="addNew" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="col-sm-4"><br>
+                        <div class="attachField"><br></div>
+                        <input type="submit" style="background-color: #2f89bd" value="Update" class="btn btn-default text-center">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    var imagesCount=$('#imagesCount').val();
+    $(document).ready(function () {
+        $('#addNew').on('click', function() {
+            $("#imageUpload").clone().prop('id', 'imageUpload_'+ ++imagesCount)
+                    .appendTo('#imageUploadContainer');
+            $('#imageUpload_'+imagesCount).find("input:radio").prop('name', 'productImages['+imagesCount+']')
+                    /*.prop('checked', false)*/
+            $('#imageUpload_'+imagesCount +' :input:file').val('')
+        });
+    });
+
+</script>

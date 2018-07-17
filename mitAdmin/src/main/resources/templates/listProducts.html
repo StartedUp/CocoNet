@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Made In Trees</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .table th {
+            text-align: center;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {display:none;}
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+    </style>
+    </head>
+<body style="background-color: #76b852" id="page-top" class="index">
+<h1 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">Made in Trees</h1><br><br><br>
+<hr>
+<div class="row">
+    <div class="col-lg-3 text-right bold">
+        <a class="btn btn-default" style="text-align: left" href="/admin">Go BACK</a>
+    </div>
+    <div class="col-lg-4 text-left bold">
+        <a class="btn btn-default" style="text-align: left" href="/addProduct">Add Product</a>
+    </div>
+    <div class="col-lg-4 text-right bold">
+        <a class="btn btn-default" style="text-align: right" href="javascript: document.logoutForm.submit()">Logout</a>
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input hidden type="submit" value="Sign Out"/>
+        </form>
+    </div>
+</div>
+<hr>
+<p style="text-align: center" class="alert-info" th:if="${addProductSuccess}">Product Added...!!!</p>
+<p style="text-align: center" class="alert-info" th:if="${uploadStatus}">Files Upload Success!!!"</p>
+
+<section>
+    <div class="container" id="maincontent" tabindex="2">
+        <h3 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">All Products</h3><br><br><br>
+        <div class="row">
+            <div class="col-lg-12">
+                <br>
+                <div class="table-responsive">
+                    <table style="border-style: solid" class="table table-hover table-bordered text-center"
+                           th:if="${!products.isEmpty()}">
+                        <thead>
+                        <tr style="color:#c7254e">
+                            <th>S.No</th>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Measurement Unit</th>
+                            <th>Variety Name</th>
+                            <th>Color</th>
+                            <th>Size In Word</th>
+                            <th>Size In Number</th>
+                            <th>Minimum Quantity</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="color: #122b40" th:each="product,stat : ${products}">
+                            <form name="removeProductForm" action="/removeproduct" method="post">
+                                <td th:text="${stat.count}"></td>
+                                <td th:text="${product.id}"></td>
+                                <td><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}"></a></td>
+                                <!--<td th:text="${product.productName}"></td>-->
+                                <td th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></td>
+                                <td th:text="${product.varietyName}"></td>
+                                <td th:text="${product.colour}"></td>
+                                <td th:text="${product.sizeInWord}"></td>
+                                <td th:text="${product.sizeInNumber}"></td>
+                                <td th:text="${product.minimumQuantity}"></td>
+                                <!--<td><input th:id="g" type="hidden" th:value="${product.id}" name="productId"/>
+                                    <button type="submit" class="removebutton">Remove Product</button>
+                                </td>-->
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox" class="product-active" th:id="${product.id}" th:checked="${product.active}">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+</div>
+<script>
+    $( document ).ready(function() {
+        $('.product-active').on('change', function () {
+            var productId = Number($(this).attr('id'));
+            var active = Boolean($(this).is(':checked'));
+            $.ajax({
+                url: "  /manage-product",
+                type: "GET",
+                data: {
+                    productId: productId,
+                    active: active
+                },
+                success: function (result) {
+                    alert("This product's active status has been updated.")
+                    $(this).prop('checked', true);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error in updating the product's status")
+                    $(this).prop('checked', false);
+                }
+            })
+        });
+    });
+</script>
+</body>
+</html>

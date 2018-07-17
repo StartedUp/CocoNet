@@ -1,0 +1,47 @@
+// Hard coded the subscription plan 18/03/2018
+INSERT INTO `coconet`.`subscription_plan` (`id`, `plan_name`, `Description`, `subscription_duration_type`, `subscription_duration_number`, `routine_pattern`, `discount_percentage`) VALUES ('5', 'One time delivery', 'The product is delivered once.', 'day', '1', '', '0');
+// changed the preferred delivery time not null 18/03/2018
+ALTER TABLE `coconet`.`subscription`
+CHANGE COLUMN `preferred_delivery_time` `preferred_delivery_time` TIME NULL DEFAULT '10:00:00' ;
+-----------------------------------------
+05/05/18- Alter table subscription plan
+-----------------------------------------
+See forign key
+-----------------------------
+SELECT
+  TABLE_NAME,COLUMN_NAME,CONSTRAINT_NAME, REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME
+FROM
+  INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE
+  REFERENCED_TABLE_SCHEMA = 'coconet_test' AND
+  REFERENCED_TABLE_NAME = 'product';
+-------------------------------------------------
+Delete foreign key
+-------------------------------
+ALTER TABLE subscription_plan DROP FOREIGN KEY subscription_plan_ibfk_1;
+--------------------------------------------------------------------------
+Delete column Product Id from subscription plan
+-------------------------------------------------------
+ALTER TABLE `coconet_test`.`subscription_plan`
+DROP COLUMN `product_id`;
+------------------------------------------------------
+Insert one time delivery in subscription plan
+-------------------------------------------------------
+INSERT INTO `coconet_test`.`subscription_plan` (`id`, `plan_name`, `Description`, `subscription_duration_type`, `subscription_duration_number`, `routine_pattern`, `discount_percentage`) VALUES ('5', 'One time delivery', 'The product is delivered once', 'day', '1', '', '0');
+------------------------------------------------------------
+
+----------------------------------------------------
+Add description to product table
+---------------------------------------------------------
+ALTER TABLE `coconet_test`.`product`
+ADD COLUMN `product_description` VARCHAR(45) NULL AFTER `size_in_number`;
+----------------------------------------------------------
+Insert  manually description
+-----------------------------------
+UPDATE `coconet_test`.`product` SET `product_description`='Good product' WHERE `id`='6';
+------------------------------------
+Change description datatype length
+--------------------------------------
+ALTER TABLE `coconet_test`.`product`
+MODIFY COLUMN product_description VARCHAR(2000);
+------------------------------------------------------

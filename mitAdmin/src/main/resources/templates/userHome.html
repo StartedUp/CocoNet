@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>MadeInTrees</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .data{
+            color:#009688;
+        }
+    </style>
+</head>
+<body style="background-color: #76b852" id="page-top" class="index">
+<h2 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">List of Active or Initialized subscriptions</h2><br><br><br>
+<div class="col-lg-12 text-right bold">
+    <a class="btn btn-default" style="text-align: right" href="javascript: document.logoutForm.submit()">Logout</a>
+    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
+</div>
+<hr>
+        <div class="table-responsive">
+            <table th:if="${!subscriptionDeliveryRecordsToday.isEmpty()}" class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Receiver's Name</th>
+                    <th>Receiver's mobile</th>
+                    <th>Date</th>
+                    <th>End Date</th>
+                    <th>Quantity per day</th>
+                    <th>Quantity delivered</th>
+                    <th>Total Price</th>
+                    <th>Payment Status</th>
+                    <th>Payment Mode</th>
+                    <th>Delivery Address</th>
+                    <th>Delivery Time</th>
+                    <th>Delivered</th>
+                    <th>Update</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="subscriptionDeliveryRecord,stat : ${subscriptionDeliveryRecordsToday}" th:if="${subscriptionDeliveryRecord.subscription.paymentType=='cod' or subscriptionDeliveryRecord.subscription.subscriptionStatus=='active'}">
+                    <td th:text="${subscriptionDeliveryRecord.subscription.deliveryAddress.addressHolderName}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.subscription.subscriber.mobile}"></td>
+                    <td th:text="${#dates.format(subscriptionDeliveryRecord.date, 'dd-MMM-yyyy')}"></td>
+                    <td th:text="${#dates.format(subscriptionDeliveryRecord.subscription.endDate, 'dd-MMM-yyyy')}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.subscription.quantityPerDay}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.quantityDelivered}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.subscription.totalPrice}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.subscription.paymentStatus}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.subscription.paymentType}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.subscription.deliveryAddress}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.subscription.preferredDeliveryTime}"></td>
+                    <td th:text="${subscriptionDeliveryRecord.delivered}"></td>
+                    <td>
+                        <a th:id="${'deliveredStatus-'+subscriptionDeliveryRecord.id}" th:if="${!subscriptionDeliveryRecord.delivered}" class="btn btn-primary text-center" data-toggle="modal" th:attr="data-target=${'#updateDelivery-'+subscriptionDeliveryRecord.id}" href="#">Update Delivery</a>
+                    </td>
+                    <td>
+                        <!-- Modal -->
+                        <div class="modal fade" th:id="${'updateDelivery-'+subscriptionDeliveryRecord.id}" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Update Delivery only if delivered</h4>
+                                        <h4 class="text-center">Verify Details</h4>
+                                        <h4><span>Receiver : </span><span class="data" th:text="${subscriptionDeliveryRecord.subscription.deliveryAddress.addressHolderName}"></span></h4>
+                                        <h3><span>Address : </span><span class="data" th:text="${subscriptionDeliveryRecord.subscription.deliveryAddress}"></span></h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form role="form" class="reportForm" th:id="${'updateDeliveryForm-'+subscriptionDeliveryRecord.id}" action="/subscriptionDeliveryUpdate" method="post">
+                                            <input hidden type="text" name="subscription.id" th:value="${subscriptionDeliveryRecord.subscription.id}">
+                                            <input hidden type="text" name="date" th:value="${#dates.format(subscriptionDeliveryRecord.date, 'dd-MMM-yyyy')}">
+                                            <input hidden type="text" name="deliveredBy" th:value="${subscriptionDeliveryRecord.deliveredBy}">
+                                            <input hidden type="text" name="id" th:value="${subscriptionDeliveryRecord.id}">
+                                            <input hidden type="text" name="subscription.quantityPerDay" th:value="${subscriptionDeliveryRecord.subscription.quantityPerDay}">
+                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                            <div class="form-group">
+                                                <label>Delivered quantity</label>
+                                                <select th:id="${'quantityDelivered-'+subscriptionDeliveryRecord.id}" name="quantityDelivered" class="form-control">
+                                                    <option selected value="0.00">0</option>
+                                                    <option value="1.00">1</option>
+                                                    <option value="2.00">2</option>
+                                                    <option value="3.00">3</option>
+                                                    <option value="4.00">4</option>
+                                                    <option value="5.00">5</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group radio hidden">
+                                                <label class="radio-inline">
+                                                    <input required name="delivered" value="true" type="radio">Delivery Ok<span class="text-danger">*</span>
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input required selected name="delivered" type="radio" value="false">Not Delivered<span class="text-danger">*</span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group"><button th:id="${'submitDeliveryUpdate-'+subscriptionDeliveryRecord.id}" type="submit" class="btn btn-primary hidden">Submit Delivery Update</button></div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- Modal -->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('select').on('change', function() {
+                    $(this).parent().siblings('.radio').addClass('hidden');
+                    $(this).parent().parent().find("button[id^='submitDeliveryUpdate-']").addClass('hidden');
+                    var quantityDelivered = this.value;
+                    var quantityPerDay =$(this).parent().parent().find("input[name='subscription.quantityPerDay']").val();
+                    console.log("quantityDelivered : "+quantityDelivered+" quantityPerDay : "+quantityPerDay);
+                    if(quantityDelivered>0){
+                        $(this).parent().siblings('.radio').removeClass('hidden');
+                        $(this).parent().parent().find("button[id^='submitDeliveryUpdate-']").first().removeClass('hidden');
+                        if(quantityPerDay>quantityDelivered){
+                            console.log("quantityDelivered is less than quantity to be delivered per day");
+                            $(this).parent().parent().find("input[value='true']").first().prop('disabled', true);
+                            $(this).parent().parent().find("input[value='false']").first().prop('selected', true);
+                        }else
+                            $(this).parent().parent().find("input[value='true']").first().prop('disabled', false);
+                    }
+                })
+            });
+    </script>
+</body>
+</html>

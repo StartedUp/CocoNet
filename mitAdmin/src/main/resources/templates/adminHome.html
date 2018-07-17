@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Made In Trees</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet" href="/css/styles.css"  th:href="@{/css/styles.css}">-->
+</head>
+<style>
+    img:hover {
+        background-color: #4cae4c;
+    }
+</style>
+<body style="background-color: #76b852" id="page-top" class="index">
+<h1 class="col-lg-12 text-center bold" style="color: saddlebrown;font-family: KacstBook">Made in Trees</h1><br><br><br>
+<hr>
+<div class="col-lg-12 text-right bold">
+    <a class="btn btn-default" style="text-align: right" href="javascript: document.logoutForm.submit()">Logout</a>
+    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-4 text-center">
+        <a href="/listProducts"  data-toggle="tooltip" title="Products Section">
+            <img th:src="@{/img/products2.jpg}" alt="Products Section" style=max-width:40%>
+        </a>
+    </div>
+    <div class="col-lg-4 text-center">
+        <a href="/listUsers"  data-toggle="tooltip" title="Users Section">
+            <img th:src="@{/img/users.png}"  alt="Users Section" style=max-width:40%>
+        </a>
+    </div>
+    <div class="col-sm-4 text-center">
+        <a href="/accounts"  data-toggle="tooltip" title="Accounts Section">
+            <img th:src="@{/img/accounts.jpg}" alt="Accounts Section"style=max-width:40%>
+        </a>
+    </div>
+    </div>
+</body>
+</html>
