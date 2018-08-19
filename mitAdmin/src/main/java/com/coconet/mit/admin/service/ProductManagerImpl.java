@@ -27,6 +27,9 @@ public class ProductManagerImpl implements ProductManager {
     @Value("${product.images.root.path}")
     private String productImagesRootPath;
 
+    @Value("${app.external.resources.path.upload}")
+    private String appResourcesPath;
+
     @Override
     public void deleteById(int id) {
 
@@ -57,18 +60,13 @@ public class ProductManagerImpl implements ProductManager {
         for (ProductImage productImage: productImages){
             if (productImage.getId()==0 && index<files.length) {
                 String imagePath=productImage.getUrl();
-                File imageFile=new File("mitAdmin/src/main/resources/static/"+imagePath);
-                File imageFileCustomerPortal=new File("mitCustomerPortal/src/main/resources/static/"+imagePath);
+                File imageFile=new File(appResourcesPath+imagePath);
                 if (!imageFile.exists()) {
                     imageFile.getParentFile().mkdirs();
-                }
-                if(!imageFileCustomerPortal.exists()) {
-                    imageFileCustomerPortal.getParentFile().mkdirs();
                 }
                 try {
                     byte[] bytes=files[index++].getBytes();
                     Files.write(imageFile.toPath(),bytes);
-                    Files.write(imageFileCustomerPortal.toPath(),bytes);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
