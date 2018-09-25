@@ -87,7 +87,7 @@ public class SubscriberController {
                 if (!newEmail.equals(loggedInSubscriber.getEmail())) {
                     _log.info("Sending Email to request email update to " + newEmail);
                     String[] recipients = {newEmail};
-                    String[] bccList = {"admin@madeintrees.com"};
+                    String[] bccList = {"madeintrees@gmail.com"};
                     String confirmEmailUrl = domainName+"/updateEmail/" + newEmail + "/" + token;
                     Mailer mailer = new Mailer();
                     mailer.setRecipients(recipients);
