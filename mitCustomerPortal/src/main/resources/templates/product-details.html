@@ -169,7 +169,7 @@
                     <div class="form-group top-margin">
                         <label>Quantity in <span th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></span><span class="text-danger">*</span></label>
                         <label style="color: red">Minimum order is <span th:text=${product.minimumQuantity}></span> <span th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></span></label>
-                        <input id="quantityPerDay" required name="quantityPerDay" data-error="Please fill this field" type="number" th:min="${product.minimumQuantity}" data-min-error="Kindly enter the quantity more than the minimum order" class="form-control" th:attr="data-minimumQuantity=${product.minimumQuantity}">
+                        <input id="quantityPerDay" required name="quantityPerDay" data-error="Please fill this field" type="text" class="form-control" th:attr="data-minimumQuantity=${product.minimumQuantity}">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="total-price">
@@ -236,6 +236,8 @@
             </div>
         </div> <!-- /row -->
     </div>	<!-- /container -->
+    <div th:include="fragments/alertBox :: messageModal"></div>
+    <script th:src="@{/js/appScript.js}"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="../static/js/headroom.min.js" th:src="@{/js/headroom.min.js}"></script>
@@ -290,10 +292,29 @@
                 });
             });
 
+            // Validation for entering only number
+            // Keycode for 46 is dot.
+            $(function () {
+                $("#quantityPerDay").bind("keypress", function (e) {
+                    var keyCode = e.which ? e.which : e.keyCode
+                    var ret = ((keyCode >= 48 && keyCode <= 57) || keyCode==46);
+                    return ret;
+                });
+            });
+
             $('#quantityPerDay').change(function () {
                 var minimumQuantity = Number($(this).data('minimumquantity'))
                 var quantity = Number(this.value);
-                if(quantity && quantity>=minimumQuantity){
+                var valid = true;
+                if(quantity<minimumQuantity){
+                    valid = false;
+                    messageAlertModal("Alert", "Minimum quantity is "+minimumQuantity)
+                }
+                else if(quantity%minimumQuantity!=0){
+                    valid = false;
+                    messageAlertModal("Alert", "Enter quantity in multiples of "+minimumQuantity)
+                }
+                if(valid){
                     priceCalculateAndUpdate();
                 }
             });
