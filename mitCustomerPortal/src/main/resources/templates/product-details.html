@@ -303,15 +303,19 @@
             });
 
             $('#quantityPerDay').change(function () {
+                $('#displayTotPrice').parent().hide();
+                $('#displayTotQty').parent().hide();
                 var minimumQuantity = Number($(this).data('minimumquantity'))
                 var quantity = Number(this.value);
                 var valid = true;
                 if(quantity<minimumQuantity){
                     valid = false;
+                    $('#quantityPerDay').val('');
                     messageAlertModal("Alert", "Minimum quantity is "+minimumQuantity)
                 }
                 else if(quantity%minimumQuantity!=0){
                     valid = false;
+                    $('#quantityPerDay').val('');
                     messageAlertModal("Alert", "Enter quantity in multiples of "+minimumQuantity)
                 }
                 if(valid){
