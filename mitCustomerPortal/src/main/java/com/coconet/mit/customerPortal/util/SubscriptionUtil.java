@@ -7,6 +7,7 @@ import com.coconet.mit.commons.model.SubscriptionPlan;
 import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 /**
@@ -70,6 +71,7 @@ public class SubscriptionUtil {
         BigDecimal instamojoCommission = price.multiply(instamojoCommissionPercentage).add(instamojoCommissionValue).setScale(2,BigDecimal.ROUND_HALF_EVEN);
         BigDecimal VAT=instamojoCommission.multiply(taxPercentage).setScale(2,BigDecimal.ROUND_HALF_EVEN);
         BigDecimal totalPrice=price.add(instamojoCommission).add(VAT);
+        totalPrice = totalPrice.setScale(0, RoundingMode.CEILING);
         System.err.println("price "+price+" instamo "+instamojoCommission+" vat "+VAT);
         System.err.println("total "+totalPrice);
         return totalPrice;

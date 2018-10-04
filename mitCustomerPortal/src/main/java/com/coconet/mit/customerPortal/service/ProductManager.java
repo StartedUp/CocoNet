@@ -1,6 +1,7 @@
 package com.coconet.mit.customerPortal.service;
 
 import com.coconet.mit.commons.model.Product;
+import com.coconet.mit.commons.model.Subscription;
 
 import java.util.List;
 
@@ -10,4 +11,6 @@ import java.util.List;
 public interface ProductManager {
     public List<Product> products();
     Product findById(int id);
+
+    boolean validateSubscription(Subscription subscription);
 }

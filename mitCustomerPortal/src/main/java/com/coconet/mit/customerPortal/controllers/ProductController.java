@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -83,7 +82,12 @@ public class ProductController{
             subscription.setProduct(product);
             model.addAttribute("subscriptionPlan", subscriptionPlan);
             model.addAttribute("subscription",subscription);
-            model.addAttribute("subscriber",subscriber);
+            model.addAttribute("subscriber",subscriber).addAttribute("product", product);
+            boolean valid = productManager.validateSubscription(subscription);
+            if(!valid){
+                model.addAttribute("invalidData", true);
+                return "product-details";
+            }
             if (bindingResult.hasErrors()) {
                 _log.info("hasErrors :" + bindingResult.hasErrors() + bindingResult.toString());
                 return "product-details";

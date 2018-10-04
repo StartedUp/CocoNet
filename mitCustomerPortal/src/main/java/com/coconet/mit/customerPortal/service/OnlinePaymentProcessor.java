@@ -85,7 +85,7 @@ public class OnlinePaymentProcessor {
                 System.out.println("Transaction id is invalid.");
             }
             if (order.isAmountInvalid()) {
-                System.out.println("Amount can not be less than 9.00.");
+                System.out.println("Amount cannot be less than 9.00.");
             }
             if (order.isCurrencyInvalid()) {
                 System.out.println("Please provide the currency.");

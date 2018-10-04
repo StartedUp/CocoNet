@@ -36,6 +36,7 @@
 
 <body class="home">
     <!-- Fixed navbar -->
+    <input type="hidden" id="invalidData" th:value="${invalidData}">
     <div class="navbar navbar-inverse navbar-fixed-top headroom" >
         <div class="container">
             <div class="navbar-header">
@@ -79,7 +80,7 @@
                 <input type="text" id="datepicker">
                 <h3>Subscription Ends on</h3>
                 <p id="displayEndDate" class="data" &lt;!&ndash;th:text="${#dates.format(subscription.endDate, 'dd-MMM-yyyy')}"&ndash;&gt;></p>-->
-                <h3>Price per <span th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></span></h3>
+                <h3>Price per <span id="measurement-unit" th:text="${product.returnMeasurementUnit(product.measurementUnit)}"></span></h3>
                 <p class="data" th:inline="text">₹ [[${product.pricePerUnit}]]</p>
                 <div class="container-fluid">
                     <!-- Modal -->
@@ -252,6 +253,9 @@
             /*razorpay button*/
             /*$(".razorpay-payment-button:first").addClass('btn btn-action hide');*/
 
+            var invalidData = $('#invalidData').val();
+            if(invalidData=='true')
+                    messageAlertModal("Alert", "Invalid data submitted")
             /*datepicker*/
             $('#datepicker').datepicker({
                 format: 'yyyy/mm/dd',
@@ -311,7 +315,7 @@
                 if(quantity<minimumQuantity){
                     valid = false;
                     $('#quantityPerDay').val('');
-                    messageAlertModal("Alert", "Minimum quantity is "+minimumQuantity)
+                    messageAlertModal("Alert", "Minimum quantity for home delivery is "+minimumQuantity+' '+$('#measurement-unit').text())
                 }
                 else if(quantity%minimumQuantity!=0){
                     valid = false;
