@@ -35,7 +35,7 @@ public class ProductManagerImpl implements ProductManager {
         BigDecimal quantity = subscription.getTotalQuantity();
         if((quantity.compareTo(product.getMinimumQuantity())==0 || quantity.compareTo(product.getMinimumQuantity())==1)  && quantity.remainder(product.getMinimumQuantity()).compareTo(BigDecimal.ZERO)==0){
             BigDecimal totalPrice = SubscriptionUtil.priceCalculator(quantity, product.getPricePerUnit());
-            return (totalPrice==subscription.getTotalPrice());
+            return (totalPrice.compareTo(subscription.getTotalPrice())==0);
         }
         return false;
     }
